@@ -499,7 +499,7 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
   <!-- VSL (placeholder wideo, podmień OFFER.vslYouTubeId na ID z YouTube) -->
   <div class="hero-vsl rise rise-3">
     <div class="vsl" id="vsl" role="button" tabindex="0" aria-label="Odtwórz wideo wprowadzające">
-      <img class="vsl-bg" src="img/terminal.png" alt="" aria-hidden="true">
+      <img class="vsl-bg" src="img/vsl-poster.jpg" alt="" aria-hidden="true">
       <span class="vsl-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
       <span class="vsl-cap">Film Ci wszystko wyjaśni:) </span>
     </div>
@@ -918,7 +918,8 @@ var SOLD_OUT = false;
 var OFFER = {
   earlyBirdEnds: "2026-07-14T23:59:59+02:00",
   heroSpots: 10,   // ← ILE MIEJSC ZOSTAŁO na najbliższą edycję (badge na samej górze). Zmieniasz tylko tę liczbę.
-  vslYouTubeId: "vsf1H-Pw6DQ",   // ← wklej ID filmu z YouTube (np. "dQw4w9WgXcQ"); puste = placeholder
+  vslVideo: "img/vsl.mp4",        // ← self-host MP4 (ma pierwszeństwo; działa pod CSP media-src 'self')
+  vslYouTubeId: "vsf1H-Pw6DQ",   // ← fallback YouTube (używany, gdy vslVideo puste; blokowany przez CSP na claudemaster.pl)
 
   course:    { eb:599, full:1199, buyUrl:"https://mikolajabramczuk.zanfia.co/c/claudemaster:-kurs-z-claude-code-dla-nie-programistow-Dbax", availableNote:"planowo na początek sierpnia" },
   workshops: { eb:899, full:1599 },
@@ -995,19 +996,30 @@ var OFFER = {
 /* ====== VSL — wideo w hero (placeholder do podmiany na YouTube) ====== */
 (function(){
   var vsl=document.getElementById("vsl"); if(!vsl) return;
-  var id=(OFFER.vslYouTubeId||"").trim();
+  var localSrc=(OFFER.vslVideo||"").trim();
+  var ytId=(OFFER.vslYouTubeId||"").trim();
   var bg=vsl.querySelector(".vsl-bg");
-  if(id && bg) bg.src="https://i.ytimg.com/vi/"+id+"/hqdefault.jpg";
+  // miniaturka z YouTube tylko gdy nie mamy własnego pliku
+  if(!localSrc && ytId && bg) bg.src="https://i.ytimg.com/vi/"+ytId+"/hqdefault.jpg";
   function play(){
-    var vid=(OFFER.vslYouTubeId||"").trim();
-    if(!vid) return; // brak filmu — placeholder
-    var ifr=document.createElement("iframe");
-    ifr.className="vsl-frame";
-    ifr.src="https://www.youtube.com/embed/"+vid+"?autoplay=1&rel=0&playsinline=1";
-    ifr.title="Wideo wprowadzające";
-    ifr.setAttribute("allow","autoplay; encrypted-media; picture-in-picture; fullscreen");
-    ifr.setAttribute("allowfullscreen","");
-    vsl.appendChild(ifr); vsl.classList.add("playing");
+    if(vsl.classList.contains("playing")) return;
+    var el;
+    if(localSrc){                       // self-host MP4 (działa pod CSP media-src 'self')
+      el=document.createElement("video");
+      el.className="vsl-frame";
+      el.src=localSrc;
+      el.controls=true; el.autoplay=true; el.playsInline=true;
+      el.setAttribute("playsinline",""); el.preload="auto";
+    } else if(ytId){                    // fallback YouTube
+      el=document.createElement("iframe");
+      el.className="vsl-frame";
+      el.src="https://www.youtube.com/embed/"+ytId+"?autoplay=1&rel=0&playsinline=1";
+      el.title="Wideo wprowadzające";
+      el.setAttribute("allow","autoplay; encrypted-media; picture-in-picture; fullscreen");
+      el.setAttribute("allowfullscreen","");
+    } else { return; }
+    vsl.appendChild(el); vsl.classList.add("playing");
+    if(el.play){ var p=el.play(); if(p&&p.catch){p.catch(function(){});} }
     if(window.umami) umami.track("vsl-play");
   }
   vsl.addEventListener("click",play);
