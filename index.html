@@ -918,7 +918,7 @@ var SOLD_OUT = false;
 var OFFER = {
   earlyBirdEnds: "2026-07-14T23:59:59+02:00",
   heroSpots: 10,   // ← ILE MIEJSC ZOSTAŁO na najbliższą edycję (badge na samej górze). Zmieniasz tylko tę liczbę.
-  vslVideo: "img/vsl.mp4",        // ← self-host MP4 (ma pierwszeństwo; działa pod CSP media-src 'self')
+  vslVideo: "img/vsl.mp4?v=1",    // ← self-host MP4 (ma pierwszeństwo; ?v= omija stary cache 404 Cloudflare, działa pod CSP media-src 'self')
   vslYouTubeId: "vsf1H-Pw6DQ",   // ← fallback YouTube (używany, gdy vslVideo puste; blokowany przez CSP na claudemaster.pl)
 
   course:    { eb:599, full:1199, buyUrl:"https://mikolajabramczuk.zanfia.co/c/claudemaster:-kurs-z-claude-code-dla-nie-programistow-Dbax", availableNote:"planowo na początek sierpnia" },
