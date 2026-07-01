@@ -6,7 +6,7 @@
 
 <!-- ===== SEO ===== -->
 <title>Claude Code dla nie-programistów · warsztaty live + kurs · claudemaster</title>
-<meta name="description" content="Warsztaty z Claude Code dla nie-programistów. Na żywo, w grupie do 10 osób, budujemy Twoje pierwsze działające projekty. Format: dwa spotkania po 2h plus zadania pomiędzy. W cenie aplikacja, kurs nagrań i społeczność. Terminy: 7 i 9 oraz 21 i 23 lipca 2026.">
+<meta name="description" content="Warsztaty z Claude Code dla nie-programistów. Na żywo, w grupie do 10 osób, budujemy Twoje pierwsze działające projekty. Format: dwa spotkania po 2h plus zadania pomiędzy. W cenie aplikacja, kurs nagrań i społeczność. Terminy: 6 i 9 oraz 20 i 23 lipca 2026.">
 <meta name="author" content="Mikołaj Abramczuk">
 <meta name="theme-color" content="#DB511D">
 <link rel="canonical" href="https://www.mikolajabramczuk.pl/claudemaster">
@@ -16,12 +16,12 @@
 <meta property="og:locale" content="pl_PL">
 <meta property="og:site_name" content="claudemaster">
 <meta property="og:title" content="Claude Code dla nie-programistów. Na żywo budujemy Twoje projekty.">
-<meta property="og:description" content="Warsztaty live + kurs dla nie-programistów. Dwa spotkania po 2h na żywo plus zadania, aplikacja i społeczność w cenie. Terminy: 7 i 9 oraz 21 i 23 lipca 2026.">
+<meta property="og:description" content="Warsztaty live + kurs dla nie-programistów. Dwa spotkania po 2h na żywo plus zadania, aplikacja i społeczność w cenie. Terminy: 6 i 9 oraz 20 i 23 lipca 2026.">
 <meta property="og:url" content="https://www.mikolajabramczuk.pl/claudemaster">
 <meta property="og:image" content="https://www.mikolajabramczuk.pl/claudemaster/img/hero2.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Claude Code dla nie-programistów. Na żywo budujemy Twoje projekty.">
-<meta name="twitter:description" content="Warsztaty live + kurs dla nie-programistów. Terminy: 7 i 9 oraz 21 i 23 lipca 2026.">
+<meta name="twitter:description" content="Warsztaty live + kurs dla nie-programistów. Terminy: 6 i 9 oraz 20 i 23 lipca 2026.">
 
 <!-- Favicon (zdjęcie prowadzącego) -->
 <link rel="icon" href="img/hero2.png">
@@ -95,9 +95,8 @@ mark,.uline{background:linear-gradient(transparent 70%,var(--accent-2) 70% 90%,t
 .tag.ink{background:var(--ink);color:var(--paper)}
 .tag.line{background:transparent;color:var(--ink-80);border:1.5px solid var(--hair)}
 
-.note,.la-between{padding:17px 20px;border:2.5px solid var(--accent-2);background:var(--ink);
-  font-size:.98rem;line-height:1.55;color:color-mix(in srgb,var(--paper) 92%,transparent)}
-.note b,.la-between b{color:var(--accent-2)}
+.co-foot-note{color:var(--muted);font-size:.94rem;line-height:1.55;max-width:72ch}
+.co-foot-note b{color:var(--ink);font-weight:700}
 
 /* ============== HERO (magazyn: rail po lewej, tekst po prawej, VSL pod spodem) ============== */
 header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
@@ -109,12 +108,11 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
 .hero .sub{font-size:1.08rem;line-height:1.6;color:var(--ink-80);max-width:48ch;margin:20px 0 0}
 .hero .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin:32px 0 0}
 /* prawy rail: format · terminy · grupa (subtelny, drugorzędny) */
-.hero-rail{display:flex;flex-direction:column;gap:20px;border-left:1px solid var(--hair);padding-left:26px}
-.hr-item{display:flex;gap:10px;align-items:flex-start}
-.hr-ico{flex:none;color:var(--accent);margin-top:1px;display:block}
-.hr-ico svg{width:16px;height:16px;display:block}
-.hr-l{font-size:.58rem;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);font-weight:700;line-height:1}
-.hr-v{font-size:.84rem;font-weight:600;color:var(--ink-80);line-height:1.25;margin-top:3px}
+.hero-rail{display:flex;flex-direction:column;gap:18px;border-left:1px solid var(--hair);padding-left:26px}
+.hr-item{display:flex;gap:12px;align-items:center}
+.hr-ico{flex:none;color:var(--accent);display:block}
+.hr-ico svg{width:19px;height:19px;display:block}
+.hr-v{font-size:.92rem;font-weight:600;color:var(--ink-80);line-height:1.3}
 /* VSL — placeholder wideo pod hero (podmień OFFER.vslYouTubeId na ID z YouTube) */
 .hero-vsl{position:relative;max-width:820px;margin:60px auto 0}
 .hero-vsl::before{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
@@ -161,7 +159,7 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
 .checklist .box svg{width:15px;height:15px;color:var(--accent);display:block}
 
 /* ============== TOGGLE Kurs/Warsztaty + bloki „w cenie" ============== */
-.copack-r{position:absolute;width:0;height:0;opacity:0;pointer-events:none}
+.copack-r,.planpack-r,.afterpack-r{position:absolute;width:0;height:0;opacity:0;pointer-events:none}
 .seg{position:relative;display:inline-grid;grid-template-columns:1fr 1fr;border:1.5px solid var(--ink);
   background:var(--paper-card);padding:4px;width:min(400px,100%);margin:40px 0 0}
 .seg label{position:relative;z-index:1;text-align:center;padding:11px 14px;font-weight:700;cursor:pointer;
@@ -175,6 +173,20 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
 .pack-note .for-w{display:none}
 .copack-r.cw:checked ~ .co-body .for-k{display:none}
 .copack-r.cw:checked ~ .co-body .pack-note .for-w{display:inline}
+
+/* toggle Plan + Co po zakupie (te same style .seg co wyżej) */
+.planpack-r.pw:checked ~ .seg .seg-thumb,
+.afterpack-r.aw:checked ~ .seg .seg-thumb{transform:translateX(100%)}
+.planpack-r.pk:checked ~ .seg label.seg-k,
+.afterpack-r.ak:checked ~ .seg label.seg-k{color:var(--on-accent)}
+.planpack-r.pw:checked ~ .seg label.seg-w,
+.afterpack-r.aw:checked ~ .seg label.seg-w{color:var(--on-accent)}
+.plan-w{display:none}
+.planpack-r.pw:checked ~ .plan-body .plan-k{display:none}
+.planpack-r.pw:checked ~ .plan-body .plan-w{display:block}
+.after-w{display:none}
+.afterpack-r.aw:checked ~ .after-body .after-k{display:none}
+.afterpack-r.aw:checked ~ .after-body .after-w{display:block}
 
 .ibox{flex:none;width:48px;height:48px;display:grid;place-items:center;color:var(--accent);
   background:color-mix(in srgb,var(--accent) 12%,transparent)}
@@ -227,10 +239,12 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
 .la-session{display:flex;align-items:center;gap:14px;margin:30px 0 6px;font-size:.72rem;font-weight:800;
   text-transform:uppercase;letter-spacing:.13em;color:var(--accent)}
 .la-session::after{content:"";flex:1;height:1px;background:var(--hair)}
-.la-between{margin:16px 0}
+.la-session.mid{color:var(--muted);font-weight:700;margin:22px 0 6px}
 
 /* ============== KAFELKI (kameralnie) ============== */
 .cards{margin:44px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:24px}
+#kameralnie .cards{grid-template-columns:1fr 1fr}
+@media(max-width:640px){#kameralnie .cards{grid-template-columns:1fr}}
 .card{position:relative;background:var(--paper-card);border:1.5px solid var(--hair);border-radius:0;padding:28px 26px}
 .card .ci{width:34px;height:34px;color:var(--accent);margin-bottom:16px}
 .card h3{font-weight:700;letter-spacing:-.01em;line-height:1.12;font-size:1.16rem;margin:0 0 8px}
@@ -258,6 +272,7 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
 .price .cur{font-size:.32em;font-weight:700;vertical-align:super;margin-right:2px}
 .price-old{font-size:1.02rem;color:var(--muted)}
 .price-old s{color:var(--muted)}
+.pricecard.feature .price-old,.pricecard.feature .price-old s{color:color-mix(in srgb,var(--paper) 50%,transparent)}
 .price-old .lab{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;margin-top:2px}
 .incl{list-style:none;margin:22px 0 0;padding:0}
 .incl li{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid var(--hair-soft);font-size:1rem;line-height:1.45;color:var(--ink-80)}
@@ -382,8 +397,25 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
 .wl-done p{color:var(--ink-80);font-size:.98rem;margin:0}
 [hidden]{display:none !important}
 
+/* odliczanie early bird (tylko kafelek kursu) */
+.eb-countdown{margin:18px 0 0;display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;
+  background:color-mix(in srgb,var(--accent-2) 24%,var(--paper));border:1.5px solid var(--accent-2);
+  padding:10px 14px;font-size:.9rem;color:var(--ink)}
+.ebc-label{font-weight:600;color:var(--ink-80)}
+.ebc-clock{font-weight:800;letter-spacing:.02em;font-variant-numeric:tabular-nums}
+
+/* ============== CO PO ZAKUPIE (toggle) ============== */
+#po-zakupie{padding-top:60px}
+.plan-intro{color:var(--ink-80);font-size:1.06rem;line-height:1.55;max-width:64ch;margin:30px 0 0}
+.after-steps{margin-top:34px;display:flex;flex-direction:column;gap:14px;max-width:820px}
+.astep{display:flex;gap:18px;align-items:flex-start;background:var(--paper-card);border:1.5px solid var(--hair);padding:20px 22px}
+.astep .an{flex:none;width:38px;height:38px;border:1.5px solid var(--ink);display:grid;place-items:center;font-weight:800;font-size:1rem}
+.astep h3{margin:0 0 4px;font-size:1.08rem;font-weight:700;letter-spacing:-.01em;line-height:1.2}
+.astep p{margin:0;color:var(--ink-80);font-size:.96rem;line-height:1.5}
+
 /* tryb wyprzedane (fallback) */
 .sold-out #cennik{display:none}
+.sold-out #po-zakupie{display:none}
 .sold-out #termin{display:none}
 
 /* ============== RESPONSYWNOŚĆ ============== */
@@ -424,12 +456,12 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
 <header class="hero">
   <div class="hero-grid">
     <div class="hero-text">
-      <span class="hero-badge rise rise-1" id="hero-badge"><span class="hb-dot" aria-hidden="true"></span><span class="hb-txt">Zostało <b id="hero-spots">7</b> miejsc na najbliższą edycję</span></span>
+      <span class="hero-badge rise rise-1" id="hero-badge"><span class="hb-dot" aria-hidden="true"></span><span class="hb-txt">Zostało <b id="hero-spots">10</b> miejsc na najbliższą edycję</span></span>
       <h1 class="rise rise-1">Claude Code dla <span class="uline">nie-programistów</span></h1>
-      <p class="sub rise rise-2">Warsztaty na żywo, na których od zera budujemy Twoje projekty. W cenie kurs i aplikacja, żeby wejść gładko.</p>
+      <p class="sub rise rise-2">Praktyczny program dla każdego, kto chce raz, a dobrze "ogarnąć" temat agentów AI.</p>
       <div class="cta-row rise rise-2">
         <a class="btn primary" href="#cennik" data-umami-event="cta-hero">Wybieram termin →</a>
-        <a class="btn ghost" href="#w-cenie">Co dostaję w cenie</a>
+        <a class="btn ghost" href="#w-cenie">Co dostaję w cenie?</a>
       </div>
 
       <!-- lista rezerwowa (widoczna tylko w trybie wyprzedane) -->
@@ -447,19 +479,19 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
       </div>
     </div>
 
-    <!-- prawy rail: format · terminy · grupa (subtelny) -->
+    <!-- prawy rail: format · terminy · grupa (same ikony + tekst) -->
     <div class="hero-rail rise rise-2">
       <div class="hr-item">
         <span class="hr-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
-        <div><div class="hr-l">Format</div><div class="hr-v">2× 2h na żywo + zadania</div></div>
+        <div class="hr-v">2 × 2h na żywo</div>
       </div>
       <div class="hr-item">
         <span class="hr-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="1.5"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg></span>
-        <div><div class="hr-l">Najbliższe terminy</div><div class="hr-v">7 i 9 · 21 i 23 lipca</div></div>
+        <div class="hr-v">6 i 9 · 20 i 23 lipca</div>
       </div>
       <div class="hr-item">
-        <span class="hr-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="8" r="3.2"/><path d="M21 21v-2a4 4 0 0 0-3-3.8"/></svg></span>
-        <div><div class="hr-l">Grupa</div><div class="hr-v">Maks 10 osób</div></div>
+        <span class="hr-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <div class="hr-v">Maks 10 osób</div>
       </div>
     </div>
   </div>
@@ -469,7 +501,7 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
     <div class="vsl" id="vsl" role="button" tabindex="0" aria-label="Odtwórz wideo wprowadzające">
       <img class="vsl-bg" src="img/terminal.png" alt="" aria-hidden="true">
       <span class="vsl-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
-      <span class="vsl-cap">Zobacz w 2 minuty, o co chodzi</span>
+      <span class="vsl-cap">Film Ci wszystko wyjaśni:) </span>
     </div>
   </div>
 </header>
@@ -478,10 +510,10 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
 <section class="sec" id="dla-kogo">
   <h2>To dla <span class="accent">Ciebie</span>, jeśli…</h2>
   <ul class="checklist">
-    <li><span class="box"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7.5l3.2 3.2L12 4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> chcesz budować własne rozwiązania, a nie tylko o nich czytać</li>
-    <li><span class="box"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7.5l3.2 3.2L12 4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> jesteś przedsiębiorcą albo aspirujesz, by nim zostać</li>
+    <li><span class="box"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7.5l3.2 3.2L12 4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> chcesz poukładać sobie wiedzę o agentach AI (w tym Claude Code)</li>
+    <li><span class="box"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7.5l3.2 3.2L12 4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> jesteś przedsiębiorcą i wiesz, że powinieneś lepiej korzystać z AI</li>
     <li><span class="box"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7.5l3.2 3.2L12 4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> jesteś freelancerem lub samozatrudnionym i chcesz ułatwić sobie pracę</li>
-    <li><span class="box"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7.5l3.2 3.2L12 4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> zaczynasz od zera i nie chcesz, żeby technikalia Cię zatrzymały</li>
+    <li><span class="box"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7.5l3.2 3.2L12 4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> bawiłeś się wcześniej z Claude Code, ale był to dla Ciebie jeden wielki chaos</li>
     <li><span class="box"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7.5l3.2 3.2L12 4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> wiesz, że AI to narzędzie, a nie zamiennik myślenia</li>
     <li><span class="box"><svg viewBox="0 0 14 14" fill="none"><path d="M2 7.5l3.2 3.2L12 4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span> chcesz wreszcie zrealizować swoje odjechane pomysły</li>
   </ul>
@@ -489,8 +521,8 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
 
 <!-- ===== CO DOSTAJĘ W CENIE (toggle Kurs/Warsztaty) ===== -->
 <section class="sec" id="w-cenie">
-  <h2>Wybierasz <span class="uline">Kurs</span> czy <span class="uline">Warsztaty</span>?</h2>
-  <p class="lead">Kurs daje Ci komplet do startu i robisz go sam, we własnym tempie. Warsztaty odblokowują dodatkowo dzień budowania na żywo. Przełącz i zobacz różnicę.</p>
+  <h2>Wybierasz <span class="uline">kurs</span> czy <span class="uline">warsztaty</span>?</h2>
+  <p class="lead">Kurs robisz sam, we własnym tempie. Warsztaty to dodatkowe 2 dni budowania na żywo (i motywacja, by od razu zabrać się za temat). Przełącz i zobacz, czym się różnią.</p>
 
   <div class="copack">
     <input class="copack-r ck" type="radio" name="copack" id="cop-k" checked>
@@ -501,108 +533,181 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
       <span class="seg-thumb" aria-hidden="true"></span>
     </div>
     <div class="co-body">
-      <p class="pack-note"><span class="for-k">W <b>Kursie</b> przerabiasz wszystko sam, kiedy masz czas:</span><span class="for-w">W <b>Warsztatach</b> masz cały Kurs plus to, co odblokowane na żywo:</span></p>
+      <p class="pack-note"><span class="for-k">Podczas <b>kursu</b> przerabiasz wszystko sam, w dogodnej chwili:</span><span class="for-w">Na <b>warsztatach</b> masz cały kurs plus 4 godziny spotkań na żywo:</span></p>
       <div class="unlock">
         <div class="urow">
           <span class="ibox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0-4 10.5c.8.8 1 1.4 1 2.5h6c0-1.1.2-1.7 1-2.5A6 6 0 0 0 12 3z"/><path d="M9 18h6"/><path d="M10 21h4"/></svg></span>
-          <div><h3>Przygotowanie od zera</h3><p>Instalacje, terminal, konta. Krok po kroku, bez żargonu.</p></div>
+          <div><h3>Przygotowanie od zera</h3><p> Przeprowadzenie "za rączkę" przez instalacje, terminal, niezbędne aplikacje.</p></div>
         </div>
         <div class="urow">
           <span class="ibox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/></svg></span>
-          <div><h3>Studnia zadań</h3><p>Ćwiczenia do robienia we własnym tempie, żeby utrwalić materiał.</p></div>
+          <div><h3>Dedykowana aplikacja</h3><p>Znajdziesz w niej m.in.: wcześniej przygotowane interaktywne ćwiczenia do robienia we własnym tempie.</p></div>
         </div>
         <div class="urow">
           <span class="ibox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v12H4z"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg></span>
-          <div><h3>Pełen kurs nagranych lekcji</h3><p>Lekko-strawne wideo, do których wracasz w każdym momencie.</p></div>
+          <div><h3>Pełen kurs nagranych lekcji</h3><p>Lekko-strawne 5-7-minutowe filmy. Wracasz, kiedy chcesz.</p></div>
         </div>
         <div class="urow">
           <span class="ibox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="8" r="3.2"/><path d="M21 21v-2a4 4 0 0 0-3-3.8"/></svg></span>
-          <div><h3>Dostęp do społeczności</h3><p>Zamknięta grupa uczestników. Wsparcie i motywacja, żeby nie utknąć.</p></div>
+          <div><h3>Dostęp do społeczności</h3><p>Zamknięta grupa uczestników. Wsparcie i motywacja, żeby ruszyć z miejsca.</p></div>
         </div>
         <div class="urow locked">
           <span class="ibox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
-          <div><h3>Dwa spotkania po 2h na żywo</h3><p>Budujemy razem w grupie do 10 osób, a między spotkaniami robisz zadania.</p></div>
-          <span class="lock" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
-          <span class="unlocktag">na żywo</span>
-        </div>
+          <div><h3>Dwa spotkania po 2h na żywo</h3><p>Budujemy i przerabiamy materiał w grupie, na żywo, a między spotkaniami dostajesz "pracę domową".</p></div>
+          <span class="lock" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>        </div>
         <div class="urow locked">
           <span class="ibox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 10h8M8 14h5"/><path d="M21 12a8 8 0 0 1-8 8H5l-2 2V12a8 8 0 0 1 8-8h2a8 8 0 0 1 8 8z"/></svg></span>
-          <div><h3>Indywidualny kontakt + nagranie</h3><p>Pytania na bieżąco, a całe spotkanie zostaje u Ciebie.</p></div>
-          <span class="lock" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
-          <span class="unlocktag">na żywo</span>
-        </div>
+          <div><h3>Indywidualny kontakt + nagranie</h3><p>Indywidualny kontakt między spotkaniami, a na żywo prywatna przestrzeń do budowania (więcej informacji w filmie na górze).</p></div>
+          <span class="lock" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="1"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>        </div>
       </div>
-      <div class="co-foot-note note">
-        <b>Kurs jest w przygotowaniu.</b> Kupując teraz, łapiesz cenę przedsprzedaży. Pełny dostęp planowo na początku sierpnia, a uczestnicy najbliższych warsztatów dostają materiały przygotowujące wcześniej.
-      </div>
+      <p class="co-foot-note">
+        <b>⚠️ Kurs jest w przygotowaniu.</b> Kupując teraz, rezerwujesz sobie niższą cenę przedsprzedażową. Pełen dostęp planowo na początku sierpnia.
+      </p>
     </div>
   </div>
 </section>
 
-<!-- ===== CO PRZEROBIMY NA ŻYWO ===== -->
+<!-- ===== PLAN (toggle Kurs/Warsztaty) ===== -->
 <section class="sec" id="na-zywo">
-  <h2>Dwa spotkania na żywo, w których przede wszystkim <span class="uline">budujemy</span></h2>
-  <p class="lead">Dwa spotkania po 2 godziny, a pomiędzy nimi robisz zadania, żeby utrwalić materiał. Na żywo nie oglądamy slajdów: od zera doprowadzamy Cię do działających projektów. Rozwiń temat, żeby zobaczyć, co dokładnie robimy.</p>
+  <h2>Plan</h2>
+  <p class="lead">Zobacz, co dokładnie przerabiamy. Przełącz, żeby porównać program <b>Kursu</b> (przechodzisz sam, we własnym tempie) i <b>Warsztatów</b> (budujemy na żywo, dwa spotkania po 2h z zadaniami pomiędzy).</p>
 
-  <div class="live-acc">
-    <div class="la-session"><span>Spotkanie 1 · 2 godziny na żywo</span></div>
-    <details class="la-item" open>
-      <summary><span class="la-num">01</span><span class="la-title">Twój pierwszy działający projekt</span><span class="la-x" aria-hidden="true"></span></summary>
-      <div class="la-body">
-        <p class="intro">Od pomysłu do efektu, który realnie działa. Wychodzisz z czymś gotowym, nie z notatkami.</p>
-        <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Pomysł → szkielet projektu<span class="sx" aria-hidden="true">+</span></summary><p>Luźny pomysł zamieniamy w konkretny plan i pierwszą wersję.</p></details>
-        <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Pierwsze uruchomienie<span class="sx" aria-hidden="true">+</span></summary><p>Odpalamy projekt i na żywo widzimy, że działa.</p></details>
-        <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Poprawki i iteracja<span class="sx" aria-hidden="true">+</span></summary><p>Uczysz się poprawiać i rozwijać efekt samodzielnie.</p></details>
+  <div class="planpack">
+    <input class="planpack-r pk" type="radio" name="planpack" id="plan-k" checked>
+    <input class="planpack-r pw" type="radio" name="planpack" id="plan-w">
+    <div class="seg" role="tablist" aria-label="Wybór planu">
+      <label class="seg-k" for="plan-k">Kurs</label>
+      <label class="seg-w" for="plan-w">Warsztaty live</label>
+      <span class="seg-thumb" aria-hidden="true"></span>
+    </div>
+    <div class="plan-body">
+
+      <!-- PLAN KURSU (własne tempo) -->
+      <div class="plan-k">
+        <p class="plan-intro">Kurs przechodzisz sam, w aplikacji i na nagraniach. To uporządkowana teoria od podstaw: rozwiń moduł, żeby zobaczyć, co w nim poznajesz.</p>
+        <div class="live-acc">
+          <details class="la-item" open>
+            <summary><span class="la-num">01</span><span class="la-title">Fundamenty: jak działa agent</span><span class="la-x" aria-hidden="true"></span></summary>
+            <div class="la-body">
+              <p class="intro">Teoria, na której stoi cała reszta. Rozumiesz, co dzieje się pod spodem, zanim cokolwiek uruchomisz.</p>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Jak działają modele i "dyrygent"<span class="sx" aria-hidden="true">+</span></summary><p>Model, harness i narzędzia w jednym prostym schemacie.</p></details>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Terminal i bash bez straszenia<span class="sx" aria-hidden="true">+</span></summary><p>pwd, ls, cd, mkdir i dlaczego agenci tak lubią tekst.</p></details>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Narzędzia agenta<span class="sx" aria-hidden="true">+</span></summary><p>Read, Write, Edit, Grep, Glob, Bash, Task i TodoWrite, po kolei.</p></details>
+            </div>
+          </details>
+          <details class="la-item">
+            <summary><span class="la-num">02</span><span class="la-title">Instalacja i podstawy Claude Code</span><span class="la-x" aria-hidden="true"></span></summary>
+            <div class="la-body">
+              <p class="intro">Suchy, poukładany przegląd instalacji i najważniejszych ustawień.</p>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Trzy drogi instalacji<span class="sx" aria-hidden="true">+</span></summary><p>Terminal, wtyczka VS Code czy aplikacja, i czym się różnią.</p></details>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Tryby zgód i wybór modelu<span class="sx" aria-hidden="true">+</span></summary><p>Pięć trybów zatwierdzania oraz kiedy Haiku, kiedy Sonnet, a kiedy Opus.</p></details>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Komendy slash i dokumentacja<span class="sx" aria-hidden="true">+</span></summary><p>/help, przydatne komendy i ustawienie "najpierw czytaj docs".</p></details>
+            </div>
+          </details>
+          <details class="la-item">
+            <summary><span class="la-num">03</span><span class="la-title">CLAUDE.md, rules i pamięć</span><span class="la-x" aria-hidden="true"></span></summary>
+            <div class="la-body">
+              <p class="intro">Jak agent trzyma reguły, kontekst i to, co ma pamiętać między sesjami.</p>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Cztery składniki dobrego CLAUDE.md<span class="sx" aria-hidden="true">+</span></summary><p>Plik lokalny vs globalny i pętla "zaplanuj, wdróż, dopisz".</p></details>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Rules<span class="sx" aria-hidden="true">+</span></summary><p>Rozbijanie zasad na mniejsze pliki i porządek w folderze .claude.</p></details>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Pamięć i Obsidian<span class="sx" aria-hidden="true">+</span></summary><p>System notatek, czyli "Notion do pracy agentowej".</p></details>
+            </div>
+          </details>
+          <details class="la-item">
+            <summary><span class="la-num">04</span><span class="la-title">Skills, hooks i MCP</span><span class="la-x" aria-hidden="true"></span></summary>
+            <div class="la-body">
+              <p class="intro">Trzy sposoby, żeby dołożyć agentowi umiejętności i połączeń ze światem.</p>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Skills<span class="sx" aria-hidden="true">+</span></summary><p>Pojemniczki z instrukcjami i wbudowany skill-creator.</p></details>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Hooks<span class="sx" aria-hidden="true">+</span></summary><p>Automatyczne "haczyki" przed i po akcjach agenta.</p></details>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>MCP i GitHub<span class="sx" aria-hidden="true">+</span></summary><p>Łączniki do Canvy, Notion czy Gmaila oraz praca z repozytorium.</p></details>
+            </div>
+          </details>
+          <details class="la-item">
+            <summary><span class="la-num">05</span><span class="la-title">Wielu agentów i kontekst</span><span class="la-x" aria-hidden="true"></span></summary>
+            <div class="la-body">
+              <p class="intro">Jak myśleć o pracy z wieloma agentami i nie utonąć w kontekście.</p>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Subagenci i agent teams<span class="sx" aria-hidden="true">+</span></summary><p>Kiedy dzielić pracę na kilku agentów i jak to w ogóle działa.</p></details>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Stochastyczne porozumienie<span class="sx" aria-hidden="true">+</span></summary><p>Kilkunastu agentów analizuje temat, a jeden zbiera wnioski.</p></details>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Zarządzanie kontekstem<span class="sx" aria-hidden="true">+</span></summary><p>Dziewięć praktyk, dzięki którym agent nie gubi wątku.</p></details>
+            </div>
+          </details>
+        </div>
       </div>
-    </details>
-    <details class="la-item">
-      <summary><span class="la-num">02</span><span class="la-title">Własny system pracy z Claude</span><span class="la-x" aria-hidden="true"></span></summary>
-      <div class="la-body">
-        <p class="intro">Ustawiasz agenta tak, żeby pracował po Twojemu, a nie po swojemu.</p>
-        <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Plik CLAUDE.md od podstaw<span class="sx" aria-hidden="true">+</span></summary><p>Reguły, kontekst i styl pracy w jednym miejscu.</p></details>
-        <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Kontekst i pamięć<span class="sx" aria-hidden="true">+</span></summary><p>Jak podawać agentowi to, co naprawdę istotne.</p></details>
+
+      <!-- PLAN WARSZTATÓW (na żywo) -->
+      <div class="plan-w">
+        <p class="plan-intro">Na warsztatach nie oglądamy slajdów, tylko budujemy. Dwa spotkania po 2h, a pomiędzy nimi robisz zadania. Rozwiń temat, żeby zobaczyć, co dokładnie tworzymy.</p>
+        <div class="live-acc">
+          <div class="la-session"><span>Spotkanie 1 · 2 godziny na żywo</span></div>
+          <details class="la-item" open>
+            <summary><span class="la-num">01</span><span class="la-title">Twój pierwszy działający projekt</span><span class="la-x" aria-hidden="true"></span></summary>
+            <div class="la-body">
+              <p class="intro">Od pomysłu do efektu, który realnie działa. Wychodzisz ze spotkania z czymś gotowym, nie z notatkami.</p>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Instalacja i pierwsze uruchomienie<span class="sx" aria-hidden="true">+</span></summary><p>Stawiamy Claude Code i od razu odpalamy go na żywo.</p></details>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Pomysł → działający projekt<span class="sx" aria-hidden="true">+</span></summary><p>Luźny pomysł zamieniamy w pierwszą, działającą wersję.</p></details>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Prowadzenie agenta<span class="sx" aria-hidden="true">+</span></summary><p>Tryby zgód, wybór modelu i poprawki, żebyś sterował, a nie tylko klikał "tak".</p></details>
+            </div>
+          </details>
+          <details class="la-item">
+            <summary><span class="la-num">02</span><span class="la-title">Agent ustawiony pod Ciebie</span><span class="la-x" aria-hidden="true"></span></summary>
+            <div class="la-body">
+              <p class="intro">Budujemy Twój plik CLAUDE.md i pierwszą automatyzację, która zostaje z Tobą.</p>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>CLAUDE.md od podstaw<span class="sx" aria-hidden="true">+</span></summary><p>Reguły i kontekst, które realnie zmieniają sposób pracy agenta.</p></details>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Zadanie: system automatycznej oferty<span class="sx" aria-hidden="true">+</span></summary><p>Budujesz generator ofert, od zera do działającego narzędzia.</p></details>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Rules i pamięć<span class="sx" aria-hidden="true">+</span></summary><p>Rozbijasz zasady na kawałki i uczysz agenta, co ma pamiętać.</p></details>
+            </div>
+          </details>
+          <div class="la-session mid"><span>Pomiędzy spotkaniami · zadania do zrobienia</span></div>
+          <div class="la-session"><span>Spotkanie 2 · 2 godziny na żywo</span></div>
+          <details class="la-item">
+            <summary><span class="la-num">03</span><span class="la-title">Podpinamy narzędzia w praktyce</span><span class="la-x" aria-hidden="true"></span></summary>
+            <div class="la-body">
+              <p class="intro">Wychodzimy poza jeden projekt: repozytorium, integracje i własne skróty.</p>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>GitHub i pierwszy push<span class="sx" aria-hidden="true">+</span></summary><p>Wrzucamy projekt do repozytorium na żywo.</p></details>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>MCP w akcji<span class="sx" aria-hidden="true">+</span></summary><p>Podpinasz Canvę, Notion czy Gmaila prosto do agenta.</p></details>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Własny skill<span class="sx" aria-hidden="true">+</span></summary><p>Zamykasz powtarzalny proces w jednej komendzie.</p></details>
+            </div>
+          </details>
+          <details class="la-item">
+            <summary><span class="la-num">04</span><span class="la-title">Hooki i praca z wieloma agentami</span><span class="la-x" aria-hidden="true"></span></summary>
+            <div class="la-body">
+              <p class="intro">Dokładamy automatyczne "haczyki" i puszczamy kilku agentów naraz.</p>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Hook z sygnałem dźwiękowym<span class="sx" aria-hidden="true">+</span></summary><p>Claude sam daje znać dźwiękiem, kiedy skończy pracę.</p></details>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Subagenci i agent teams<span class="sx" aria-hidden="true">+</span></summary><p>Dzielisz robotę między kilku agentów pracujących równolegle.</p></details>
+              <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Stochastyczne porozumienie<span class="sx" aria-hidden="true">+</span></summary><p>Kilku agentów analizuje temat, a jeden zbiera wnioski.</p></details>
+            </div>
+          </details>
+        </div>
       </div>
-    </details>
-    <div class="la-between">Pomiędzy spotkaniami robisz zadania, żeby utrwalić materiał i przyjść z konkretami.</div>
-    <div class="la-session"><span>Spotkanie 2 · 2 godziny na żywo</span></div>
-    <details class="la-item">
-      <summary><span class="la-num">03</span><span class="la-title">Automatyzacje, które oszczędzają czas</span><span class="la-x" aria-hidden="true"></span></summary>
-      <div class="la-body">
-        <p class="intro">Budujemy konkretne narzędzie, które zostaje z Tobą po warsztacie.</p>
-        <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Wybór procesu do automatyzacji<span class="sx" aria-hidden="true">+</span></summary><p>Co realnie warto odciążyć w Twojej codziennej pracy.</p></details>
-        <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Budowa narzędzia (np. system ofert)<span class="sx" aria-hidden="true">+</span></summary><p>Od zera do działającego generatora ofert.</p></details>
-      </div>
-    </details>
-    <details class="la-item">
-      <summary><span class="la-num">04</span><span class="la-title">Integracje i praca z wieloma agentami</span><span class="la-x" aria-hidden="true"></span></summary>
-      <div class="la-body">
-        <p class="intro">Pokazujemy, jak iść dalej samodzielnie, gdy warsztat się skończy.</p>
-        <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>GitHub i MCP<span class="sx" aria-hidden="true">+</span></summary><p>Podpinasz narzędzia i źródła, z których korzysta agent.</p></details>
-        <details class="la-sub"><summary><span class="sd" aria-hidden="true"></span>Podział pracy między agentów<span class="sx" aria-hidden="true">+</span></summary><p>Kilku agentów robi różne rzeczy równolegle.</p></details>
-      </div>
-    </details>
+
+    </div>
   </div>
 </section>
 
-<!-- ===== KAMERALNIE ===== -->
+<!-- ===== NA CZYM SIĘ SKUPIAMY ===== -->
 <section class="sec" id="kameralnie">
-  <h2>Dlaczego pracujemy w tak <span class="accent">małej</span> grupie?</h2>
-  <p class="lead">To zamknięte warsztaty dla maksymalnie 10 osób. Nie bez powodu.</p>
+  <h2>Na czym się <span class="uline">skupiamy</span>?</h2>
+  <p class="lead">Warsztaty w małej grupie do 10 osób mają jasny cel. Oto cztery rzeczy, które są dla nas najważniejsze.</p>
   <div class="cards">
     <article class="card">
-      <svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10h8M8 14h5"/><path d="M21 12a8 8 0 0 1-8 8H5l-2 2V12a8 8 0 0 1 8-8h2a8 8 0 0 1 8 8z"/></svg>
-      <h3>Indywidualny kontakt na żywo</h3>
-      <p>Chcemy efektu „prywatnych konsultacji", a nie masowego szkolenia, gdzie jesteś numerkiem na liście.</p>
+      <svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18"/><path d="M5 8l7-5 7 5"/><path d="M5 8v6a7 4 0 0 0 14 0V8"/></svg>
+      <h3>Reguły ponad metody</h3>
+      <p>Zasad jest kilka, metod miliony. Kto ogarnie zasady, sam dobiera metodę do sytuacji (jak mawiał Ralph Waldo Emerson). Uczymy Cię reguł pracy z agentem, nie wkuwania sztywnych przepisów.</p>
     </article>
     <article class="card">
       <svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="10" cy="8" r="3.2"/><path d="M21 21v-2a4 4 0 0 0-3-3.8"/><path d="M16 4.2a4 4 0 0 1 0 7.6"/></svg>
-      <h3>Społeczność uczestników</h3>
-      <p>Dostęp do zamkniętej grupy wszystkich uczestników. Wzajemne wsparcie i motywacja, by ruszyć z miejsca.</p>
+      <h3>Grupa proaktywnych ludzi</h3>
+      <p>Mała grupa ambitnych, ogarniętych osób. Otoczenie, które napędza i zostaje z Tobą długo po ostatnim spotkaniu.</p>
     </article>
     <article class="card">
-      <svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4z" fill="currentColor" stroke="none"/></svg>
-      <h3>Wsparcie po spotkaniu</h3>
-      <p>Nagranie całego spotkania zostaje u Ciebie, a do społeczności i kursu wracasz kiedy chcesz.</p>
+      <svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.2A1.6 1.6 0 0 0 7 19.3a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0-1.1-2.7H1a2 2 0 1 1 0-4h.2A1.6 1.6 0 0 0 2.7 7a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 7 2.7 1.6 1.6 0 0 0 8 1.2V1a2 2 0 1 1 4 0v.2a1.6 1.6 0 0 0 2.7 1.1l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1A1.6 1.6 0 0 0 21.3 7H21"/></svg>
+      <h3>Zrozumieć agentów, nie jedno narzędzie</h3>
+      <p>Pokazujemy, jak działają agenci w ogóle. Przesiądziesz się na Codex czy Hermes i odnajdziesz się od ręki.</p>
+    </article>
+    <article class="card">
+      <svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 7l-1.5-1.5a2.1 2.1 0 0 0-3 0L3 11.5a2.1 2.1 0 0 0 0 3L4.5 16"/><path d="M9 17l1.5 1.5a2.1 2.1 0 0 0 3 0L21 11a2.1 2.1 0 0 0 0-3L19.5 6.5"/><path d="M9 9l6 6"/></svg>
+      <h3>Uczymy się, budując</h3>
+      <p>Teorię łapiesz dopiero, kiedy coś robisz. Dlatego budujemy na żywo, a w aplikacji czeka studnia zadań, żeby ćwiczyć dalej po spotkaniu.</p>
     </article>
   </div>
 </section>
@@ -615,11 +720,15 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
   <div class="pricing">
     <!-- KURS -->
     <article class="pricecard">
-      <div class="pc-head"><span class="pc-kind">Kurs</span><span class="tag line">własne tempo</span></div>
+      <div class="pc-head"><span class="pc-kind">Kurs</span></div>
       <p class="pc-tagline">Aplikacja, kurs nagrań i społeczność. Przechodzisz materiał sam, kiedy chcesz.</p>
       <div class="price-row">
         <span class="price"><span class="cur">zł</span><span id="course-eb">599</span></span>
-        <span class="price-old" id="course-old"><s id="course-full">1199 zł</s><span class="lab">cena pełna</span></span>
+        <span class="price-old" id="course-old"><s id="course-full">1199 zł</s></span>
+      </div>
+      <div class="eb-countdown" id="course-countdown">
+        <span class="ebc-label">Cena przedsprzedaży kończy się za</span>
+        <span class="ebc-clock"><b id="ebc-d">–</b> d · <b id="ebc-h">–</b> g · <b id="ebc-m">–</b> m · <b id="ebc-s">–</b> s</span>
       </div>
       <ul class="incl">
         <li><span class="ic">✦</span> Aplikacja Claudemaster: przygotowanie od zera i studnia zadań</li>
@@ -634,11 +743,11 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
 
     <!-- WARSZTATY -->
     <article class="pricecard feature">
-      <div class="pc-head"><span class="pc-kind">Warsztaty live</span><span class="tag">najwięcej</span></div>
+      <div class="pc-head"><span class="pc-kind">Warsztaty live</span></div>
       <p class="pc-tagline">Wszystko z kursu plus dwa spotkania po 2h na żywo, z zadaniami pomiędzy.</p>
       <div class="price-row">
         <span class="price"><span class="cur">zł</span><span id="ws-eb">899</span></span>
-        <span class="price-old" id="ws-old"><s id="ws-full">1599 zł</s><span class="lab">cena pełna</span></span>
+        <span class="price-old" id="ws-old"><s id="ws-full">1599 zł</s></span>
       </div>
       <ul class="incl">
         <li><span class="ic">✦</span> <b>Wszystko, co w pakiecie Kurs</b></li>
@@ -648,7 +757,7 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
       </ul>
       <div class="pc-foot">
         <div class="ed-list" id="ws-editions"><!-- terminy wstawia JS z OFFER --></div>
-        <p class="pc-note">Udział możesz wykupić do 24h przed startem edycji (żeby zdążyć przejść aplikację) lub do wyczerpania miejsc.</p>
+        <p class="pc-note">Udział możesz wykupić nawet do 3 godzin przed startem edycji, lub do wyczerpania miejsc.</p>
       </div>
     </article>
   </div>
@@ -664,10 +773,48 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
         <tr><td class="feat">2× 2h na żywo + zadania (grupa do 10 osób)</td><td class="col-k"><span class="no">—</span></td><td class="col-w"><span class="yes">✓</span></td></tr>
         <tr><td class="feat">Indywidualny kontakt z prowadzącymi</td><td class="col-k"><span class="no">—</span></td><td class="col-w"><span class="yes">✓</span></td></tr>
         <tr><td class="feat">Nagranie spotkania zostaje u Ciebie</td><td class="col-k"><span class="no">—</span></td><td class="col-w"><span class="yes">✓</span></td></tr>
-        <tr><td class="feat">Early bird (do 14 lipca)</td><td class="col-k"><b>599 zł</b></td><td class="col-w"><b>899 zł</b></td></tr>
+        <tr><td class="feat">Cena w przedsprzedaży</td><td class="col-k"><b>599 zł</b></td><td class="col-w"><b>899 zł</b></td></tr>
       </tbody>
     </table>
   </details>
+</section>
+
+<!-- ===== CO PO ZAKUPIE (toggle Kurs/Warsztaty) ===== -->
+<section class="sec" id="po-zakupie">
+  <h2>Co się dzieje <span class="uline">po zakupie</span></h2>
+  <p class="lead">Przełącz, żeby zobaczyć, co dostajesz od razu, a co pojawia się później.</p>
+
+  <div class="afterpack">
+    <input class="afterpack-r ak" type="radio" name="afterpack" id="after-k" checked>
+    <input class="afterpack-r aw" type="radio" name="afterpack" id="after-w">
+    <div class="seg" role="tablist" aria-label="Wybór pakietu">
+      <label class="seg-k" for="after-k">Kurs</label>
+      <label class="seg-w" for="after-w">Warsztaty live</label>
+      <span class="seg-thumb" aria-hidden="true"></span>
+    </div>
+    <div class="after-body">
+
+      <!-- PO ZAKUPIE KURSU -->
+      <div class="after-k">
+        <div class="after-steps">
+          <div class="astep"><span class="an">1</span><div><h3>Wchodzisz do społeczności</h3><p>Od razu dołączasz do zamkniętej grupy. Pytasz, pokazujesz efekty i łapiesz motywację od pierwszego dnia.</p></div></div>
+          <div class="astep"><span class="an">2</span><div><h3>Odpalasz aplikację</h3><p>Ruszasz z przygotowaniem od zera i studnią zadań. Ćwiczysz we własnym tempie, kiedy tylko chcesz.</p></div></div>
+          <div class="astep"><span class="an">3</span><div><h3>Dostajesz nagrania etapami</h3><p>Lekcje wypuszczamy stopniowo. Pełne wydanie planowo na początek sierpnia.</p></div></div>
+        </div>
+      </div>
+
+      <!-- PO ZAKUPIE WARSZTATÓW -->
+      <div class="after-w">
+        <div class="after-steps">
+          <div class="astep"><span class="an">1</span><div><h3>Wchodzisz do społeczności</h3><p>Od razu dołączasz do zamkniętej grupy uczestników. Masz wsparcie i motywację od pierwszego dnia.</p></div></div>
+          <div class="astep"><span class="an">2</span><div><h3>Odpalasz aplikację</h3><p>Startujesz z przygotowaniem od zera, żeby na spotkanie przyjść już gotowym.</p></div></div>
+          <div class="astep"><span class="an">3</span><div><h3>Robisz zadania przed warsztatami</h3><p>Przygotowujesz się wcześniej, dzięki czemu na żywo nie tracimy czasu na podstawy.</p></div></div>
+          <div class="astep"><span class="an">4</span><div><h3>Zabierasz materiały i nagranie</h3><p>Całe nagranie i dostęp do kursu zostają u Ciebie na później.</p></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </section>
 
 <!-- ===== TERMIN ===== -->
@@ -712,7 +859,7 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
 <!-- ===== FINAL ===== -->
 <section class="sec final">
   <h2>Gotowy, żeby <span class="accent">DZIAŁAĆ</span>?</h2>
-  <p class="lead">Warsztaty na żywo dla nie-programistów: 7 i 9 oraz 21 i 23 lipca 2026, dwa spotkania po 2h plus zadania. Grupa do 10 osób, więc miejsc jest naprawdę mało.</p>
+  <p class="lead">Warsztaty na żywo dla nie-programistów: 6 i 9 oraz 20 i 23 lipca 2026, dwa spotkania po 2h plus zadania. Grupa do 10 osób, więc miejsc jest naprawdę mało.</p>
   <a class="btn primary" href="#cennik" data-umami-event="cta-final">Wybieram termin →</a>
 </section>
 
@@ -772,14 +919,14 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
 var SOLD_OUT = false;
 var OFFER = {
   earlyBirdEnds: "2026-07-14T23:59:59+02:00",
-  heroSpots: 7,
-  vslYouTubeId: "",   // ← wklej ID filmu z YouTube (np. "dQw4w9WgXcQ"); puste = placeholder
+  heroSpots: 10,   // ← ILE MIEJSC ZOSTAŁO na najbliższą edycję (badge na samej górze). Zmieniasz tylko tę liczbę.
+  vslYouTubeId: "vsf1H-Pw6DQ",   // ← wklej ID filmu z YouTube (np. "dQw4w9WgXcQ"); puste = placeholder
 
-  course:    { eb:599, full:1199, buyUrl:"#", availableNote:"planowo na początek sierpnia" },
+  course:    { eb:599, full:1199, buyUrl:"https://mikolajabramczuk.zanfia.co/c/claudemaster:-kurs-z-claude-code-dla-nie-programistow-Dbax", availableNote:"planowo na początek sierpnia" },
   workshops: { eb:899, full:1599 },
   editions: [
-    { date:"2026-07-07", time:"17:30", label:"7 i 9 lipca 2026", buyUrl:"https://mikolajabramczuk.zanfia.co/c/claudemaster:-szkolenie-z-claude-code-lO1G", soldOut:false },
-    { date:"2026-07-21", time:"17:30", label:"21 i 23 lipca 2026", buyUrl:"#", soldOut:false }
+    { date:"2026-07-06", time:"17:30", label:"6 i 9 lipca 2026", buyUrl:"https://mikolajabramczuk.zanfia.co/c/claudemaster:-szkolenie-z-claude-code-lO1G", soldOut:false },
+    { date:"2026-07-20", time:"17:30", label:"20 i 23 lipca 2026", buyUrl:"#", soldOut:false }
   ]
 };
 
@@ -799,8 +946,8 @@ var OFFER = {
   var spotsEl=document.getElementById("hero-spots");
   if(spotsEl && OFFER.heroSpots) spotsEl.textContent=OFFER.heroSpots;
 
-  setPrice("course",OFFER.course);
-  setPrice("ws",OFFER.workshops);
+  setPrice("course",OFFER.course,isEB);         // kurs: cena przedsprzedaży z odliczaniem do earlyBirdEnds
+  setPrice("ws",OFFER.workshops,true);          // warsztaty: zawsze subtelna kotwica 1599, bez deadline'u
 
   var noteEl=document.getElementById("course-note");
   if(noteEl) noteEl.textContent="Dostęp od startu kursu, "+OFFER.course.availableNote+".";
@@ -809,11 +956,11 @@ var OFFER = {
 
   renderEditions();
 
-  function setPrice(prefix,p){
+  function setPrice(prefix,p,showEB){
     var ebEl=document.getElementById(prefix+"-eb"),
         oldWrap=document.getElementById(prefix+"-old"),
         fullEl=document.getElementById(prefix+"-full");
-    if(isEB){
+    if(showEB){
       if(ebEl) ebEl.textContent=fmt(p.eb);
       if(fullEl) fullEl.textContent=fmt(p.full)+" zł";
       if(oldWrap) oldWrap.hidden=false;
@@ -858,7 +1005,7 @@ var OFFER = {
     if(!vid) return; // brak filmu — placeholder
     var ifr=document.createElement("iframe");
     ifr.className="vsl-frame";
-    ifr.src="https://www.youtube-nocookie.com/embed/"+vid+"?autoplay=1&rel=0";
+    ifr.src="https://www.youtube.com/embed/"+vid+"?autoplay=1&rel=0&playsinline=1";
     ifr.title="Wideo wprowadzające";
     ifr.setAttribute("allow","autoplay; encrypted-media; picture-in-picture; fullscreen");
     ifr.setAttribute("allowfullscreen","");
@@ -867,6 +1014,25 @@ var OFFER = {
   }
   vsl.addEventListener("click",play);
   vsl.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();play();}});
+})();
+
+/* ====== ODLICZANIE early bird (tylko kafelek kursu) ====== */
+(function(){
+  var box=document.getElementById("course-countdown"); if(!box) return;
+  var end=new Date(OFFER.earlyBirdEnds).getTime();
+  var d=document.getElementById("ebc-d"),h=document.getElementById("ebc-h"),
+      m=document.getElementById("ebc-m"),s=document.getElementById("ebc-s");
+  function pad(n){return (n<10?"0":"")+n;}
+  function tick(){
+    var diff=end-Date.now();
+    if(diff<=0){box.style.display="none"; return false;}
+    d.textContent=Math.floor(diff/86400000);
+    h.textContent=pad(Math.floor(diff%86400000/3600000));
+    m.textContent=pad(Math.floor(diff%3600000/60000));
+    s.textContent=pad(Math.floor(diff%60000/1000));
+    return true;
+  }
+  if(tick()!==false){ var iv=setInterval(function(){ if(tick()===false) clearInterval(iv); },1000); }
 })();
 
 /* ====== MARQUEE OPINII ====== */

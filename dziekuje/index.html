@@ -5,134 +5,116 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- ===== SEO ===== -->
-<title>Dziękujemy · Warsztaty z Claude Code · claudemaster</title>
-<meta name="description" content="Dziękujemy! Twoje miejsce na warsztatach z Claude Code jest zaklepane. Sprawdź skrzynkę, czekają tam kolejne kroki.">
+<title>Dziękujemy · Claude Code dla nie-programistów · claudemaster</title>
+<meta name="description" content="Dziękujemy! Twoje miejsce jest zaklepane. Sprawdź skrzynkę, tam czekają kolejne kroki i wszystkie szczegóły.">
 <meta name="author" content="Mikołaj Abramczuk">
-<meta name="theme-color" content="#bf092f">
+<meta name="theme-color" content="#DB511D">
 <meta name="robots" content="noindex">
 <link rel="canonical" href="https://www.mikolajabramczuk.pl/claudemaster/dziekuje">
 
-<!-- Favicon (zdjęcie prowadzącego) -->
 <link rel="icon" href="../img/hero2.png">
 <link rel="apple-touch-icon" href="../img/hero2.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet">
 
-<!-- ===== UMAMI ANALYTICS (Umami Cloud, region EU) ===== -->
+<!-- ===== UMAMI ANALYTICS ===== -->
 <script defer src="https://cloud.umami.is/script.js" data-website-id="4a59cbd9-057d-4bff-a5a5-a3b577e29275"></script>
 
 <style>
 /* ============================================================
-   claudemaster · strona "dziękuję" (jeden plik, w stylu landingu)
-   Paleta: #bf092f czerwień · #f8f4ec krem · #211c18 atrament
+   claudemaster · strona "dziękuję" (jeden plik, branding aplikacji)
+   Paleta: papier #ECE7DE · atrament #1B1A17 · pomarańcz #DB511D · żółty #F0BE12
    ============================================================ */
 :root{
-  --red:#bf092f; --red-deep:#9c0726; --cream:#f8f4ec; --ink:#211c18;
-  --paper:#f8f4ec; --muted:#6a6258; --line:rgba(33,28,24,.14);
-  --card:#efe7d4;
+  --paper:#ECE7DE; --paper-card:#F6F3EC; --ink:#1B1A17;
+  --accent:#DB511D; --accent-2:#F0BE12; --on-accent:#FFFDF7;
+  --accent-deep:color-mix(in srgb,var(--accent) 64%,#000);
+  --hair:color-mix(in srgb,var(--ink) 14%,transparent);
+  --muted:color-mix(in srgb,var(--ink) 58%,transparent);
+  --ink-80:color-mix(in srgb,var(--ink) 84%,transparent);
+  --grid:color-mix(in srgb,var(--ink) 6%,transparent);
   --sans:"Funnel Sans",system-ui,sans-serif;
-  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
 }
 *{box-sizing:border-box}
 html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
-body{margin:0;font-family:var(--sans);line-height:1.5;background:var(--cream);color:var(--ink);
+body{margin:0;font-family:var(--sans);line-height:1.6;color:var(--ink);
+  background-color:var(--paper);
+  background-image:radial-gradient(var(--grid) 1px, transparent 1.3px);
+  background-size:24px 24px;
   min-height:100vh;display:flex;flex-direction:column}
 a{color:inherit}
 img{display:block;max-width:100%}
-h1,h2,h3{text-wrap:balance;margin:0}
-p{text-wrap:pretty;margin:0}
+h1,h2,h3{margin:0;text-wrap:balance}
+p{margin:0;text-wrap:pretty}
+mark,.uline{background:linear-gradient(transparent 70%,var(--accent-2) 70% 90%,transparent 90%);color:inherit;padding:0 .04em}
 
-/* ---- ENTRANCE MOTION ---- */
+/* ---- ENTRANCE ---- */
 @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .rise{animation:rise .7s cubic-bezier(.16,1,.3,1) both}
 .rise-1{animation-delay:.04s}.rise-2{animation-delay:.12s}.rise-3{animation-delay:.2s}
 
-/* ---- COUNTDOWN ---- */
-.countdown{display:inline-flex;align-items:flex-end;gap:8px;font-variant-numeric:tabular-nums;font-family:var(--mono)}
-.cd-unit{display:flex;flex-direction:column;align-items:center}
-.cd-num{line-height:1;font-weight:800}
-.cd-lab{text-transform:uppercase;letter-spacing:.1em;opacity:.7}
-.cd-sep{align-self:flex-start;opacity:.35}
-
 /* ============== GÓRA ============== */
-.ty-top{max-width:1180px;margin:0 auto;padding:96px 32px 24px;text-align:center}
-.ty-eyebrow{display:inline-block;font-family:var(--mono);font-size:.74rem;letter-spacing:.26em;text-transform:uppercase;
-  color:var(--red);border:1.5px solid var(--red);padding:6px 14px;border-radius:3px;margin:0 0 26px}
-.ty-title{font-weight:800;line-height:.98;letter-spacing:-.035em;text-transform:uppercase;
-  font-size:clamp(2.1rem,5.2vw,3.4rem);color:var(--ink)}
-.ty-title .soft{color:var(--red)}
-.ty-sub{font-size:1.15rem;line-height:1.55;color:var(--muted);max-width:48ch;margin:18px auto 0}
+.ty-top{max-width:820px;margin:0 auto;padding:96px 32px 8px;text-align:center}
+.ty-eyebrow{display:inline-flex;align-items:center;gap:9px;text-transform:uppercase;letter-spacing:.16em;
+  font-size:.74rem;font-weight:700;color:var(--muted);margin:0 0 22px}
+.ty-eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.ty-title{font-weight:700;line-height:1.08;letter-spacing:-.025em;font-size:clamp(2.05rem,4.6vw,3.05rem)}
+.ty-sub{font-size:1.1rem;line-height:1.55;color:var(--ink-80);max-width:52ch;margin:20px auto 0}
 
-/* ============== BILET · „Wyrwany karton” ============== */
-.ticket-wrap{max-width:760px;margin:0 auto;padding:24px 32px 56px;flex:1}
-.ticket{position:relative;transform:rotate(-1.1deg)}
-.ticket-paper{position:absolute;inset:0;background:var(--card);
-  border:2.5px solid var(--ink);border-radius:4px;
-  filter:url(#torn) drop-shadow(0 26px 40px rgba(33,28,24,.26));
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.10'/%3E%3C/svg%3E")}
-.ticket-frame{position:absolute;inset:14px;border:1.5px solid rgba(33,28,24,.55);border-radius:2px;pointer-events:none;z-index:1;filter:url(#torn2)}
-.ticket-content{position:relative;z-index:2;display:grid;grid-template-columns:1fr 116px;gap:30px;padding:40px 44px}
-.tk-stamp{font-family:var(--mono);font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:var(--red);
-  display:inline-block;border:1.5px solid var(--red);padding:5px 12px;border-radius:3px;transform:rotate(-2deg)}
-.tk-tick{width:54px;height:54px;border:2.5px solid var(--red);border-radius:50%;display:grid;place-items:center;margin:18px 0 4px}
-.tk-tick svg{width:26px;height:26px;color:var(--red)}
-.tk-title{font-weight:800;text-transform:uppercase;letter-spacing:-.025em;line-height:.9;
-  font-size:clamp(2rem,5.4vw,3rem);margin:10px 0 6px;text-shadow:1.5px 1.5px 0 rgba(33,28,24,.1)}
-.tk-title .accent{color:var(--red)}
-.tk-for{font-family:var(--mono);font-size:.86rem;color:var(--muted);letter-spacing:.04em;margin:0 0 22px;max-width:42ch}
-.tk-facts{list-style:none;margin:8px 0 0;padding:0;font-family:var(--mono);font-size:.96rem}
-.tk-facts li{display:flex;align-items:baseline;gap:14px;padding:10px 0;border-bottom:1.5px dotted rgba(33,28,24,.3)}
-.tk-facts li:last-child{border-bottom:none}
-.tk-facts .k{min-width:96px;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.tk-facts .v{font-weight:700;color:var(--ink)}
-.tk-facts .v .accent{color:var(--red)}
-.tk-cta-row{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-top:26px}
-.tk-cta-row .cd-head{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.tk-cta-row .cd-num{font-size:1.55rem;color:var(--red);font-weight:800}
-.tk-cta-row .cd-lab{font-size:.52rem}
-.tk-cta-row .cd-sep{font-size:1.1rem}
-.tk-cta{display:inline-flex;align-items:center;gap:8px;background:var(--red);color:var(--cream);
-  font-weight:700;font-size:1rem;padding:14px 26px;border-radius:6px;text-decoration:none;transition:transform .16s}
-.tk-cta:hover{transform:translateY(-2px)}
-.tk-side{position:relative;border-left:2px dashed rgba(33,28,24,.4);display:flex;flex-direction:column;
-  align-items:center;justify-content:space-between;padding:6px 0}
-.tk-side .adm{writing-mode:vertical-rl;font-family:var(--mono);font-weight:700;font-size:.74rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
-.tk-side .num{writing-mode:vertical-rl;font-family:var(--mono);font-weight:800;font-size:1.5rem;letter-spacing:.16em;color:var(--ink);opacity:.85}
-.tk-side .edycja{writing-mode:vertical-rl;font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;color:var(--red)}
+/* ============== KARTA POTWIERDZENIA ============== */
+.card-wrap{max-width:820px;margin:0 auto;padding:40px 32px 8px;flex:1 0 auto}
+.confirm{background:var(--paper-card);border:1.5px solid var(--hair);border-radius:0;
+  padding:38px 40px;display:flex;gap:26px;align-items:flex-start;
+  box-shadow:0 18px 36px rgba(27,26,23,.08)}
+.confirm .tick{flex:none;width:60px;height:60px;border-radius:50%;background:var(--accent);
+  display:grid;place-items:center;box-shadow:0 8px 20px rgba(219,81,29,.3)}
+.confirm .tick svg{width:30px;height:30px;color:var(--on-accent)}
+.confirm h2{font-size:1.5rem;font-weight:700;letter-spacing:-.02em;margin:2px 0 8px}
+.confirm p{color:var(--ink-80);font-size:1.04rem;line-height:1.55;max-width:46ch}
+.confirm .strip{margin-top:20px;display:inline-flex;align-items:center;gap:10px;
+  font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);
+  border-top:1px solid var(--hair);padding-top:16px}
+.confirm .strip b{color:var(--ink)}
 
 /* ============== NASTĘPNE KROKI ============== */
-.next{max-width:760px;margin:0 auto;padding:0 32px 64px}
-.next-head{font-family:var(--mono);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--red);text-align:center;margin-bottom:20px}
+.next{max-width:820px;margin:0 auto;padding:34px 32px 8px}
+.next-head{text-transform:uppercase;letter-spacing:.16em;font-size:.74rem;font-weight:700;
+  color:var(--accent);margin-bottom:18px}
 .steps{list-style:none;margin:0;padding:0;display:grid;gap:14px}
-.steps li{display:flex;gap:16px;align-items:flex-start;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:18px 20px}
-.steps .n{flex:none;width:30px;height:30px;border:2px solid var(--red);border-radius:8px;display:grid;place-items:center;
-  font-family:var(--mono);font-weight:800;color:var(--red);font-size:.9rem}
-.steps .tx{font-size:1.02rem;line-height:1.45}
-.steps .tx b{font-weight:700}
-.steps .tx a{color:var(--red);font-weight:700;text-decoration:none;border-bottom:2px solid rgba(191,9,47,.3)}
-.steps .tx a:hover{border-color:var(--red)}
+.steps li{display:flex;gap:16px;align-items:flex-start;background:var(--paper-card);
+  border:1.5px solid var(--hair);border-radius:0;padding:18px 20px}
+.steps .n{flex:none;width:34px;height:34px;border:1.5px solid var(--ink);border-radius:0;
+  display:grid;place-items:center;font-weight:800;font-size:1rem}
+.steps .tx{font-size:1.02rem;line-height:1.5;color:var(--ink-80)}
+.steps .tx b{font-weight:700;color:var(--ink)}
+.steps .tx a{color:var(--accent);font-weight:700;text-decoration:none;border-bottom:2px solid color-mix(in srgb,var(--accent) 32%,transparent)}
+.steps .tx a:hover{border-color:var(--accent)}
+
+/* ============== CTA POWROTU ============== */
+.back-row{max-width:820px;margin:0 auto;padding:30px 32px 72px;text-align:center}
+.btn{display:inline-flex;align-items:center;gap:9px;font:inherit;font-weight:700;
+  padding:14px 26px;border-radius:0;text-decoration:none;cursor:pointer;transition:transform .16s}
+.btn.primary{background:var(--accent);color:var(--on-accent);box-shadow:0 4px 0 var(--accent-deep)}
+.btn.primary:hover{transform:translateY(-2px)}
 
 /* ============== FOOTER ============== */
-.site-footer{border-top:1px solid var(--line);background:#fff;padding:28px 32px}
-.foot-inner{max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--muted)}
-.foot-links{display:flex;gap:24px;flex-wrap:wrap}
+.site-footer{border-top:1px solid var(--hair);background:var(--paper-card);padding:28px 32px}
+.foot-inner{max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;
+  gap:16px;flex-wrap:wrap;font-size:.82rem;color:var(--muted)}
+.foot-links{display:flex;gap:22px;flex-wrap:wrap}
 .foot-links a{text-decoration:none;transition:color .15s}
 .foot-links a:hover{color:var(--ink)}
 .site-footer .sep{opacity:.5;margin:0 6px}
 
-@media(max-width:760px){
-  .ticket-content{grid-template-columns:1fr;padding:30px 26px}
-  .ticket{transform:rotate(-.5deg)}
-  .tk-side{border-left:none;border-top:2px dashed rgba(33,28,24,.4);flex-direction:row;padding:14px 0 0;margin-top:18px}
-  .tk-side .adm,.tk-side .num,.tk-side .edycja{writing-mode:horizontal-tb}
-}
-@media(max-width:560px){
-  .ty-top{padding:56px 18px 18px}
-  .ticket-wrap{padding:20px 16px 44px}
-  .next{padding:0 18px 52px}
-  .site-footer{padding:24px 18px}
+@media(max-width:640px){
+  .ty-top{padding:64px 20px 4px}
+  .card-wrap{padding:28px 20px 4px}
+  .confirm{flex-direction:column;gap:18px;padding:28px 24px}
+  .next{padding:26px 20px 4px}
+  .back-row{padding:24px 20px 56px}
+  .site-footer{padding:24px 20px}
 }
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -142,68 +124,47 @@ p{text-wrap:pretty;margin:0}
 </style>
 </head>
 <body>
-<!-- filtry „wyrwanej” krawędzi biletu (poza ekranem) -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <filter id="torn"><feTurbulence type="fractalNoise" baseFrequency="0.014 0.02" numOctaves="3" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="11"/></filter>
-  <filter id="torn2"><feTurbulence type="fractalNoise" baseFrequency="0.03 0.04" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="5"/></filter>
-</svg>
 
 <!-- ===== GÓRA ===== -->
 <header>
   <div class="ty-top">
-    <span class="ty-eyebrow rise rise-1">dziękujemy</span>
-    <h1 class="ty-title rise rise-1">Widzimy się na <span class="soft">warsztatach</span></h1>
-    <p class="ty-sub rise rise-2">Twoje miejsce jest zaklepane. Sprawdź skrzynkę, bo tam czekają kolejne kroki.</p>
+    <span class="ty-eyebrow rise rise-1"><span class="dot" aria-hidden="true"></span>dziękujemy</span>
+    <h1 class="ty-title rise rise-1">Jesteś <span class="uline">w środku</span></h1>
+    <p class="ty-sub rise rise-2">Twoje miejsce jest zaklepane. Sprawdź skrzynkę, tam czekają kolejne kroki i wszystkie szczegóły.</p>
   </div>
 
-  <!-- BILET · Wyrwany karton -->
-  <div class="ticket-wrap rise rise-3">
-    <div class="ticket">
-      <div class="ticket-paper"></div>
-      <div class="ticket-frame"></div>
-      <div class="ticket-content">
-        <div>
-          <span class="tk-stamp">Claudemaster · bilet wstępu</span>
-          <div class="tk-tick"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <h2 class="tk-title">Miejsce <span class="accent">zaklepane</span></h2>
-          <p class="tk-for">do zobaczenia na pierwszej edycji, na żywo, po ludzku.</p>
-          <ul class="tk-facts">
-            <li><span class="k">Data</span><span class="v">czwartek, <span class="accent">25 czerwca 2026</span></span></li>
-            <li><span class="k">Godzina</span><span class="v">17:30 <span class="accent">(czasu polskiego)</span></span></li>
-            <li><span class="k">Format</span><span class="v">online, na żywo</span></li>
-            <li><span class="k">Miejsce</span><span class="v">link dostaniesz mailem</span></li>
-          </ul>
-          <div class="tk-cta-row">
-            <div>
-              <div class="cd-head">startujemy za</div>
-              <div class="countdown" id="cd"></div>
-            </div>
-            <a class="tk-cta" href="/claudemaster" data-umami-event="dziekuje-powrot">← Wróć na stronę</a>
-          </div>
-        </div>
-        <div class="tk-side">
-          <span class="adm">zachowaj bilet</span>
-          <span class="edycja">edycja 01</span>
-        </div>
+  <!-- KARTA POTWIERDZENIA -->
+  <div class="card-wrap rise rise-3">
+    <div class="confirm">
+      <span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div>
+        <h2>Miejsce zaklepane</h2>
+        <p>Potwierdzenie i kolejne kroki są już w drodze na Twój e-mail. Znajdziesz tam termin, link i wszystkie dostępy.</p>
+        <span class="strip">Sprawdź skrzynkę &middot; także <b>Oferty / Spam</b></span>
       </div>
     </div>
   </div>
 </header>
 
 <!-- ===== NASTĘPNE KROKI ===== -->
-<section class="next">
+<section class="next rise rise-3">
   <div class="next-head">co dalej?</div>
   <ol class="steps">
-    <li><span class="n">1</span><span class="tx"><b>Sprawdź skrzynkę.</b> Wysłałem Ci potwierdzenie. Jeśli go nie widzisz, zerknij w „Oferty"/„Spam" i przenieś do głównej skrzynki.</span></li>
-    <li><span class="n">2</span><span class="tx"><b>Zapisz datę.</b> Czwartek, 25 czerwca 2026, 17:30. Link do spotkania dostaniesz mailem przed startem.</span></li>
-    <li><span class="n">3</span><span class="tx"><b>Do zobaczenia.</b> Masz pytanie? Odpisz po prostu na maila, przeczytam osobiście.</span></li>
+    <li><span class="n">1</span><span class="tx"><b>Sprawdź skrzynkę.</b> Wysłałem Ci potwierdzenie. Jeśli go nie widzisz, zajrzyj w „Oferty" lub „Spam" i przenieś do głównej skrzynki.</span></li>
+    <li><span class="n">2</span><span class="tx"><b>Zapisz termin.</b> Datę, godzinę i link do spotkania znajdziesz w mailu. Dorzuć je od razu do kalendarza.</span></li>
+    <li><span class="n">3</span><span class="tx"><b>Odezwij się.</b> Masz pytanie? Odpisz po prostu na maila albo napisz w grupie, odpowiadam osobiście.</span></li>
   </ol>
 </section>
+
+<!-- ===== CTA POWROTU ===== -->
+<div class="back-row rise rise-3">
+  <a class="btn primary" href="/claudemaster" data-umami-event="dziekuje-powrot">← Wróć na stronę</a>
+</div>
 
 <!-- ===== FOOTER ===== -->
 <footer class="site-footer">
   <div class="foot-inner">
-    <div>© 2026 Mikołaj Abramczuk. <span class="sep">|</span> Chłopski Rozum.ai.</div>
+    <div>© 2026 Mikołaj Abramczuk <span class="sep">|</span> Chłopski Rozum.ai</div>
     <div class="foot-links">
       <a href="https://www.youtube.com/@MikolajAbramczuk" target="_blank" rel="noopener">YouTube</a>
       <a href="https://www.linkedin.com/in/miko%C5%82aj-abramczuk/" target="_blank" rel="noopener">LinkedIn</a>
@@ -213,16 +174,5 @@ p{text-wrap:pretty;margin:0}
   </div>
 </footer>
 
-<script>
-/* ====== ODLICZANIE ====== */
-(function(){
-  var T=new Date("2026-06-25T17:30:00+02:00"),PL=["dni","godz","min","sek"],el=document.getElementById("cd");
-  if(!el) return;
-  function p(n){return String(n).padStart(2,"0")}
-  function tick(){var d=Math.max(0,T-new Date());var v=[Math.floor(d/864e5),p(Math.floor(d%864e5/36e5)),p(Math.floor(d%36e5/6e4)),p(Math.floor(d%6e4/1e3))];
-    el.innerHTML=v.map(function(x,i){return '<span class="cd-unit"><span class="cd-num">'+x+'</span><span class="cd-lab">'+PL[i]+'</span></span>'}).join('<span class="cd-sep">:</span>')}
-  tick();setInterval(tick,1000);
-})();
-</script>
 </body>
 </html>
