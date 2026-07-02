@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- ===== SEO ===== -->
+<title>Zostaw opinię · Warsztaty Claude Code · claudemaster</title>
+<meta name="description" content="Byłeś na warsztatach Claude Code? Zostaw krótką opinię. Zajmie minutę, a bardzo mi pomaga.">
+<meta name="author" content="Mikołaj Abramczuk">
+<meta name="theme-color" content="#DB511D">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://www.mikolajabramczuk.pl/claudemaster/app/opinie">
+
+<link rel="icon" href="../../img/hero2.png">
+<link rel="apple-touch-icon" href="../../img/hero2.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet">
+
+<!-- ===== UMAMI ANALYTICS ===== -->
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4a59cbd9-057d-4bff-a5a5-a3b577e29275"></script>
+
+<style>
+/* ============================================================
+   claudemaster · strona zbierania OPINII o warsztatach (jeden plik, branding aplikacji)
+   Paleta: papier #ECE7DE · atrament #1B1A17 · pomarańcz #DB511D · żółty #F0BE12
+   Silnik dostarczania: Web3Forms (opinia leci mailem na mikolaj@mikolajabramczuk.pl)
+   ============================================================ */
+:root{
+  --paper:#ECE7DE; --paper-card:#F6F3EC; --ink:#1B1A17;
+  --accent:#DB511D; --accent-2:#F0BE12; --on-accent:#FFFDF7;
+  --accent-deep:color-mix(in srgb,var(--accent) 64%,#000);
+  --hair:color-mix(in srgb,var(--ink) 14%,transparent);
+  --muted:color-mix(in srgb,var(--ink) 58%,transparent);
+  --ink-80:color-mix(in srgb,var(--ink) 84%,transparent);
+  --grid:color-mix(in srgb,var(--ink) 6%,transparent);
+  --sans:"Funnel Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
+body{margin:0;font-family:var(--sans);line-height:1.6;color:var(--ink);
+  background-color:var(--paper);
+  background-image:radial-gradient(var(--grid) 1px, transparent 1.3px);
+  background-size:24px 24px;
+  min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit}
+img{display:block;max-width:100%}
+h1,h2,h3{margin:0;text-wrap:balance}
+p{margin:0;text-wrap:pretty}
+mark,.uline{background:linear-gradient(transparent 70%,var(--accent-2) 70% 90%,transparent 90%);color:inherit;padding:0 .04em}
+
+/* ---- ENTRANCE ---- */
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.rise{animation:rise .7s cubic-bezier(.16,1,.3,1) both}
+.rise-1{animation-delay:.04s}.rise-2{animation-delay:.12s}.rise-3{animation-delay:.2s}
+
+/* ============== GÓRA ============== */
+.op-top{max-width:760px;margin:0 auto;padding:88px 32px 8px;text-align:center}
+.op-eyebrow{display:inline-flex;align-items:center;gap:9px;text-transform:uppercase;letter-spacing:.16em;
+  font-size:.74rem;font-weight:700;color:var(--muted);margin:0 0 22px}
+.op-eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.op-title{font-weight:700;line-height:1.08;letter-spacing:-.025em;font-size:clamp(2.05rem,4.6vw,3.05rem)}
+.op-sub{font-size:1.1rem;line-height:1.55;color:var(--ink-80);max-width:52ch;margin:20px auto 0}
+
+/* ============== FORMULARZ ============== */
+.form-wrap{max-width:760px;margin:0 auto;padding:36px 32px 8px;flex:1 0 auto}
+.op-form{background:var(--paper-card);border:1.5px solid var(--hair);border-radius:0;
+  padding:34px 36px;box-shadow:0 18px 36px rgba(27,26,23,.08)}
+.field{display:flex;gap:16px;align-items:flex-start;padding:0 0 26px}
+.field:last-of-type{padding-bottom:0}
+.field .n{flex:none;width:34px;height:34px;border:1.5px solid var(--ink);border-radius:0;
+  display:grid;place-items:center;font-weight:800;font-size:1rem;margin-top:2px}
+.field .body{flex:1 1 auto;min-width:0}
+.field label.q{display:block;font-weight:700;font-size:1.06rem;letter-spacing:-.01em;margin-bottom:3px}
+.field .hint{display:block;color:var(--muted);font-size:.92rem;line-height:1.45;margin-bottom:11px}
+.op-form input[type=text],
+.op-form textarea{width:100%;font:inherit;color:var(--ink);background:var(--paper);
+  border:1.5px solid var(--hair);border-radius:0;padding:13px 15px;transition:border-color .15s,box-shadow .15s}
+.op-form textarea{resize:vertical;min-height:132px;line-height:1.55}
+.op-form input[type=text]:focus,
+.op-form textarea:focus{outline:none;border-color:var(--accent);
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.op-form input::placeholder,
+.op-form textarea::placeholder{color:color-mix(in srgb,var(--ink) 38%,transparent)}
+
+/* ---- ZGODA ---- */
+.consent{display:flex;gap:13px;align-items:flex-start;border-top:1px solid var(--hair);
+  margin-top:4px;padding-top:24px}
+.consent input[type=checkbox]{flex:none;appearance:none;-webkit-appearance:none;
+  width:22px;height:22px;margin:1px 0 0;border:1.5px solid var(--ink);border-radius:0;
+  background:var(--paper);cursor:pointer;display:grid;place-items:center;transition:background .15s,border-color .15s}
+.consent input[type=checkbox]:checked{background:var(--accent);border-color:var(--accent)}
+.consent input[type=checkbox]:checked::after{content:"";width:11px;height:6px;margin-top:-2px;
+  border-left:2.4px solid var(--on-accent);border-bottom:2.4px solid var(--on-accent);transform:rotate(-45deg)}
+.consent input[type=checkbox]:focus-visible{outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent)}
+.consent label{font-size:.98rem;line-height:1.5;color:var(--ink-80);cursor:pointer}
+
+/* ---- SUBMIT ---- */
+.op-actions{margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:9px;font:inherit;font-weight:700;
+  padding:14px 26px;border-radius:0;text-decoration:none;cursor:pointer;transition:transform .16s;
+  border:none;font-size:1rem}
+.btn.primary{background:var(--accent);color:var(--on-accent);box-shadow:0 4px 0 var(--accent-deep)}
+.btn.primary:hover{transform:translateY(-2px)}
+.btn.primary:disabled{opacity:.6;cursor:progress;transform:none}
+.form-err{color:var(--accent-deep);font-weight:600;font-size:.94rem;margin-top:14px;display:none}
+.form-err.show{display:block}
+
+/* ---- honeypot ---- */
+.hp{position:absolute!important;left:-9999px!important;opacity:0;height:0;overflow:hidden}
+
+/* ============== SUKCES ============== */
+.confirm{display:none;background:var(--paper-card);border:1.5px solid var(--hair);border-radius:0;
+  padding:38px 40px;gap:26px;align-items:flex-start;box-shadow:0 18px 36px rgba(27,26,23,.08)}
+.confirm.show{display:flex;animation:rise .6s cubic-bezier(.16,1,.3,1) both}
+.confirm .tick{flex:none;width:60px;height:60px;border-radius:50%;background:var(--accent);
+  display:grid;place-items:center;box-shadow:0 8px 20px rgba(219,81,29,.3)}
+.confirm .tick svg{width:30px;height:30px;color:var(--on-accent)}
+.confirm h2{font-size:1.5rem;font-weight:700;letter-spacing:-.02em;margin:2px 0 8px}
+.confirm p{color:var(--ink-80);font-size:1.04rem;line-height:1.55;max-width:48ch}
+
+/* ============== KAFELEK: SZCZERY FEEDBACK ============== */
+.fb-wrap{max-width:760px;margin:0 auto;padding:22px 32px 72px}
+.fb{position:relative;background:var(--ink);color:var(--paper);border-radius:0;padding:34px 36px;
+  overflow:hidden}
+.fb::before{content:"";position:absolute;inset:0;
+  background-image:radial-gradient(color-mix(in srgb,var(--paper) 9%,transparent) 1px,transparent 1.3px);
+  background-size:22px 22px;opacity:.5;pointer-events:none}
+.fb-head{position:relative;text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:700;
+  color:var(--accent-2);margin-bottom:14px}
+.fb h3{position:relative;font-size:1.42rem;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+.fb p{position:relative;color:color-mix(in srgb,var(--paper) 82%,transparent);font-size:1.02rem;
+  line-height:1.6;margin-top:12px;max-width:56ch}
+.fb .fb-note{position:relative;margin-top:10px;font-size:.95rem;
+  color:color-mix(in srgb,var(--accent-2) 90%,#fff)}
+.fb .btn{position:relative;margin-top:22px}
+.fb .btn.ghost{background:transparent;color:var(--paper);border:1.5px solid color-mix(in srgb,var(--paper) 42%,transparent);
+  box-shadow:none}
+.fb .btn.ghost:hover{border-color:var(--accent-2);color:var(--accent-2)}
+
+/* ============== FOOTER ============== */
+.site-footer{border-top:1px solid var(--hair);background:var(--paper-card);padding:28px 32px}
+.foot-inner{max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;
+  gap:16px;flex-wrap:wrap;font-size:.82rem;color:var(--muted)}
+.foot-links{display:flex;gap:22px;flex-wrap:wrap}
+.foot-links a{text-decoration:none;transition:color .15s}
+.foot-links a:hover{color:var(--ink)}
+.site-footer .sep{opacity:.5;margin:0 6px}
+
+@media(max-width:640px){
+  .op-top{padding:60px 20px 4px}
+  .form-wrap{padding:26px 18px 4px}
+  .op-form{padding:26px 20px}
+  .field{gap:12px}
+  .field .n{width:30px;height:30px;font-size:.92rem}
+  .confirm{flex-direction:column;gap:18px;padding:28px 24px}
+  .fb-wrap{padding:18px 18px 56px}
+  .fb{padding:28px 24px}
+  .site-footer{padding:24px 20px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms !important;animation-delay:0s !important;transition-duration:.001ms !important}
+  .rise{opacity:1 !important;transform:none !important}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== GÓRA ===== -->
+<header>
+  <div class="op-top">
+    <span class="op-eyebrow rise rise-1"><span class="dot" aria-hidden="true"></span>opinie</span>
+    <h1 class="op-title rise rise-1">Zostaw <span class="uline">opinię</span> o warsztatach</h1>
+    <p class="op-sub rise rise-2">Kilka zdań o tym, co dały Ci warsztaty. Zajmie minutę, a mi realnie pomaga i pokazuje kolejnym osobom, czego mogą się spodziewać.</p>
+  </div>
+</header>
+
+<!-- ===== FORMULARZ ===== -->
+<div class="form-wrap rise rise-3">
+
+  <!-- =====================================================================
+       ⚠️ TODO MIKOŁAJ: wklej swój klucz Web3Forms w value poniżej.
+       Klucz bierzesz za darmo na https://web3forms.com (podajesz swój
+       mail, dostajesz Access Key na maila). Klucz przypisany jest do
+       mikolaj@mikolajabramczuk.pl, więc opinie lecą prosto tam.
+       Klucz NIE jest tajny (i tak jest widoczny w kodzie strony).
+       ===================================================================== -->
+  <form id="opinia-form" class="op-form" action="https://api.web3forms.com/submit" method="POST">
+    <input type="hidden" name="access_key" value="ad6bc06e-cca8-46d4-a769-4e6832e87fb8">
+    <input type="hidden" name="subject" value="Nowa opinia o warsztatach Claudemaster">
+    <input type="hidden" name="from_name" value="claudemaster · opinie">
+    <!-- honeypot antyspam (boty zaznaczają, ludzie nie widzą) -->
+    <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
+
+    <div class="field">
+      <span class="n" aria-hidden="true">1</span>
+      <div class="body">
+        <label class="q" for="op-opinia">Twoja opinia</label>
+        <span class="hint">Napisz szczerze i po ludzku, co Ci dały warsztaty. Co się zmieniło, co teraz umiesz, komu byś je polecił.</span>
+        <textarea id="op-opinia" name="opinia" required placeholder="Wszedłem na warsztaty myśląc, że…"></textarea>
+      </div>
+    </div>
+
+    <div class="field">
+      <span class="n" aria-hidden="true">2</span>
+      <div class="body">
+        <label class="q" for="op-imie">Twoje imię</label>
+        <span class="hint">Podpiszę nim opinię na stronie.</span>
+        <input type="text" id="op-imie" name="imie" required autocomplete="name" placeholder="np. Kasia">
+      </div>
+    </div>
+
+    <div class="field">
+      <span class="n" aria-hidden="true">3</span>
+      <div class="body">
+        <label class="q" for="op-zawod">Czym się zajmujesz zawodowo?</label>
+        <span class="hint">Krótko, np. „właścicielka kawiarni", „freelancer, grafik", „prowadzę biuro rachunkowe".</span>
+        <input type="text" id="op-zawod" name="zawod" required placeholder="np. właścicielka sklepu online">
+      </div>
+    </div>
+
+    <div class="consent">
+      <input type="checkbox" id="op-zgoda" name="zgoda" value="tak" required>
+      <label for="op-zgoda">Zgadzam się, żeby moja opinia (z imieniem i zawodem) mogła pojawić się na stronie claudemaster i w materiałach o warsztatach.</label>
+    </div>
+
+    <div class="op-actions">
+      <button type="submit" class="btn primary" id="op-submit" data-umami-event="opinia-wyslij">Wyślij opinię</button>
+      <p class="form-err" id="op-err">Coś nie zadziałało. Spróbuj jeszcze raz albo napisz do mnie mailem.</p>
+    </div>
+  </form>
+
+  <!-- SUKCES (pokazywany po wysłaniu) -->
+  <div class="confirm" id="op-success" role="status" aria-live="polite">
+    <span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <div>
+      <h2>Dzięki, mam to!</h2>
+      <p>Twoja opinia właśnie do mnie trafiła. Jeśli użyję jej na stronie, znajdzie się w gronie innych. Naprawdę doceniam, że poświęciłeś chwilę.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== KAFELEK: SZCZERY FEEDBACK ===== -->
+<div class="fb-wrap rise rise-3">
+  <div class="fb">
+    <div class="fb-head">a tak zupełnie szczerze?</div>
+    <h3>Masz feedback o warsztatach? Napisz mi wprost.</h3>
+    <p>Powyższy formularz to opinia na stronę. Ale jeśli chcesz mi po ludzku powiedzieć, co byś zmienił, co Ci się podobało, a co nie, co zauważyłeś albo co dałoby się poprawić, napisz do mnie bezpośrednio. Nie musi być ładne, ma być prawdziwe.</p>
+    <p class="fb-note">Szczery feedback jest u mnie bardzo mile widziany. To z niego robię kolejne edycje lepszymi.</p>
+    <a class="btn ghost" href="mailto:mikolaj@mikolajabramczuk.pl?subject=Feedback%20o%20warsztatach%20Claudemaster" data-umami-event="opinia-feedback-mail">Napisz do mnie →</a>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="foot-inner">
+    <div>© 2026 Mikołaj Abramczuk <span class="sep">|</span> Chłopski Rozum.ai</div>
+    <div class="foot-links">
+      <a href="https://www.youtube.com/@MikolajAbramczuk" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://www.linkedin.com/in/miko%C5%82aj-abramczuk/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://mikolajabramczuk.substack.com/" target="_blank" rel="noopener">Substack</a>
+      <a href="https://www.mikolajabramczuk.pl/claudemaster">Strona główna</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Web3Forms · wysyłka AJAX-em, żeby zostać na stronie i pokazać podziękowanie.
+   Bez JS formularz i tak POST-uje natywnie do Web3Forms (fallback). */
+(function(){
+  var form = document.getElementById('opinia-form');
+  var success = document.getElementById('op-success');
+  var errEl = document.getElementById('op-err');
+  var btn = document.getElementById('op-submit');
+  if(!form) return;
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    errEl.classList.remove('show');
+    btn.disabled = true;
+    var label = btn.textContent;
+    btn.textContent = 'Wysyłam…';
+
+    try{
+      var res = await fetch('https://api.web3forms.com/submit', {
+        method:'POST',
+        headers:{'Accept':'application/json'},
+        body:new FormData(form)
+      });
+      var json = await res.json();
+      if(json.success){
+        form.style.display = 'none';
+        success.classList.add('show');
+        success.scrollIntoView({behavior:'smooth', block:'center'});
+      } else {
+        throw new Error(json.message || 'error');
+      }
+    }catch(err){
+      errEl.classList.add('show');
+      btn.disabled = false;
+      btn.textContent = label;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
