@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- ===== SEO ===== -->
+<title>Dziękujemy · Kurs Claude Code dla nie-programistów · claudemaster</title>
+<meta name="description" content="Dziękujemy za zakup kursu w przedsprzedaży. Potwierdzenie jest już w skrzynce. Dostęp otwieram na starcie kursu, planowo na początku sierpnia.">
+<meta name="author" content="Mikołaj Abramczuk">
+<meta name="theme-color" content="#DB511D">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://www.mikolajabramczuk.pl/claudemaster/dziekuje-kurs">
+
+<link rel="icon" href="../img/hero2.png">
+<link rel="apple-touch-icon" href="../img/hero2.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet">
+
+<!-- ===== UMAMI ANALYTICS ===== -->
+<script defer src="https://cloud.umami.is/script.js" data-website-id="4a59cbd9-057d-4bff-a5a5-a3b577e29275"></script>
+
+<style>
+/* ============================================================
+   claudemaster · strona "dziękuję" po zakupie KURSU (przedsprzedaż)
+   Jeden plik, branding aplikacji.
+   Paleta: papier #ECE7DE · atrament #1B1A17 · pomarańcz #DB511D · żółty #F0BE12
+   ============================================================ */
+:root{
+  --paper:#ECE7DE; --paper-card:#F6F3EC; --ink:#1B1A17;
+  --accent:#DB511D; --accent-2:#F0BE12; --on-accent:#FFFDF7;
+  --accent-deep:color-mix(in srgb,var(--accent) 64%,#000);
+  --hair:color-mix(in srgb,var(--ink) 14%,transparent);
+  --muted:color-mix(in srgb,var(--ink) 58%,transparent);
+  --ink-80:color-mix(in srgb,var(--ink) 84%,transparent);
+  --grid:color-mix(in srgb,var(--ink) 6%,transparent);
+  --sans:"Funnel Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
+body{margin:0;font-family:var(--sans);line-height:1.6;color:var(--ink);
+  background-color:var(--paper);
+  background-image:radial-gradient(var(--grid) 1px, transparent 1.3px);
+  background-size:24px 24px;
+  min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit}
+img{display:block;max-width:100%}
+h1,h2,h3{margin:0;text-wrap:balance}
+p{margin:0;text-wrap:pretty}
+mark,.uline{background:linear-gradient(transparent 70%,var(--accent-2) 70% 90%,transparent 90%);color:inherit;padding:0 .04em}
+
+/* ---- ENTRANCE ---- */
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.rise{animation:rise .7s cubic-bezier(.16,1,.3,1) both}
+.rise-1{animation-delay:.04s}.rise-2{animation-delay:.12s}.rise-3{animation-delay:.2s}
+
+/* ============== GÓRA ============== */
+.ty-top{max-width:820px;margin:0 auto;padding:96px 32px 8px;text-align:center}
+.ty-eyebrow{display:inline-flex;align-items:center;gap:9px;text-transform:uppercase;letter-spacing:.16em;
+  font-size:.74rem;font-weight:700;color:var(--muted);margin:0 0 22px}
+.ty-eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.ty-title{font-weight:700;line-height:1.08;letter-spacing:-.025em;font-size:clamp(2.05rem,4.6vw,3.05rem)}
+.ty-sub{font-size:1.1rem;line-height:1.55;color:var(--ink-80);max-width:54ch;margin:20px auto 0}
+
+/* ============== KARTA POTWIERDZENIA ============== */
+.card-wrap{max-width:820px;margin:0 auto;padding:40px 32px 8px;flex:1 0 auto}
+.confirm{background:var(--paper-card);border:1.5px solid var(--hair);border-radius:0;
+  padding:38px 40px;display:flex;gap:26px;align-items:flex-start;
+  box-shadow:0 18px 36px rgba(27,26,23,.08)}
+.confirm .tick{flex:none;width:60px;height:60px;border-radius:50%;background:var(--accent);
+  display:grid;place-items:center;box-shadow:0 8px 20px rgba(219,81,29,.3)}
+.confirm .tick svg{width:30px;height:30px;color:var(--on-accent)}
+.confirm h2{font-size:1.5rem;font-weight:700;letter-spacing:-.02em;margin:2px 0 8px}
+.confirm p{color:var(--ink-80);font-size:1.04rem;line-height:1.55;max-width:48ch}
+.confirm .strip{margin-top:20px;display:inline-flex;align-items:center;gap:10px;
+  font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);
+  border-top:1px solid var(--hair);padding-top:16px}
+.confirm .strip b{color:var(--ink)}
+
+/* ============== NASTĘPNE KROKI ============== */
+.next{max-width:820px;margin:0 auto;padding:34px 32px 8px}
+.next-head{text-transform:uppercase;letter-spacing:.16em;font-size:.74rem;font-weight:700;
+  color:var(--accent);margin-bottom:18px}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.steps li{display:flex;gap:16px;align-items:flex-start;background:var(--paper-card);
+  border:1.5px solid var(--hair);border-radius:0;padding:18px 20px}
+.steps .n{flex:none;width:34px;height:34px;border:1.5px solid var(--ink);border-radius:0;
+  display:grid;place-items:center;font-weight:800;font-size:1rem}
+.steps .tx{font-size:1.02rem;line-height:1.5;color:var(--ink-80)}
+.steps .tx b{font-weight:700;color:var(--ink)}
+.steps .tx a{color:var(--accent);font-weight:700;text-decoration:none;border-bottom:2px solid color-mix(in srgb,var(--accent) 32%,transparent)}
+.steps .tx a:hover{border-color:var(--accent)}
+
+/* ============== CTA POWROTU ============== */
+.back-row{max-width:820px;margin:0 auto;padding:30px 32px 72px;text-align:center}
+.btn{display:inline-flex;align-items:center;gap:9px;font:inherit;font-weight:700;
+  padding:14px 26px;border-radius:0;text-decoration:none;cursor:pointer;transition:transform .16s}
+.btn.primary{background:var(--accent);color:var(--on-accent);box-shadow:0 4px 0 var(--accent-deep)}
+.btn.primary:hover{transform:translateY(-2px)}
+
+/* ============== FOOTER ============== */
+.site-footer{border-top:1px solid var(--hair);background:var(--paper-card);padding:28px 32px}
+.foot-inner{max-width:1120px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;
+  gap:16px;flex-wrap:wrap;font-size:.82rem;color:var(--muted)}
+.foot-links{display:flex;gap:22px;flex-wrap:wrap}
+.foot-links a{text-decoration:none;transition:color .15s}
+.foot-links a:hover{color:var(--ink)}
+.site-footer .sep{opacity:.5;margin:0 6px}
+
+@media(max-width:640px){
+  .ty-top{padding:64px 20px 4px}
+  .card-wrap{padding:28px 20px 4px}
+  .confirm{flex-direction:column;gap:18px;padding:28px 24px}
+  .next{padding:26px 20px 4px}
+  .back-row{padding:24px 20px 56px}
+  .site-footer{padding:24px 20px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms !important;animation-delay:0s !important;transition-duration:.001ms !important}
+  .rise{opacity:1 !important;transform:none !important}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== GÓRA ===== -->
+<header>
+  <div class="ty-top">
+    <span class="ty-eyebrow rise rise-1"><span class="dot" aria-hidden="true"></span>dziękujemy &middot; kurs w przedsprzedaży</span>
+    <h1 class="ty-title rise rise-1">Kurs jest <span class="uline">Twój</span></h1>
+    <p class="ty-sub rise rise-2">Dzięki, że kupujesz w przedsprzedaży. Kurs jest jeszcze w przygotowaniu, dostęp otwieram na starcie, planowo na początku sierpnia. Potwierdzenie zakupu masz już na mailu.</p>
+  </div>
+
+  <!-- KARTA POTWIERDZENIA -->
+  <div class="card-wrap rise rise-3">
+    <div class="confirm">
+      <span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div>
+        <h2>Zakup przyjęty</h2>
+        <p>Potwierdzenie zamówienia jest już w drodze na Twój e-mail. Gdy kurs ruszy, na ten sam adres wyślę Ci dostęp do wszystkich lekcji i do społeczności.</p>
+        <span class="strip">Sprawdź skrzynkę &middot; także <b>Oferty / Spam</b></span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== NASTĘPNE KROKI ===== -->
+<section class="next rise rise-3">
+  <div class="next-head">co dalej?</div>
+  <ol class="steps">
+    <li><span class="n">1</span><span class="tx"><b>Sprawdź skrzynkę.</b> Wysłałem Ci potwierdzenie zakupu. Jeśli go nie widzisz, zajrzyj w „Oferty" lub „Spam" i przenieś do głównej skrzynki.</span></li>
+    <li><span class="n">2</span><span class="tx"><b>Poczekaj na start.</b> Kurs jest w przygotowaniu, dostęp otwieram planowo na początku sierpnia. Dam znać mailem, gdy tylko wejdzie, nic Cię nie ominie.</span></li>
+    <li><span class="n">3</span><span class="tx"><b>Masz pytanie?</b> Odpisz po prostu na maila, odpowiadam osobiście.</span></li>
+  </ol>
+</section>
+
+<!-- ===== CTA POWROTU ===== -->
+<div class="back-row rise rise-3">
+  <a class="btn primary" href="/claudemaster" data-umami-event="dziekuje-kurs-powrot">← Wróć na stronę</a>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="foot-inner">
+    <div>© 2026 Mikołaj Abramczuk <span class="sep">|</span> Chłopski Rozum.ai</div>
+    <div class="foot-links">
+      <a href="https://www.youtube.com/@MikolajAbramczuk" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://www.linkedin.com/in/miko%C5%82aj-abramczuk/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://mikolajabramczuk.substack.com/" target="_blank" rel="noopener">Substack</a>
+      <a href="https://www.mikolajabramczuk.pl/">Strona główna</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
