@@ -192,6 +192,10 @@ mark,.uline{background:linear-gradient(transparent 70%,var(--accent-2) 70% 90%,t
     <input type="hidden" name="access_key" value="ad6bc06e-cca8-46d4-a769-4e6832e87fb8">
     <input type="hidden" name="subject" value="Nowa opinia o warsztatach Claudemaster">
     <input type="hidden" name="from_name" value="claudemaster · opinie">
+    <!-- po wysłaniu Web3Forms wraca tu z ?ok=1 (JS pokazuje podziękowanie).
+         Natywny POST omija CSP claudemaster.pl (blokuje fetch, ale nie form-action).
+         JS niżej nadpisuje ten redirect na bieżącą domenę. -->
+    <input type="hidden" name="redirect" value="https://claudemaster.pl/app/opinie/?ok=1">
     <!-- honeypot antyspam (boty zaznaczają, ludzie nie widzą) -->
     <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
 
@@ -268,41 +272,34 @@ mark,.uline{background:linear-gradient(transparent 70%,var(--accent-2) 70% 90%,t
 </footer>
 
 <script>
-/* Web3Forms · wysyłka AJAX-em, żeby zostać na stronie i pokazać podziękowanie.
-   Bez JS formularz i tak POST-uje natywnie do Web3Forms (fallback). */
+/* Web3Forms · NATYWNY POST (nie fetch), bo CSP na claudemaster.pl blokuje
+   fetch do zewnętrznych domen (brak connect-src → dziedziczy default-src 'self').
+   Formularz POST-uje bezpośrednio, Web3Forms przekierowuje z powrotem tu z ?ok=1,
+   a poniższy JS pokazuje wtedy ekran podziękowania. Działa też bez JS. */
 (function(){
   var form = document.getElementById('opinia-form');
   var success = document.getElementById('op-success');
-  var errEl = document.getElementById('op-err');
   var btn = document.getElementById('op-submit');
+
+  // Po powrocie z Web3Forms (?ok=1) — pokaż podziękowanie zamiast formularza.
+  if(/[?&]ok=1/.test(location.search)){
+    if(form) form.style.display = 'none';
+    if(success){
+      success.classList.add('show');
+      success.scrollIntoView({block:'center'});
+    }
+    return;
+  }
   if(!form) return;
 
-  form.addEventListener('submit', async function(e){
-    e.preventDefault();
-    errEl.classList.remove('show');
-    btn.disabled = true;
-    var label = btn.textContent;
-    btn.textContent = 'Wysyłam…';
+  // Redirect po wysłaniu = ta sama strona na bieżącej domenie (działa na
+  // claudemaster.pl i mikolajabramczuk.pl bez hardkodowania jednej domeny).
+  var redir = form.querySelector('input[name="redirect"]');
+  if(redir) redir.value = location.origin + location.pathname + '?ok=1';
 
-    try{
-      var res = await fetch('https://api.web3forms.com/submit', {
-        method:'POST',
-        headers:{'Accept':'application/json'},
-        body:new FormData(form)
-      });
-      var json = await res.json();
-      if(json.success){
-        form.style.display = 'none';
-        success.classList.add('show');
-        success.scrollIntoView({behavior:'smooth', block:'center'});
-      } else {
-        throw new Error(json.message || 'error');
-      }
-    }catch(err){
-      errEl.classList.add('show');
-      btn.disabled = false;
-      btn.textContent = label;
-    }
+  // Delikatny feedback na przycisku podczas wysyłki (nie blokuje natywnego POST).
+  form.addEventListener('submit', function(){
+    btn.textContent = 'Wysyłam…';
   });
 })();
 </script>
