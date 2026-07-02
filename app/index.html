@@ -157,6 +157,15 @@
   .reset-btn{font:inherit;font-size:12.5px;color:var(--muted);background:transparent;border:none;border-bottom:1px solid var(--hair);cursor:pointer;padding:0 0 1px}
   .reset-btn:hover{color:var(--bad);border-color:var(--bad)}
 
+  /* ===== SEKCJA OPCJONALNA (nie liczy się do 7 kroków) ===== */
+  .opt-section{margin:40px 0 0}
+  .opt-head{border-top:1px solid var(--hair);padding-top:30px}
+  .opt-head .opt-title{font-size:clamp(20px,3.4vw,24px);font-weight:600;letter-spacing:-.01em;line-height:1.15;margin:12px 0 8px}
+  .opt-head .opt-lead{font-size:15.5px;color:var(--ink-80);max-width:60ch}
+  .step.optional:not(.done) .step-num{border-color:var(--hair);color:var(--muted);font-weight:700}
+  .step.optional.done .step-num{color:#fff}
+  .opt-tag{display:inline-block;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin-bottom:3px}
+
   @media (max-width:640px){
     .step-head{flex-wrap:wrap;gap:12px}
     .step-check{margin-left:50px}
@@ -424,6 +433,101 @@
       <p id="finish-text">Kiedy przejdziesz wszystkie siedem punktów, będziesz w pełni gotowy na warsztaty. Nie spiesz się, w razie problemu wróć tu w każdej chwili, postęp się zapisuje.</p>
     </div>
 
+    <!-- ===================== DODATKOWO (OPCJONALNE) ===================== -->
+    <section class="opt-section" id="dodatkowo">
+      <div class="opt-head">
+        <div class="eyebrow">Dodatkowo · opcjonalne</div>
+        <h2 class="opt-title">Narzędzia, które <mark>ułatwiają pracę</mark></h2>
+        <p class="opt-lead">Tych rzeczy nie musisz mieć na start warsztatów. Możesz je zainstalować teraz albo wrócić do nich później, kiedy zechcesz wycisnąć z agenta więcej. Na warsztatach pokażę, jak z nich korzystać.</p>
+      </div>
+
+      <!-- OPC 1: Obsidian -->
+      <article class="step optional" data-opt="0">
+        <div class="step-head">
+          <span class="step-num">+</span>
+          <div class="step-headings">
+            <span class="opt-tag">Opcjonalne</span>
+            <h2>Zainstaluj Obsidian</h2>
+            <p class="step-sub">Notatnik na Twoją wiedzę i pomysły.</p>
+          </div>
+          <button class="step-check" type="button"><span class="mk">&#10003;</span><span class="ck-txt">Odhacz</span></button>
+        </div>
+        <div class="step-body">
+          <p>Obsidian to darmowy program do notatek w zwykłych plikach tekstowych. Przyda się, żeby trzymać w jednym miejscu pomysły, prompty i materiały, które potem podsuwasz Claude.</p>
+          <ol>
+            <li>Wejdź na <strong>obsidian.md</strong> i kliknij <strong>Download</strong> (strona sama wykryje Twój system).</li>
+            <li>Zainstaluj tak samo jak VS Code: na Macu przeciągnij do folderu <strong>Aplikacje</strong>, na Windowsie uruchom pobrany instalator.</li>
+          </ol>
+          <div class="step-actions">
+            <a class="bigbtn primary" href="https://obsidian.md/download" target="_blank" rel="noopener">Pobierz Obsidian <span class="ar">&rarr;</span></a>
+          </div>
+          <figure class="shot" data-img="img/13-obsidian.png">
+            <img src="img/13-obsidian.png" alt="Strona pobierania Obsidian z przyciskiem Download" onerror="this.closest('.shot').classList.add('noimg');this.remove();">
+            <span class="ph">Zrzut ekranu wkrótce</span>
+            <figcaption>Strona obsidian.md, fioletowy przycisk „Download" na środku pobiera wersję dla Twojego systemu.</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <!-- OPC 2: Wispr Flow -->
+      <article class="step optional" data-opt="1">
+        <div class="step-head">
+          <span class="step-num">+</span>
+          <div class="step-headings">
+            <span class="opt-tag">Opcjonalne</span>
+            <h2>Zainstaluj Wispr Flow</h2>
+            <p class="step-sub">Mówisz do komputera zamiast pisać.</p>
+          </div>
+          <button class="step-check" type="button"><span class="mk">&#10003;</span><span class="ck-txt">Odhacz</span></button>
+        </div>
+        <div class="step-body">
+          <p>Wispr Flow zamienia Twój głos na tekst w dowolnym polu, także w rozmowie z Claude. Zamiast wystukiwać długie polecenia, po prostu je mówisz. Działa na Macu i Windowsie.</p>
+          <ol>
+            <li>Kliknij przycisk poniżej (mój link), pobierz aplikację dla swojego systemu i zainstaluj.</li>
+            <li>Uruchom Wispr Flow i przejdź krótką konfigurację mikrofonu.</li>
+          </ol>
+          <div class="step-actions">
+            <a class="bigbtn primary" href="https://wisprflow.ai/r?MIKI17" target="_blank" rel="noopener">Pobierz Wispr Flow <span class="ar">&rarr;</span></a>
+          </div>
+          <p class="quiet">Pobranie przez ten link daje <mark>30 dni okresu próbnego</mark> zamiast standardowych 14. To mój link polecający.</p>
+          <figure class="shot" data-img="img/14-wisprflow.png">
+            <img src="img/14-wisprflow.png" alt="Strona Wispr Flow z hasłem Don't type, just speak i przyciskiem Download for free" onerror="this.closest('.shot').classList.add('noimg');this.remove();">
+            <span class="ph">Zrzut ekranu wkrótce</span>
+            <figcaption>Strona Wispr Flow, przycisk „Download for free" pobiera aplikację (dostępna na Mac i Windows).</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <!-- OPC 3: GitHub -->
+      <article class="step optional" data-opt="2">
+        <div class="step-head">
+          <span class="step-num">+</span>
+          <div class="step-headings">
+            <span class="opt-tag">Opcjonalne</span>
+            <h2>Załóż darmowe konto na GitHubie</h2>
+            <p class="step-sub">Miejsce, do którego wyślesz swoje projekty.</p>
+          </div>
+          <button class="step-check" type="button"><span class="mk">&#10003;</span><span class="ck-txt">Odhacz</span></button>
+        </div>
+        <div class="step-body">
+          <p>GitHub to miejsce w sieci, gdzie przechowujesz i wersjonujesz swoje projekty. Na warsztatach zrobisz pierwszy „push", czyli wyślesz swój folder do GitHuba. Wystarczy darmowe konto, załóż je wcześniej, żeby nie tracić na to czasu na żywo.</p>
+          <ol>
+            <li>Wejdź na <strong>github.com/signup</strong>.</li>
+            <li>Podaj <strong>e-mail</strong>, wymyśl <strong>hasło</strong> i <strong>nazwę użytkownika</strong> (username).</li>
+            <li>Potwierdź konto, klikając link w mailu, który przyśle Ci GitHub.</li>
+          </ol>
+          <div class="step-actions">
+            <a class="bigbtn primary" href="https://github.com/signup" target="_blank" rel="noopener">Załóż konto na GitHubie <span class="ar">&rarr;</span></a>
+          </div>
+          <figure class="shot" data-img="img/15-github.png">
+            <img src="img/15-github.png" alt="Formularz rejestracji GitHub: pola e-mail, hasło, nazwa użytkownika" onerror="this.closest('.shot').classList.add('noimg');this.remove();">
+            <span class="ph">Zrzut ekranu wkrótce</span>
+            <figcaption>Formularz „Create your free account": wpisujesz e-mail, hasło i nazwę użytkownika, resztę klikasz dalej.</figcaption>
+          </figure>
+        </div>
+      </article>
+    </section>
+
     <div class="footer-row">
       <span>Claudemaster · Przygotowanie do warsztatów</span>
       <button class="reset-btn" id="reset" type="button">Wyczyść mój postęp</button>
@@ -496,7 +600,7 @@
 
   /* ---------- POSTĘP (localStorage, wzorzec z app.html) ---------- */
   var KEY = "cm_przygotowanie";
-  var steps = Array.prototype.slice.call(document.querySelectorAll(".step"));
+  var steps = Array.prototype.slice.call(document.querySelectorAll(".step:not(.optional)"));
   var TOTAL = steps.length;
   var pbar = document.getElementById("pbar");
   var plabel = document.getElementById("plabel");
@@ -551,15 +655,46 @@
     if (btn) btn.addEventListener("click", function(){ toggle(i); });
   });
 
+  /* ---------- KROKI OPCJONALNE (osobny stan, nie liczą się do 7) ---------- */
+  var OPT_KEY = "cm_przygotowanie_opt";
+  var osteps = Array.prototype.slice.call(document.querySelectorAll(".step.optional"));
+  var optState = loadOpt();
+  function loadOpt(){
+    try { var s = JSON.parse(localStorage.getItem(OPT_KEY) || "{}"); if (!s.checked) s.checked = []; return s; }
+    catch(e){ return { checked: [] }; }
+  }
+  function saveOpt(){ try { localStorage.setItem(OPT_KEY, JSON.stringify(optState)); } catch(e){} }
+  function renderOpt(){
+    osteps.forEach(function(step, i){
+      var on = optState.checked.indexOf(i) !== -1;
+      step.classList.toggle("done", on);
+      var txt = step.querySelector(".ck-txt");
+      if (txt) txt.textContent = on ? "Zrobione" : "Odhacz";
+    });
+  }
+  osteps.forEach(function(step, i){
+    var btn = step.querySelector(".step-check");
+    if (btn) btn.addEventListener("click", function(){
+      var idx = optState.checked.indexOf(i);
+      if (idx === -1) optState.checked.push(i); else optState.checked.splice(idx, 1);
+      saveOpt();
+      renderOpt();
+    });
+  });
+
   document.getElementById("reset").addEventListener("click", function(){
     if (confirm("Na pewno wyczyścić cały postęp?")){
       state = { checked: [] };
       save();
       render();
+      optState = { checked: [] };
+      saveOpt();
+      renderOpt();
     }
   });
 
   render();
+  renderOpt();
 })();
 </script>
 </body>
