@@ -101,8 +101,8 @@ mark,.uline{background:linear-gradient(transparent 70%,var(--accent-2) 70% 90%,t
 /* ============== HERO (magazyn: rail po lewej, tekst po prawej, VSL pod spodem) ============== */
 header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
 .hero-grid{display:grid;grid-template-columns:1fr 230px;gap:52px;align-items:center}
-.hero-badge{display:inline-flex;align-items:center;gap:9px;font-size:.95rem;font-weight:600;color:var(--ink-80)}
-.hero-badge .hb-dot{width:9px;height:9px;border-radius:50%;background:var(--accent);flex:none}
+.hero-badge{display:inline-flex;align-items:flex-start;gap:8px;font-size:clamp(.8rem,2.4vw,.92rem);font-weight:600;line-height:1.35;color:var(--ink-80)}
+.hero-badge .hb-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex:none;margin-top:.42em}
 .hero-badge b{color:var(--accent);font-weight:800}
 .hero h1{font-size:clamp(2.05rem,4.4vw,3.15rem);font-weight:700;line-height:1.08;letter-spacing:-.025em;margin:20px 0 0}
 .hero .sub{font-size:1.08rem;line-height:1.6;color:var(--ink-80);max-width:48ch;margin:20px 0 0}
@@ -290,7 +290,9 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
   background:var(--accent);color:var(--on-accent);padding:15px 18px;font-weight:700;border-radius:0;
   box-shadow:0 4px 0 var(--accent-deep);transition:transform .16s}
 .ed-btn:hover{transform:translateY(-2px)}
-.ed-btn .ed-when{text-transform:uppercase;letter-spacing:.04em;font-size:.92rem}
+.ed-btn .ed-when{display:flex;flex-direction:column;gap:3px;text-transform:uppercase;letter-spacing:.04em;font-size:.92rem}
+.ed-btn .ed-meta{text-transform:none;letter-spacing:0;font-size:.76rem;font-weight:600;color:color-mix(in srgb,var(--on-accent) 78%,transparent)}
+.ed-btn .ed-meta b{font-weight:800;color:var(--on-accent)}
 .ed-btn .ed-go{font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
 .ed-btn.ed-closed{background:transparent;color:color-mix(in srgb,var(--paper) 55%,transparent);border:1.5px solid color-mix(in srgb,var(--paper) 22%,transparent);box-shadow:none}
 .ed-btn.ed-closed:hover{transform:none}
@@ -456,7 +458,7 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
 <header class="hero">
   <div class="hero-grid">
     <div class="hero-text">
-      <span class="hero-badge rise rise-1" id="hero-badge"><span class="hb-dot" aria-hidden="true"></span><span class="hb-txt">Zostało <b id="hero-spots">10</b> miejsc na najbliższą edycję</span></span>
+      <span class="hero-badge rise rise-1" id="hero-badge"><span class="hb-dot" aria-hidden="true"></span><span class="hb-txt" id="hero-spots">Zostało <b>9</b> i <b>8</b> miejsc na dwie edycje</span></span>
       <h1 class="rise rise-1">Claude Code dla <span class="uline">nie-programistów</span></h1>
       <p class="sub rise rise-2">Praktyczny program dla każdego, kto chce raz, a dobrze "ogarnąć" temat agentów AI.</p>
       <div class="cta-row rise rise-2">
@@ -917,15 +919,16 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
 var SOLD_OUT = false;
 var OFFER = {
   earlyBirdEnds: "2026-07-14T23:59:59+02:00",
-  heroSpots: 10,   // ← ILE MIEJSC ZOSTAŁO na najbliższą edycję (badge na samej górze). Zmieniasz tylko tę liczbę.
+  // Liczbę wolnych miejsc ustawiasz osobno przy każdej edycji niżej (pole `spots`).
+  // Badge na górze strony i przyciski w cenniku czytają te wartości automatycznie.
   vslVideo: "img/vsl.mp4?v=1",    // ← self-host MP4 (ma pierwszeństwo; ?v= omija stary cache 404 Cloudflare, działa pod CSP media-src 'self')
   vslYouTubeId: "vsf1H-Pw6DQ",   // ← fallback YouTube (używany, gdy vslVideo puste; blokowany przez CSP na claudemaster.pl)
 
   course:    { eb:599, full:1199, buyUrl:"https://mikolajabramczuk.zanfia.co/c/claudemaster:-kurs-z-claude-code-dla-nie-programistow-Dbax", availableNote:"planowo na początek sierpnia" },
   workshops: { eb:899, full:1599 },
   editions: [
-    { date:"2026-07-06", time:"17:30", label:"6 i 9 lipca 2026", buyUrl:"https://mikolajabramczuk.zanfia.co/c/claudemaster:-szkolenie-z-claude-code-lO1G", soldOut:false },
-    { date:"2026-07-20", time:"17:30", label:"20 i 23 lipca 2026", buyUrl:"https://mikolajabramczuk.zanfia.co/c/claudemaster:-warsztaty-z-claude-code-dla-nie-programistow-FreS", soldOut:false }
+    { date:"2026-07-06", time:"17:30", label:"6 i 9 lipca 2026", spots:9, buyUrl:"https://mikolajabramczuk.zanfia.co/c/claudemaster:-szkolenie-z-claude-code-lO1G", soldOut:false },
+    { date:"2026-07-20", time:"17:30", label:"20 i 23 lipca 2026", spots:8, buyUrl:"https://mikolajabramczuk.zanfia.co/c/claudemaster:-warsztaty-z-claude-code-dla-nie-programistow-FreS", soldOut:false }
   ]
 };
 
@@ -938,12 +941,23 @@ var OFFER = {
 
   function fmt(n){return Number(n).toLocaleString("pl-PL");}
   function dayMonth(d){return d.getDate()+" "+MONTHS[d.getMonth()];}
+  function miejsca(n){                              // polska odmiana: 1 miejsce / 2-4 miejsca / 5+ miejsc
+    var d=n%10, s=n%100;
+    if(n===1) return "miejsce";
+    if(d>=2 && d<=4 && !(s>=12 && s<=14)) return "miejsca";
+    return "miejsc";
+  }
 
   var ebDateEl=document.getElementById("eb-date");
   if(ebDateEl) ebDateEl.textContent=dayMonth(ebEnd);
 
-  var spotsEl=document.getElementById("hero-spots");
-  if(spotsEl && OFFER.heroSpots) spotsEl.textContent=OFFER.heroSpots;
+  // Badge na górze: liczba wolnych miejsc dla dwóch najbliższych edycji (dane z OFFER.editions)
+  var spotsEl=document.getElementById("hero-spots"), eds=OFFER.editions||[];
+  if(spotsEl && eds.length>=2){
+    spotsEl.innerHTML="Zostało <b>"+eds[0].spots+"</b> i <b>"+eds[1].spots+"</b> "+miejsca(eds[1].spots)+" na dwie edycje";
+  } else if(spotsEl && eds.length===1){
+    spotsEl.innerHTML="Zostało <b>"+eds[0].spots+"</b> "+miejsca(eds[0].spots)+" na najbliższą edycję";
+  }
 
   setPrice("course",OFFER.course,isEB);         // kurs: cena przedsprzedaży z odliczaniem do earlyBirdEnds
   setPrice("ws",OFFER.workshops,true);          // warsztaty: zawsze subtelna kotwica 1599, bez deadline'u
@@ -982,7 +996,9 @@ var OFFER = {
         a.setAttribute("href",ed.buyUrl||"#");
         a.setAttribute("data-umami-event","kup-warsztaty");
         a.setAttribute("data-umami-event-termin",ed.label);
-        a.innerHTML='<span class="ed-when">'+ed.label+'</span><span class="ed-go">Rezerwuję →</span>';
+        var meta='oba dni od '+ed.time;
+        if(ed.spots) meta+=' · zostało <b>'+ed.spots+'</b> '+miejsca(ed.spots);
+        a.innerHTML='<span class="ed-when">'+ed.label+'<span class="ed-meta">'+meta+'</span></span><span class="ed-go">Rezerwuję →</span>';
       } else {
         a.setAttribute("href","#lista-rezerwowa");
         a.setAttribute("data-wl-open","");
