@@ -458,7 +458,7 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
 <header class="hero">
   <div class="hero-grid">
     <div class="hero-text">
-      <span class="hero-badge rise rise-1" id="hero-badge"><span class="hb-dot" aria-hidden="true"></span><span class="hb-txt" id="hero-spots">Zostało <b>4</b> miejsca na najbliższą edycję</span></span>
+      <span class="hero-badge rise rise-1" id="hero-badge"><span class="hb-dot" aria-hidden="true"></span><span class="hb-txt" id="hero-spots">Zostały <b>4</b> miejsca na najbliższą edycję</span></span>
       <h1 class="rise rise-1">Claude Code dla <span class="uline">nie-programistów</span></h1>
       <p class="sub rise rise-2">Praktyczny program dla każdego, kto chce raz, a dobrze "ogarnąć" temat agentów AI.</p>
       <div class="cta-row rise rise-2">
@@ -907,6 +907,12 @@ var OFFER = {
     if(d>=2 && d<=4 && !(s>=12 && s<=14)) return "miejsca";
     return "miejsc";
   }
+  function zostalo(n){                              // czasownik: zostały 2-4 / zostało 1 i 5+
+    var d=n%10, s=n%100;
+    if(d>=2 && d<=4 && !(s>=12 && s<=14)) return "zostały";
+    return "zostało";
+  }
+  function cap(str){return str.charAt(0).toUpperCase()+str.slice(1);}
 
   var ebDateEl=document.getElementById("eb-date");
   if(ebDateEl) ebDateEl.textContent=dayMonth(ebEnd);
@@ -916,7 +922,7 @@ var OFFER = {
   if(spotsEl && eds.length>=2){
     spotsEl.innerHTML="Zostało <b>"+eds[0].spots+"</b> i <b>"+eds[1].spots+"</b> "+miejsca(eds[1].spots)+" na dwie edycje";
   } else if(spotsEl && eds.length===1){
-    spotsEl.innerHTML="Zostało <b>"+eds[0].spots+"</b> "+miejsca(eds[0].spots)+" na najbliższą edycję";
+    spotsEl.innerHTML=cap(zostalo(eds[0].spots))+" <b>"+eds[0].spots+"</b> "+miejsca(eds[0].spots)+" na najbliższą edycję";
   }
 
   setPrice("course",OFFER.course,isEB);         // kurs: cena przedsprzedaży z odliczaniem do earlyBirdEnds
@@ -957,7 +963,7 @@ var OFFER = {
         a.setAttribute("data-umami-event","kup-warsztaty");
         a.setAttribute("data-umami-event-termin",ed.label);
         var meta='oba dni od '+ed.time;
-        if(ed.spots) meta+=' · zostało <b>'+ed.spots+'</b> '+miejsca(ed.spots);
+        if(ed.spots) meta+=' · '+zostalo(ed.spots)+' <b>'+ed.spots+'</b> '+miejsca(ed.spots);
         a.innerHTML='<span class="ed-when">'+ed.label+'<span class="ed-meta">'+meta+'</span></span><span class="ed-go">Rezerwuję →</span>';
       } else {
         a.setAttribute("href","#lista-rezerwowa");
