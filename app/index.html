@@ -1,701 +1,160 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Przygotowanie do warsztatów · Claudemaster</title>
-<meta name="robots" content="noindex, nofollow">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zadania · Claudemaster</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#ECE7DE;
-    --paper-card:#F6F3EC;
-    --ink:#1B1A17;
-    --accent:#DB511D;
-    --accent-2:#F0BE12;
-    --on-accent:#FFFDF7;
-    --ok:#3B7A4B;
-    --bad:#C23B2E;
+    --paper:#ECE7DE; --paper-card:#F6F3EC; --ink:#1B1A17;
+    --accent:#DB511D; --accent-2:#F0BE12; --on-accent:#FFFDF7;
+    --ok:#3B7A4B; --bad:#C23B2E;
     --hair:color-mix(in srgb,var(--ink) 14%,transparent);
     --hair-soft:color-mix(in srgb,var(--ink) 8%,transparent);
-    --muted:color-mix(in srgb,var(--ink) 60%,transparent);
+    --muted:color-mix(in srgb,var(--ink) 58%,transparent);
     --ink-80:color-mix(in srgb,var(--ink) 84%,transparent);
     --grid:color-mix(in srgb,var(--ink) 6%,transparent);
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
   body{font-family:"Funnel Sans",system-ui,sans-serif;color:var(--ink);line-height:1.6;
     background-color:var(--paper);
-    background-image:radial-gradient(var(--grid) 1px, transparent 1.3px);
-    background-size:22px 22px;}
-  a{color:var(--accent)}
+    background-image:radial-gradient(var(--grid) 1px, transparent 1.3px);background-size:22px 22px;}
+  .wrap{max-width:920px;margin:0 auto;padding:0 40px}
 
-  .wrap{max-width:800px;margin:0 auto;padding:0 24px}
-  .eyebrow{display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.16em;font-size:11px;font-weight:600;color:var(--muted)}
-  .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent)}
-  mark,.uline{background:linear-gradient(transparent 62%, var(--accent-2) 62% 92%, transparent 92%);color:inherit;padding:0 .05em}
-
-  /* przyciski */
-  .bigbtn{font:inherit;font-weight:700;font-size:13.5px;letter-spacing:.05em;text-transform:uppercase;border:none;border-radius:0;
-    padding:13px 22px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:9px;text-decoration:none}
-  .bigbtn.primary{background:var(--accent);color:var(--on-accent);box-shadow:0 4px 0 color-mix(in srgb,var(--accent) 65%,#000)}
-  .bigbtn.primary:hover{transform:translateY(1px);box-shadow:0 3px 0 color-mix(in srgb,var(--accent) 65%,#000)}
-  .bigbtn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
-  .bigbtn.small{padding:10px 16px;font-size:12px}
-  .bigbtn .ar{font-size:15px}
-
-  /* ===== BRAMKA HASŁEM (bramka grzecznościowa, nie realne zabezpieczenie) ===== */
-  .gate{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:24px;
-    background-color:var(--paper);
-    background-image:radial-gradient(var(--grid) 1px, transparent 1.3px);background-size:22px 22px}
-  .gate-card{width:100%;max-width:430px;background:var(--paper-card);border:1.5px solid var(--ink);padding:34px 30px;
-    box-shadow:8px 8px 0 var(--ink)}
-  .gate-card h1{font-size:26px;font-weight:600;letter-spacing:-.01em;margin:12px 0 8px;line-height:1.1}
-  .gate-card p{font-size:15px;color:var(--ink-80);margin-bottom:22px}
-  .gate-form{display:flex;flex-direction:column;gap:12px}
-  .gate-form input{font:inherit;font-size:16px;padding:13px 15px;border:1.5px solid var(--ink);background:#fff;color:var(--ink);border-radius:0}
-  .gate-form input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%,transparent)}
-  .gate-error{color:var(--bad);font-size:13.5px;font-weight:600;margin-top:6px}
-  .gate-foot{margin-top:20px;font-size:12px;color:var(--muted)}
-
-  /* ===== NAGŁÓWEK + STICKY PASEK POSTĘPU ===== */
-  header.top{padding:52px 0 26px}
-  header.top h1{font-size:clamp(26px,4.2vw,34px);font-weight:600;line-height:1.1;letter-spacing:-.015em;margin:14px 0 14px}
-  header.top .lead{font-size:16.5px;color:var(--ink-80);max-width:60ch}
-  .save-hint{margin-top:14px;font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}
-  .save-hint::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ok);flex:none}
-
-  .progress-sticky{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--paper) 88%,transparent);
+  /* --- topbar (shell aplikacji) --- */
+  .topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:16px;
+    padding:14px 40px;background:color-mix(in srgb,var(--paper) 88%,transparent);
     backdrop-filter:blur(8px);border-bottom:1px solid var(--hair)}
-  .progress-inner{max-width:800px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:14px}
-  .progress-inner .bar{flex:1;height:7px;background:color-mix(in srgb,var(--ink) 10%,transparent);overflow:hidden}
-  .progress-inner .bar i{display:block;height:100%;width:0%;background:var(--accent-2);transition:width .35s ease}
-  .progress-inner .lbl{flex:none;font-size:12.5px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums;letter-spacing:.02em}
+  .wordmark{font-weight:600;font-size:19px;letter-spacing:.01em}
+  .switcher{display:flex;margin-left:auto;border:1.5px solid var(--ink)}
+  .switcher a{font:inherit;font-weight:700;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;
+    padding:9px 20px;background:transparent;color:var(--ink);text-decoration:none}
+  .switcher a.active{background:var(--ink);color:var(--paper)}
+  .switcher a+a{border-left:1.5px solid var(--ink)}
 
-  /* ===== KROKI ===== */
-  main{padding-bottom:40px}
-  .step{background:var(--paper-card);border:1.5px solid var(--hair);margin:20px 0;transition:border-color .2s}
-  .step.done{border-color:color-mix(in srgb,var(--ok) 55%,var(--hair))}
-  .step-head{display:flex;align-items:flex-start;gap:16px;padding:22px 24px 6px}
-  .step-num{flex:none;width:34px;height:34px;border:2px solid var(--ink);display:grid;place-items:center;
-    font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;transition:.2s}
-  .step.done .step-num{background:var(--ok);border-color:var(--ok);color:#fff}
-  .step-headings{flex:1;min-width:0}
-  .step-headings h2{font-size:20px;font-weight:600;letter-spacing:-.01em;line-height:1.2}
-  .step-sub{font-size:13.5px;color:var(--muted);margin-top:3px}
+  /* --- nagłówek --- */
+  .head{padding:56px 0 32px}
+  .head h1{font-size:clamp(30px,4.4vw,40px);font-weight:600;letter-spacing:-.02em}
+  .head p{font-size:16.5px;color:var(--ink-80);max-width:56ch;margin-top:10px}
 
-  .step-check{flex:none;display:inline-flex;align-items:center;gap:9px;font:inherit;cursor:pointer;
-    background:transparent;border:1.5px solid var(--hair);color:var(--ink-80);border-radius:0;padding:8px 13px;transition:.15s}
-  .step-check:hover{border-color:var(--ink)}
-  .step-check .mk{width:20px;height:20px;border:2px solid var(--hair);background:#fff;display:grid;place-items:center;
-    font-size:12px;color:transparent;transition:.15s}
-  .step-check .ck-txt{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
-  .step.done .step-check{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 10%,#fff)}
-  .step.done .step-check .mk{background:var(--ok);border-color:var(--ok);color:#fff}
-  .step.done .step-check .ck-txt{color:var(--ok)}
+  /* --- zadanie polecane (jedno, gotowe) --- */
+  .feature{display:grid;grid-template-columns:1.55fr 1fr;gap:0;text-decoration:none;color:var(--ink);
+    background:var(--paper-card);border:1.5px solid var(--hair);
+    transition:border-color .15s,transform .12s,box-shadow .15s}
+  .feature:hover{border-color:var(--ink);transform:translateY(-2px);box-shadow:0 6px 0 color-mix(in srgb,var(--ink) 8%,transparent)}
+  .feat-l{padding:30px 30px 28px;display:flex;flex-direction:column;gap:14px}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;text-transform:uppercase;letter-spacing:.15em;
+    font-size:11px;font-weight:700;color:var(--muted)}
+  .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent)}
+  .feat-l h2{font-size:26px;font-weight:600;line-height:1.16;letter-spacing:-.01em}
+  .feat-l h2 mark{background:linear-gradient(transparent 60%, var(--accent-2) 60% 92%, transparent 92%);color:inherit;padding:0 .04em}
+  .feat-l .desc{font-size:15px;color:var(--ink-80);line-height:1.5}
+  .meta{display:inline-flex;align-items:center;gap:10px;font-size:12.5px;font-weight:600;color:var(--muted)}
+  .dot{width:9px;height:9px;border-radius:50%;flex:none}
+  .dot.easy{background:var(--ok)} .dot.med{background:var(--accent-2)} .dot.hard{background:var(--bad)}
+  .meta .sep{width:3px;height:3px;border-radius:50%;background:var(--muted);opacity:.6}
+  .cta{margin-top:auto;display:inline-flex;align-items:center;gap:10px;align-self:flex-start;
+    background:var(--accent);color:var(--on-accent);font-weight:700;font-size:13px;letter-spacing:.06em;
+    text-transform:uppercase;padding:13px 22px}
+  .cta svg{transition:transform .15s}
+  .feature:hover .cta svg{transform:translateX(4px)}
+  /* prawy panel: co zrobisz w 3 krokach */
+  .feat-r{border-left:1.5px solid var(--hair);padding:28px 28px;display:flex;flex-direction:column;gap:2px;
+    background:color-mix(in srgb,var(--ink) 2.5%,var(--paper-card))}
+  .feat-r .rh{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.13em;color:var(--muted);margin-bottom:14px}
+  .step{display:flex;gap:13px;align-items:flex-start;padding:11px 0;border-top:1px solid var(--hair-soft)}
+  .step:first-of-type{border-top:none}
+  .step .n{flex:none;width:22px;height:22px;border:1.5px solid var(--ink);display:grid;place-items:center;
+    font-size:11.5px;font-weight:700;margin-top:1px}
+  .step .t{font-size:14px;color:var(--ink-80);line-height:1.4}
 
-  .step-body{padding:8px 24px 26px 74px}
-  .step-body p{font-size:15.5px;color:var(--ink-80);margin:10px 0}
-  .step-body ol,.step-body ul{margin:10px 0 10px 2px;padding-left:20px}
-  .step-body li{font-size:15.5px;color:var(--ink-80);margin:7px 0;line-height:1.5}
-  .step-body strong{color:var(--ink);font-weight:700}
-  .step-body code{font-family:ui-monospace,Menlo,monospace;font-size:13.5px;background:color-mix(in srgb,var(--ink) 7%,transparent);
-    padding:2px 6px;border-radius:0}
-  .step-actions{margin:16px 0 4px}
+  /* --- Wkrótce --- */
+  .soon{margin-top:44px}
+  .soon-h{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);
+    display:flex;align-items:center;gap:16px;margin-bottom:18px}
+  .soon-h::after{content:"";height:1px;background:var(--hair);flex:1}
+  .soon-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .scard{background:transparent;border:1px dashed color-mix(in srgb,var(--ink) 20%,transparent);
+    padding:17px 19px;display:flex;flex-direction:column;gap:8px}
+  .scard .meta{font-size:11.5px}
+  .scard h3{font-size:15.5px;font-weight:600;color:var(--ink-80);line-height:1.25}
+  .scard p{font-size:13px;color:var(--muted);line-height:1.45}
 
-  /* cicha notatka (bez żółtych callout boxów) */
-  .quiet{font-size:13.5px;color:var(--muted);border-left:2px solid var(--hair);padding:2px 0 2px 14px;margin:14px 0}
-  .quiet strong{color:var(--ink-80)}
+  footer{padding:50px 0 72px;color:var(--muted);font-size:13px;margin-top:26px;border-top:1px solid var(--hair)}
 
-  /* przełącznik Mac / Windows (JS: wybór wspólny dla całej strony i zapamiętany) */
-  .osblock{margin:14px 0 4px}
-  .osseg{display:inline-grid;grid-template-columns:1fr 1fr;border:1.5px solid var(--ink);margin:2px 0 6px}
-  .osseg .os-btn{font:inherit;padding:9px 26px;font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;cursor:pointer;text-align:center;transition:.15s;background:transparent;color:var(--ink);border:none}
-  .osseg .os-btn[data-os-set="win"]{border-left:1.5px solid var(--ink)}
-  body[data-os="mac"] .osseg .os-btn[data-os-set="mac"]{background:var(--ink);color:var(--on-accent)}
-  body[data-os="win"] .osseg .os-btn[data-os-set="win"]{background:var(--ink);color:var(--on-accent)}
-  .os-body{display:none}
-  body[data-os="mac"] .os-body.os-mac{display:block}
-  body[data-os="win"] .os-body.os-win{display:block}
-  /* pojedyncze elementy zależne od systemu (np. zrzut instalatora tylko na Windows) */
-  .os-only{display:none}
-  body[data-os="mac"] .os-only.for-mac{display:revert}
-  body[data-os="win"] .os-only.for-win{display:revert}
-  .os-body .os-tag{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:2px}
-
-  /* sloty na zrzuty ekranu */
-  .shot{border:1.5px solid var(--hair);background:#fff;margin:16px 0 6px}
-  .shot img{display:block;width:100%;height:auto}
-  .shot .ph{display:none}
-  .shot.noimg{background:repeating-linear-gradient(45deg,var(--paper-card),var(--paper-card) 12px,color-mix(in srgb,var(--ink) 4%,var(--paper-card)) 12px,color-mix(in srgb,var(--ink) 4%,var(--paper-card)) 24px);border-style:dashed}
-  .shot.noimg .ph{display:flex;align-items:center;gap:9px;padding:26px 18px;justify-content:center;color:var(--muted);font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:.08em}
-  .shot.noimg .ph::before{content:"";width:26px;height:26px;border:1.5px solid var(--muted);border-radius:50%;
-    display:grid;place-items:center;flex:none;background:
-      linear-gradient(var(--muted),var(--muted)) center/11px 1.5px no-repeat,
-      linear-gradient(var(--muted),var(--muted)) center/1.5px 11px no-repeat}
-  .shot figcaption{padding:9px 14px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--hair-soft);display:flex;gap:9px;align-items:baseline;line-height:1.45}
-  .shot.noimg figcaption{border-top:1px dashed var(--hair)}
-  .shot .shot-no{flex:none;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.05em;font-size:11px}
-
-  /* udawane pole prompta (krok 7) */
-  .prompt-demo{border:1.5px solid var(--ink);background:#fff;margin:16px 0 6px}
-  .prompt-demo .pd-top{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:9px 14px;border-bottom:1px solid var(--hair-soft)}
-  .prompt-demo .pd-row{display:flex;align-items:center;gap:10px;padding:14px}
-  .prompt-demo .pd-caret{color:var(--accent);font-weight:800}
-  .prompt-demo .pd-text{font-size:15px;color:var(--ink)}
-  .prompt-demo .pd-enter{margin-left:auto;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);border:1px solid var(--hair);padding:4px 9px}
-
-  /* stopka */
-  .finish{margin:34px 0 10px;padding:26px 24px;border:1.5px solid var(--hair);background:var(--paper-card)}
-  .finish.all-done{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 6%,var(--paper-card))}
-  .finish h3{font-size:19px;font-weight:600;margin:8px 0 6px}
-  .finish p{font-size:15px;color:var(--ink-80)}
-  .footer-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
-    padding:26px 0 60px;color:var(--muted);font-size:13px;border-top:1px solid var(--hair);margin-top:14px}
-  .reset-btn{font:inherit;font-size:12.5px;color:var(--muted);background:transparent;border:none;border-bottom:1px solid var(--hair);cursor:pointer;padding:0 0 1px}
-  .reset-btn:hover{color:var(--bad);border-color:var(--bad)}
-
-  /* ===== SEKCJA OPCJONALNA (nie liczy się do 7 kroków) ===== */
-  .opt-section{margin:40px 0 0}
-  .opt-head{border-top:1px solid var(--hair);padding-top:30px}
-  .opt-head .opt-title{font-size:clamp(20px,3.4vw,24px);font-weight:600;letter-spacing:-.01em;line-height:1.15;margin:12px 0 8px}
-  .opt-head .opt-lead{font-size:15.5px;color:var(--ink-80);max-width:60ch}
-  .step.optional:not(.done) .step-num{border-color:var(--hair);color:var(--muted);font-weight:700}
-  .step.optional.done .step-num{color:#fff}
-  .opt-tag{display:inline-block;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin-bottom:3px}
-
-  @media (max-width:640px){
-    .step-head{flex-wrap:wrap;gap:12px}
-    .step-check{margin-left:50px}
-    .step-body{padding-left:24px}
-    .gate-card{box-shadow:5px 5px 0 var(--ink)}
+  @media(max-width:720px){
+    .wrap{padding:0 20px}.topbar{padding:12px 20px}
+    .switcher a{padding:8px 13px;letter-spacing:.03em}
+    .head{padding:38px 0 26px}
+    .feature{grid-template-columns:1fr}
+    .feat-r{border-left:none;border-top:1.5px solid var(--hair)}
+    .soon-grid{grid-template-columns:1fr}
   }
 </style>
 </head>
-<body data-os="mac">
-
-<!-- ===================== BRAMKA HASŁEM ===================== -->
-<!-- Uwaga: to bramka grzecznościowa (hasło jest w kodzie). Ma odsiać przypadkowe wejścia,
-     nie jest twardym zabezpieczeniem. Twarde = .htaccess na serwerze (poza tym plikiem). -->
-<div class="gate" id="gate">
-  <div class="gate-card">
-    <div class="eyebrow">Materiały dla uczestników</div>
-    <h1>Przygotowanie do warsztatów</h1>
-    <p>Ta strona jest dla osób, które kupiły dostęp do warsztatów. Wpisz hasło, które dostałeś w mailu.</p>
-    <form class="gate-form" id="gate-form" autocomplete="off">
-      <input type="password" id="gate-input" placeholder="Hasło" aria-label="Hasło" autofocus>
-      <button class="bigbtn primary" type="submit">Wejdź <span class="ar">&rarr;</span></button>
-      <p class="gate-error" id="gate-error" hidden>Nieprawidłowe hasło. Sprawdź mail od nas.</p>
-    </form>
-    <p class="gate-foot">Nie masz hasła? Znajdziesz je w pierwszym mailu po zakupie warsztatów.</p>
+<body>
+  <div class="topbar">
+    <div class="wordmark">Claudemaster</div>
+    <nav class="switcher">
+      <a href="#">Warsztaty</a><a href="#">Kurs</a><a class="active" href="#">Zadania</a>
+    </nav>
   </div>
-</div>
-
-<!-- ===================== TREŚĆ ===================== -->
-<main id="app" hidden>
-
-  <div class="progress-sticky">
-    <div class="progress-inner">
-      <div class="bar"><i id="pbar"></i></div>
-      <span class="lbl" id="plabel">0 z 7 gotowe</span>
-    </div>
-  </div>
-
-  <header class="top wrap">
-    <div class="eyebrow">Zanim usiądziemy na żywo</div>
-    <h1>Przygotowanie przed <mark>warsztatami</mark></h1>
-    <p class="lead">Przejdź te kroki spokojnie, w swoim tempie. Zajmą maksymalnie kilkanaście minut. Dzięki temu na warsztatach od razu będziemy mogli pracować z agentem Claude Code. Odhaczaj po kolei, a w razie wątpliwości pytaj na grupie.</p>
-    <p class="save-hint">Twój postęp zapisuje się w tej przeglądarce. Możesz zamknąć stronę i wrócić później.</p>
-  </header>
 
   <div class="wrap">
+    <header class="head">
+      <h1>Zadania</h1>
+      <p>Pobierasz gotowy folder, odpalasz w nim Claude Code i budujesz coś realnego u siebie. Zacznij od pierwszego, kolejne dochodzą.</p>
+    </header>
 
-    <!-- KROK 1 -->
-    <article class="step" data-step="0">
-      <div class="step-head">
-        <span class="step-num">1</span>
-        <div class="step-headings">
-          <h2>Kup płatną subskrypcję Claude</h2>
-          <p class="step-sub">Bez tego Claude Code nie ruszy.</p>
-        </div>
-        <button class="step-check" type="button"><span class="mk">&#10003;</span><span class="ck-txt">Odhacz</span></button>
+    <a class="feature" href="zadania/badanie-rynku-w-niszy.html">
+      <div class="feat-l">
+        <span class="eyebrow">Zacznij tutaj</span>
+        <h2>Badanie <mark>rynku</mark> w niszy</h2>
+        <p class="desc">Odpalasz pięciu tanich agentów naraz. Każdy bada inny wycinek rynku, a jeden mocniejszy skleja z tego gotowy raport z rekomendacją.</p>
+        <span class="meta"><span class="dot easy"></span>Łatwe<span class="sep"></span>do 20 min</span>
+        <span class="cta">Otwórz zadanie
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
       </div>
-      <div class="step-body">
-        <p>Narzędzie, którego użyjemy na warsztatach (Claude Code), działa na <strong>płatnym koncie Claude</strong>. Wystarczy najtańszy plan <strong>Pro</strong>. Nie potrzebujesz żadnego „klucza API" ani planu firmowego.</p>
-        <ol>
-          <li>Wejdź na <strong>claude.com/pricing</strong>.</li>
-          <li>Wybierz plan <strong>Pro</strong> (plan Max też zadziała, ale na start nie jest potrzebny).</li>
-          <li>Załóż konto lub zaloguj się i opłać subskrypcję.</li>
-          <li>Zapamiętaj e-mail i hasło. Tym samym kontem zalogujesz się później w VS Code.</li>
-        </ol>
-        <div class="step-actions">
-          <a class="bigbtn primary" href="https://claude.com/pricing" target="_blank" rel="noopener">Otwórz cennik Claude <span class="ar">&rarr;</span></a>
-        </div>
-        <figure class="shot" data-img="img/01-cennik.png">
-          <img src="img/01-cennik.png" alt="Strona z cennikiem Claude z planami Free, Pro i Max" onerror="this.closest('.shot').classList.add('noimg');this.remove();">
-          <span class="ph">Zrzut ekranu wkrótce</span>
-          <figcaption><span class="shot-no">Zrzut 1</span> Cennik na claude.com/pricing, plan Pro to ten, którego potrzebujesz.</figcaption>
-        </figure>
-        <p class="quiet">To samo konto Claude zaloguje Cię potem we wtyczce w VS Code. <strong>Nie płacisz drugi raz.</strong></p>
+      <div class="feat-r">
+        <div class="rh">Co zrobisz</div>
+        <div class="step"><span class="n">1</span><span class="t">Pobierasz folder i odpalasz w nim Claude Code</span></div>
+        <div class="step"><span class="n">2</span><span class="t">Jednym poleceniem puszczasz pięciu badaczy naraz</span></div>
+        <div class="step"><span class="n">3</span><span class="t">Składacz zbiera notatki w jeden raport z rekomendacją</span></div>
       </div>
-    </article>
+    </a>
 
-    <!-- KROK 2 -->
-    <article class="step" data-step="1">
-      <div class="step-head">
-        <span class="step-num">2</span>
-        <div class="step-headings">
-          <h2>Pobierz i zainstaluj VS Code</h2>
-          <p class="step-sub">Darmowy program, w którym zamieszka Claude.</p>
+    <section class="soon">
+      <div class="soon-h">Wkrótce w bibliotece</div>
+      <div class="soon-grid">
+        <div class="scard">
+          <span class="meta"><span class="dot med"></span>Średnie</span>
+          <h3>Meta-opisy produktów w limicie znaków</h3>
+          <p>Ustawiasz jeden cel, a pętla /goal poprawia opisy, aż każdy wejdzie w limit i złapie słowo kluczowe.</p>
         </div>
-        <button class="step-check" type="button"><span class="mk">&#10003;</span><span class="ck-txt">Odhacz</span></button>
+        <div class="scard">
+          <span class="meta"><span class="dot easy"></span>Łatwe</span>
+          <h3>Pierwszy slash command</h3>
+          <p>Jeden plik zamienia się w Twoją własną komendę, na przykład /podsumuj albo /post.</p>
+        </div>
+        <div class="scard">
+          <span class="meta"><span class="dot med"></span>Średnie</span>
+          <h3>Research przez Reddit</h3>
+          <p>Claude sam nie zagląda na Reddita. Poznajesz obejścia, żeby wyciągnąć prawdziwy głos ludzi.</p>
+        </div>
+        <div class="scard">
+          <span class="meta"><span class="dot hard"></span>Trudne</span>
+          <h3>Cykliczny wywiad konkurencji</h3>
+          <p>Rutyna w tle raz w tygodniu skanuje ceny i oferty rywali i wrzuca gotowy digest.</p>
+        </div>
       </div>
-      <div class="step-body">
-        <p>VS Code to darmowy edytor od Microsoftu. To w nim będziesz rozmawiać z Claude. Kliknij duży przycisk pobierania, strona sama wykryje Twój system.</p>
-        <div class="step-actions">
-          <a class="bigbtn primary" href="https://code.visualstudio.com" target="_blank" rel="noopener">Pobierz VS Code <span class="ar">&rarr;</span></a>
-        </div>
-        <figure class="shot" data-img="img/02-vscode-download.png">
-          <img src="img/02-vscode-download.png" alt="Strona code.visualstudio.com z przyciskiem pobierania" onerror="this.closest('.shot').classList.add('noimg');this.remove();">
-          <span class="ph">Zrzut ekranu wkrótce</span>
-          <figcaption><span class="shot-no">Zrzut 2</span> Strona code.visualstudio.com, niebieski przycisk pobierania na środku.</figcaption>
-        </figure>
-
-        <div class="osblock">
-          <div class="osseg" role="group" aria-label="Wybierz system">
-            <button type="button" class="os-btn" data-os-set="mac">Mac</button>
-            <button type="button" class="os-btn" data-os-set="win">Windows</button>
-          </div>
-
-          <div class="os-body os-mac">
-            <span class="os-tag">Na Macu</span>
-            <ol>
-              <li>Kliknij przycisk pobierania (strona sama wybierze wersję dla Maca).</li>
-              <li>Otwórz pobrany plik. Pojawi się ikona <strong>Visual Studio Code</strong>.</li>
-              <li>Przeciągnij tę ikonę do folderu <strong>Aplikacje</strong> (Applications).</li>
-              <li>Uruchom VS Code z Launchpada lub folderu Aplikacje. Jeśli Mac zapyta „czy na pewno chcesz otworzyć", kliknij <strong>Otwórz</strong>.</li>
-            </ol>
-          </div>
-
-          <div class="os-body os-win">
-            <span class="os-tag">Na Windowsie</span>
-            <ol>
-              <li>Kliknij przycisk pobierania (wersja dla Windows).</li>
-              <li>Uruchom pobrany plik <code>VSCodeUserSetup...exe</code>.</li>
-              <li>Zaakceptuj warunki i klikaj <strong>Dalej</strong>, zostaw domyślne ustawienia.</li>
-              <li>Kliknij <strong>Zainstaluj</strong>, a na końcu <strong>Zakończ</strong> (możesz zaznaczyć „Uruchom VS Code").</li>
-            </ol>
-          </div>
-
-          <figure class="shot os-only for-win" data-img="img/03-vscode-install.png">
-            <img src="img/03-vscode-install.png" alt="Okno instalatora VS Code na Windows" onerror="this.closest('.shot').classList.add('noimg');this.remove();">
-            <span class="ph">Zrzut ekranu wkrótce</span>
-            <figcaption><span class="shot-no">Zrzut 3</span> Instalator VS Code na Windows: zostaw domyślne zaznaczenia i klikaj Dalej, potem Zainstaluj.</figcaption>
-          </figure>
-        </div>
-
-        <p class="quiet">Potrzebna wersja <strong>1.98 lub nowsza</strong>. Świeżo pobrany VS Code zawsze ją ma, więc nie musisz nic sprawdzać.</p>
-      </div>
-    </article>
-
-    <!-- KROK 3 -->
-    <article class="step" data-step="2">
-      <div class="step-head">
-        <span class="step-num">3</span>
-        <div class="step-headings">
-          <h2>Zrób na pulpicie folder o nazwie agent</h2>
-          <p class="step-sub">Tu będą mieszkać Twoje projekty.</p>
-        </div>
-        <button class="step-check" type="button"><span class="mk">&#10003;</span><span class="ck-txt">Odhacz</span></button>
-      </div>
-      <div class="step-body">
-        <p>To zwykły folder, jak każdy inny na komputerze.</p>
-        <ul>
-          <li><strong>Mac:</strong> kliknij prawym przyciskiem na pulpicie &rarr; <strong>Nowy folder</strong>.</li>
-          <li><strong>Windows:</strong> kliknij prawym przyciskiem na pulpicie &rarr; <strong>Nowy</strong> &rarr; <strong>Folder</strong>.</li>
-        </ul>
-        <p>Nazwij go dokładnie: <code>agent</code>, małymi literami, bez spacji.</p>
-        <figure class="shot" data-img="img/08-pulpit.png">
-          <img src="img/08-pulpit.png" alt="Pulpit z menu Nowy folder i utworzonym folderem agent" onerror="this.closest('.shot').classList.add('noimg');this.remove();">
-          <span class="ph">Zrzut ekranu wkrótce</span>
-          <figcaption><span class="shot-no">Zrzut 4</span> Prawy klik na pulpicie &rarr; Nowy folder, i nazwij go „agent".</figcaption>
-        </figure>
-      </div>
-    </article>
-
-    <!-- KROK 4 -->
-    <article class="step" data-step="3">
-      <div class="step-head">
-        <span class="step-num">4</span>
-        <div class="step-headings">
-          <h2>Otwórz folder agent w VS Code</h2>
-          <p class="step-sub">Pokazujesz Claude, gdzie ma pracować.</p>
-        </div>
-        <button class="step-check" type="button"><span class="mk">&#10003;</span><span class="ck-txt">Odhacz</span></button>
-      </div>
-      <div class="step-body">
-        <p>Uruchom VS Code. Z górnego menu wybierz <strong>File &rarr; Open Folder...</strong> (po polsku <strong>Plik &rarr; Otwórz folder...</strong>), wskaż folder <code>agent</code> z pulpitu i kliknij <strong>Otwórz</strong>.</p>
-        <p>Jeśli VS Code zapyta, czy ufasz autorom w tym folderze, kliknij <strong>Yes, I trust the authors</strong> (Tak, ufam autorom).</p>
-        <figure class="shot" data-img="img/09-open-folder.png">
-          <img src="img/09-open-folder.png" alt="Ekran startowy VS Code z przyciskiem Open Folder i okno wyboru folderu agent" onerror="this.closest('.shot').classList.add('noimg');this.remove();">
-          <span class="ph">Zrzut ekranu wkrótce</span>
-          <figcaption><span class="shot-no">Zrzut 5</span> Kliknij Open Folder (na ekranie startowym albo File &rarr; Open Folder), wskaż folder agent i kliknij Otwórz.</figcaption>
-        </figure>
-      </div>
-    </article>
-
-    <!-- KROK 5 -->
-    <article class="step" data-step="4">
-      <div class="step-head">
-        <span class="step-num">5</span>
-        <div class="step-headings">
-          <h2>Dodaj rozszerzenie Claude Code</h2>
-          <p class="step-sub">Claude wprowadza się do VS Code.</p>
-        </div>
-        <button class="step-check" type="button"><span class="mk">&#10003;</span><span class="ck-txt">Odhacz</span></button>
-      </div>
-      <div class="step-body">
-        <ol>
-          <li>Naciśnij <strong>Cmd+Shift+X</strong> (Mac) lub <strong>Ctrl+Shift+X</strong> (Windows), żeby otworzyć panel <strong>Extensions</strong> (Rozszerzenia) po lewej.</li>
-          <li>W pole wyszukiwania na górze wpisz <strong>claude code for vs</strong> i wybierz pierwszą pozycję.</li>
-          <li>Upewnij się, że to rozszerzenie od wydawcy <strong>Anthropic</strong>, i kliknij <strong>Install</strong>.</li>
-          <li>Jeśli po instalacji pojawi się przycisk <strong>Enable</strong> (Włącz), kliknij go, żeby aktywować wtyczkę.</li>
-        </ol>
-        <figure class="shot" data-img="img/10-install-extension.png">
-          <img src="img/10-install-extension.png" alt="Panel Extensions w VS Code z wyszukanym rozszerzeniem Claude Code for VS Code od Anthropic" onerror="this.closest('.shot').classList.add('noimg');this.remove();">
-          <span class="ph">Zrzut ekranu wkrótce</span>
-          <figcaption><span class="shot-no">Zrzut 6</span> Panel Extensions: wpisz „claude code for vs", wybierz pierwszą pozycję (od Anthropic), kliknij Install, a potem Enable.</figcaption>
-        </figure>
-        <p class="quiet">Wtyczka ma w sobie wszystko, czego trzeba. <strong>Nie musisz otwierać terminala</strong> ani niczego doinstalowywać.</p>
-      </div>
-    </article>
-
-    <!-- KROK 6 -->
-    <article class="step" data-step="5">
-      <div class="step-head">
-        <span class="step-num">6</span>
-        <div class="step-headings">
-          <h2>Zaloguj się swoim kontem Claude</h2>
-          <p class="step-sub">Łączysz wtyczkę z opłaconym kontem.</p>
-        </div>
-        <button class="step-check" type="button"><span class="mk">&#10003;</span><span class="ck-txt">Odhacz</span></button>
-      </div>
-      <div class="step-body">
-        <ol>
-          <li>Poszukaj ikony <strong>Spark</strong> (iskra): jest na lewym pasku (Activity Bar) i w prawym górnym rogu edytora. Kliknij ją, żeby otworzyć panel Claude Code.</li>
-          <li>Kliknij <strong>Sign in</strong>.</li>
-          <li>Otworzy się przeglądarka. Zaloguj się <strong>tym samym kontem Claude</strong>, na którym wykupiłeś subskrypcję, i potwierdź.</li>
-          <li>Wróć do VS Code. Panel pokaże, że jesteś zalogowany. Może pojawić się checklista <strong>Learn Claude Code</strong>, spokojnie możesz ją zamknąć.</li>
-        </ol>
-        <figure class="shot" data-img="img/11-spark.png">
-          <img src="img/11-spark.png" alt="Ikona Spark w prawym górnym rogu edytora VS Code" onerror="this.closest('.shot').classList.add('noimg');this.remove();">
-          <span class="ph">Zrzut ekranu wkrótce</span>
-          <figcaption><span class="shot-no">Zrzut 8</span> Ikona Spark (pomarańczowa iskra) w prawym górnym rogu edytora. Kliknij ją i zaloguj się na swoje konto Claude.</figcaption>
-        </figure>
-        <p class="quiet">Nie widzisz ikony Spark? <strong>Zamknij i otwórz VS Code ponownie</strong>, powinna się pojawić.</p>
-      </div>
-    </article>
-
-    <!-- KROK 7 -->
-    <article class="step" data-step="6">
-      <div class="step-head">
-        <span class="step-num">7</span>
-        <div class="step-headings">
-          <h2>Napisz pierwszą wiadomość do Claude</h2>
-          <p class="step-sub">Sprawdzasz, że wszystko ze sobą gada.</p>
-        </div>
-        <button class="step-check" type="button"><span class="mk">&#10003;</span><span class="ck-txt">Odhacz</span></button>
-      </div>
-      <div class="step-body">
-        <p>W panelu Claude Code, na dole, jest pole tekstowe. Wpisz w nie:</p>
-        <div class="prompt-demo">
-          <div class="pd-top">Panel Claude Code</div>
-          <div class="pd-row">
-            <span class="pd-caret">&gt;</span>
-            <span class="pd-text">cześć, czy mnie słyszysz?</span>
-            <span class="pd-enter">Enter</span>
-          </div>
-        </div>
-        <p>Naciśnij <strong>Enter</strong>. Jeśli Claude odpowie, wszystko działa i jesteś gotowy na warsztaty.</p>
-        <figure class="shot" data-img="img/12-pierwsza-wiadomosc.png">
-          <img src="img/12-pierwsza-wiadomosc.png" alt="Panel Claude Code z wpisaną wiadomością cześć, czy mnie słyszysz?" onerror="this.closest('.shot').classList.add('noimg');this.remove();">
-          <span class="ph">Zrzut ekranu wkrótce</span>
-          <figcaption><span class="shot-no">Zrzut 9</span> Panel Claude Code po prawej: u dołu wpisujesz „cześć, czy mnie słyszysz?" i naciskasz Enter.</figcaption>
-        </figure>
-      </div>
-    </article>
-
-    <div class="finish" id="finish">
-      <div class="eyebrow" id="finish-eyebrow">Prawie gotowe</div>
-      <h3 id="finish-title">Odhacz wszystkie kroki powyżej</h3>
-      <p id="finish-text">Kiedy przejdziesz wszystkie siedem punktów, będziesz w pełni gotowy na warsztaty. Nie spiesz się, w razie problemu wróć tu w każdej chwili, postęp się zapisuje.</p>
-    </div>
-
-    <!-- ===================== DODATKOWO (OPCJONALNE) ===================== -->
-    <section class="opt-section" id="dodatkowo">
-      <div class="opt-head">
-        <div class="eyebrow">Dodatkowo · opcjonalne</div>
-        <h2 class="opt-title">Narzędzia, które <mark>ułatwiają pracę</mark></h2>
-        <p class="opt-lead">Tych rzeczy nie musisz mieć na start warsztatów. Możesz je zainstalować teraz albo wrócić do nich później, kiedy zechcesz wycisnąć z agenta więcej. Na warsztatach pokażę, jak z nich korzystać.</p>
-      </div>
-
-      <!-- OPC 1: Obsidian -->
-      <article class="step optional" data-opt="0">
-        <div class="step-head">
-          <span class="step-num">+</span>
-          <div class="step-headings">
-            <span class="opt-tag">Opcjonalne</span>
-            <h2>Zainstaluj Obsidian</h2>
-            <p class="step-sub">Notatnik na Twoją wiedzę i pomysły.</p>
-          </div>
-          <button class="step-check" type="button"><span class="mk">&#10003;</span><span class="ck-txt">Odhacz</span></button>
-        </div>
-        <div class="step-body">
-          <p>Obsidian to darmowy program do notatek w zwykłych plikach tekstowych. Przyda się, żeby trzymać w jednym miejscu pomysły, prompty i materiały, które potem podsuwasz Claude.</p>
-          <ol>
-            <li>Wejdź na <strong>obsidian.md</strong> i kliknij <strong>Download</strong> (strona sama wykryje Twój system).</li>
-            <li>Zainstaluj tak samo jak VS Code: na Macu przeciągnij do folderu <strong>Aplikacje</strong>, na Windowsie uruchom pobrany instalator.</li>
-          </ol>
-          <div class="step-actions">
-            <a class="bigbtn primary" href="https://obsidian.md/download" target="_blank" rel="noopener">Pobierz Obsidian <span class="ar">&rarr;</span></a>
-          </div>
-          <figure class="shot" data-img="img/13-obsidian.png">
-            <img src="img/13-obsidian.png?v=1" alt="Strona pobierania Obsidian z przyciskiem Download" onerror="this.closest('.shot').classList.add('noimg');this.remove();">
-            <span class="ph">Zrzut ekranu wkrótce</span>
-            <figcaption>Strona obsidian.md, fioletowy przycisk „Download" na środku pobiera wersję dla Twojego systemu.</figcaption>
-          </figure>
-        </div>
-      </article>
-
-      <!-- OPC 2: Wispr Flow -->
-      <article class="step optional" data-opt="1">
-        <div class="step-head">
-          <span class="step-num">+</span>
-          <div class="step-headings">
-            <span class="opt-tag">Opcjonalne</span>
-            <h2>Zainstaluj Wispr Flow</h2>
-            <p class="step-sub">Mówisz do komputera zamiast pisać.</p>
-          </div>
-          <button class="step-check" type="button"><span class="mk">&#10003;</span><span class="ck-txt">Odhacz</span></button>
-        </div>
-        <div class="step-body">
-          <p>Wispr Flow zamienia Twój głos na tekst w dowolnym polu, także w rozmowie z Claude. Zamiast wystukiwać długie polecenia, po prostu je mówisz. Działa na Macu i Windowsie.</p>
-          <ol>
-            <li>Kliknij przycisk poniżej (mój link), pobierz aplikację dla swojego systemu i zainstaluj.</li>
-            <li>Uruchom Wispr Flow i przejdź krótką konfigurację mikrofonu.</li>
-          </ol>
-          <div class="step-actions">
-            <a class="bigbtn primary" href="https://wisprflow.ai/r?MIKI17" target="_blank" rel="noopener">Pobierz Wispr Flow <span class="ar">&rarr;</span></a>
-          </div>
-          <p class="quiet">Pobranie przez ten link daje <mark>30 dni okresu próbnego</mark> zamiast standardowych 14. To mój link polecający.</p>
-          <figure class="shot" data-img="img/14-wisprflow.png">
-            <img src="img/14-wisprflow.png?v=1" alt="Strona Wispr Flow z hasłem Don't type, just speak i przyciskiem Download for free" onerror="this.closest('.shot').classList.add('noimg');this.remove();">
-            <span class="ph">Zrzut ekranu wkrótce</span>
-            <figcaption>Strona Wispr Flow, przycisk „Download for free" pobiera aplikację (dostępna na Mac i Windows).</figcaption>
-          </figure>
-        </div>
-      </article>
-
-      <!-- OPC 3: GitHub -->
-      <article class="step optional" data-opt="2">
-        <div class="step-head">
-          <span class="step-num">+</span>
-          <div class="step-headings">
-            <span class="opt-tag">Opcjonalne</span>
-            <h2>Załóż darmowe konto na GitHubie</h2>
-            <p class="step-sub">Miejsce, do którego wyślesz swoje projekty.</p>
-          </div>
-          <button class="step-check" type="button"><span class="mk">&#10003;</span><span class="ck-txt">Odhacz</span></button>
-        </div>
-        <div class="step-body">
-          <p>GitHub to miejsce w sieci, gdzie przechowujesz i wersjonujesz swoje projekty. Na warsztatach zrobisz pierwszy „push", czyli wyślesz swój folder do GitHuba. Wystarczy darmowe konto, załóż je wcześniej, żeby nie tracić na to czasu na żywo.</p>
-          <ol>
-            <li>Wejdź na <strong>github.com/signup</strong>.</li>
-            <li>Podaj <strong>e-mail</strong>, wymyśl <strong>hasło</strong> i <strong>nazwę użytkownika</strong> (username).</li>
-            <li>Potwierdź konto, klikając link w mailu, który przyśle Ci GitHub.</li>
-          </ol>
-          <div class="step-actions">
-            <a class="bigbtn primary" href="https://github.com/signup" target="_blank" rel="noopener">Załóż konto na GitHubie <span class="ar">&rarr;</span></a>
-          </div>
-          <figure class="shot" data-img="img/15-github.png">
-            <img src="img/15-github.png?v=1" alt="Formularz rejestracji GitHub: pola e-mail, hasło, nazwa użytkownika" onerror="this.closest('.shot').classList.add('noimg');this.remove();">
-            <span class="ph">Zrzut ekranu wkrótce</span>
-            <figcaption>Formularz „Create your free account": wpisujesz e-mail, hasło i nazwę użytkownika, resztę klikasz dalej.</figcaption>
-          </figure>
-        </div>
-      </article>
     </section>
 
-    <div class="footer-row">
-      <span>Claudemaster · Przygotowanie do warsztatów</span>
-      <button class="reset-btn" id="reset" type="button">Wyczyść mój postęp</button>
-    </div>
-
+    <footer>Claudemaster · zadania praktyczne. Nowe dochodzą co jakiś czas.</footer>
   </div>
-</main>
-
-<script>
-(function(){
-  "use strict";
-
-  /* ---------- BRAMKA HASŁEM (grzecznościowa) ---------- */
-  var PASSWORD = "claudemaster";           // hasło jest w kodzie: to celowo lekka bramka, nie realne zabezpieczenie
-  var GATE_KEY = "cm_przygotowanie_gate";
-  var gate = document.getElementById("gate");
-  var app = document.getElementById("app");
-  var form = document.getElementById("gate-form");
-  var input = document.getElementById("gate-input");
-  var gerror = document.getElementById("gate-error");
-
-  function unlock(){
-    gate.style.display = "none";
-    app.hidden = false;
-  }
-  try { if (sessionStorage.getItem(GATE_KEY) === "1") unlock(); } catch(e){}
-
-  form.addEventListener("submit", function(ev){
-    ev.preventDefault();
-    if (input.value.trim().toLowerCase() === PASSWORD){
-      try { sessionStorage.setItem(GATE_KEY, "1"); } catch(e){}
-      gerror.hidden = true;
-      unlock();
-    } else {
-      gerror.hidden = false;
-      input.value = "";
-      input.focus();
-    }
-  });
-
-  /* ---------- WYBÓR SYSTEMU (Mac/Windows): wspólny dla całej strony i zapamiętany ---------- */
-  var OS_KEY = "cm_przygotowanie_os";
-  function detectOS(){
-    var s = ((navigator.userAgent || "") + " " + (navigator.platform || "")).toLowerCase();
-    return s.indexOf("win") !== -1 ? "win" : "mac";
-  }
-  function currentOS(){
-    try { var v = localStorage.getItem(OS_KEY); if (v === "mac" || v === "win") return v; } catch(e){}
-    return detectOS();
-  }
-  function renumberShots(){
-    var n = 0;
-    Array.prototype.forEach.call(document.querySelectorAll(".shot"), function(fig){
-      var noEl = fig.querySelector(".shot-no");
-      if (!noEl) return;
-      if (getComputedStyle(fig).display === "none") return;   // pomiń zrzut schowany przez wybór systemu
-      n++;
-      noEl.textContent = "Zrzut " + n;
-    });
-  }
-  function setOS(os){
-    document.body.setAttribute("data-os", os);
-    try { localStorage.setItem(OS_KEY, os); } catch(e){}
-    renumberShots();
-  }
-  Array.prototype.forEach.call(document.querySelectorAll("[data-os-set]"), function(btn){
-    btn.addEventListener("click", function(){ setOS(btn.getAttribute("data-os-set")); });
-  });
-  setOS(currentOS());
-
-  /* ---------- POSTĘP (localStorage, wzorzec z app.html) ---------- */
-  var KEY = "cm_przygotowanie";
-  var steps = Array.prototype.slice.call(document.querySelectorAll(".step:not(.optional)"));
-  var TOTAL = steps.length;
-  var pbar = document.getElementById("pbar");
-  var plabel = document.getElementById("plabel");
-  var finish = document.getElementById("finish");
-  var finishEyebrow = document.getElementById("finish-eyebrow");
-  var finishTitle = document.getElementById("finish-title");
-  var finishText = document.getElementById("finish-text");
-
-  var state = load();
-  function load(){
-    try { var s = JSON.parse(localStorage.getItem(KEY) || "{}"); if (!s.checked) s.checked = []; return s; }
-    catch(e){ return { checked: [] }; }
-  }
-  function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){} }
-
-  function isDone(i){ return state.checked.indexOf(i) !== -1; }
-  function toggle(i){
-    var idx = state.checked.indexOf(i);
-    if (idx === -1) state.checked.push(i); else state.checked.splice(idx, 1);
-    save();
-    render();
-  }
-
-  function render(){
-    var done = 0;
-    steps.forEach(function(step, i){
-      var on = isDone(i);
-      if (on) done++;
-      step.classList.toggle("done", on);
-      var txt = step.querySelector(".ck-txt");
-      if (txt) txt.textContent = on ? "Zrobione" : "Odhacz";
-    });
-    var pct = TOTAL ? Math.round(done / TOTAL * 100) : 0;
-    pbar.style.width = pct + "%";
-    plabel.textContent = done + " z " + TOTAL + " gotowe";
-
-    var all = done === TOTAL;
-    finish.classList.toggle("all-done", all);
-    if (all){
-      finishEyebrow.textContent = "Gotowe";
-      finishTitle.textContent = "Wszystko gotowe. Do zobaczenia na warsztatach.";
-      finishText.textContent = "Świetna robota. Masz komplet: konto, VS Code, wtyczkę i pierwszą rozmowę z Claude. Reszta dzieje się na żywo, do zobaczenia.";
-    } else {
-      finishEyebrow.textContent = "Prawie gotowe";
-      finishTitle.textContent = "Odhacz wszystkie kroki powyżej";
-      finishText.textContent = "Kiedy przejdziesz wszystkie siedem punktów, będziesz w pełni gotowy na warsztaty. Nie spiesz się, w razie problemu wróć tu w każdej chwili, postęp się zapisuje.";
-    }
-  }
-
-  steps.forEach(function(step, i){
-    var btn = step.querySelector(".step-check");
-    if (btn) btn.addEventListener("click", function(){ toggle(i); });
-  });
-
-  /* ---------- KROKI OPCJONALNE (osobny stan, nie liczą się do 7) ---------- */
-  var OPT_KEY = "cm_przygotowanie_opt";
-  var osteps = Array.prototype.slice.call(document.querySelectorAll(".step.optional"));
-  var optState = loadOpt();
-  function loadOpt(){
-    try { var s = JSON.parse(localStorage.getItem(OPT_KEY) || "{}"); if (!s.checked) s.checked = []; return s; }
-    catch(e){ return { checked: [] }; }
-  }
-  function saveOpt(){ try { localStorage.setItem(OPT_KEY, JSON.stringify(optState)); } catch(e){} }
-  function renderOpt(){
-    osteps.forEach(function(step, i){
-      var on = optState.checked.indexOf(i) !== -1;
-      step.classList.toggle("done", on);
-      var txt = step.querySelector(".ck-txt");
-      if (txt) txt.textContent = on ? "Zrobione" : "Odhacz";
-    });
-  }
-  osteps.forEach(function(step, i){
-    var btn = step.querySelector(".step-check");
-    if (btn) btn.addEventListener("click", function(){
-      var idx = optState.checked.indexOf(i);
-      if (idx === -1) optState.checked.push(i); else optState.checked.splice(idx, 1);
-      saveOpt();
-      renderOpt();
-    });
-  });
-
-  document.getElementById("reset").addEventListener("click", function(){
-    if (confirm("Na pewno wyczyścić cały postęp?")){
-      state = { checked: [] };
-      save();
-      render();
-      optState = { checked: [] };
-      saveOpt();
-      renderOpt();
-    }
-  });
-
-  render();
-  renderOpt();
-})();
-</script>
 </body>
 </html>
