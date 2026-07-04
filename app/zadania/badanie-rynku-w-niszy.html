@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Claudemaster · Misja: Badanie rynku w niszy</title>
+<meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet">
@@ -74,7 +75,7 @@ const MISJA = {
 
   // Feedback od wczesnych użytkowników (leci mailem przez Web3Forms, jak app/opinie).
   feedbackTytul: "Jak Ci poszło z tym zadaniem?",
-  feedbackOpis: "To jedno z pierwszych zadań, które testujemy na żywo. Napisz mi szczerze, co było jasne, gdzie coś zgrzytnęło i czego zabrakło. Z takich uwag robię kolejne wersje lepszymi.",
+  feedbackOpis: "Napisz szczerze, co było jasne, co nie, gdzie utknąłeś. Z góry dzięki",
   feedbackPlaceholder: "np. Zaciąłem się, gdy trzeba było odpalić pięciu badaczy naraz, bo…",
   feedbackEmailLabel: "E-mail (opcjonalnie, gdybym chciał dopytać)",
   feedbackWyslij: "Wyślij feedback",
@@ -125,6 +126,21 @@ const MISJA = {
     background-image:radial-gradient(var(--grid) 1px, transparent 1.3px);
     background-size:22px 22px;}
   .wrap{max-width:1120px;margin:0 auto;padding:0 40px}
+
+  /* ===== BRAMKA HASŁEM (bramka grzecznościowa, nie realne zabezpieczenie) ===== */
+  .gate{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:24px;
+    background-color:var(--paper);
+    background-image:radial-gradient(var(--grid) 1px, transparent 1.3px);background-size:22px 22px}
+  .gate-card{width:100%;max-width:430px;background:var(--paper-card);border:1.5px solid var(--ink);padding:34px 30px;
+    box-shadow:8px 8px 0 var(--ink)}
+  .gate-card h1{font-size:26px;font-weight:600;letter-spacing:-.01em;margin:12px 0 8px;line-height:1.1}
+  .gate-card p{font-size:15px;color:var(--ink-80);margin-bottom:22px}
+  .gate-form{display:flex;flex-direction:column;gap:12px}
+  .gate-form input{font:inherit;font-size:16px;padding:13px 15px;border:1.5px solid var(--ink);background:#fff;color:var(--ink)}
+  .gate-form input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%,transparent)}
+  .gate-error{color:var(--bad);font-size:13.5px;font-weight:600;margin-top:6px}
+  .gate-foot{margin-top:20px;font-size:12px;color:var(--muted)}
+  .gate .ar{font-size:15px}
 
   .nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:20px;
     padding:15px 40px;background:color-mix(in srgb,var(--paper) 86%,transparent);
@@ -249,6 +265,22 @@ const MISJA = {
 </head>
 <body>
 
+<!-- ===================== BRAMKA HASŁEM ===================== -->
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <div class="eyebrow">Materiały dla uczestników</div>
+    <h1>Zadania praktyczne</h1>
+    <p>Ta strona jest dla osób, które kupiły dostęp do Claudemaster. Wpisz hasło, które dostałeś w mailu.</p>
+    <form class="gate-form" id="gate-form" autocomplete="off">
+      <input type="password" id="gate-input" placeholder="Hasło" aria-label="Hasło" autofocus>
+      <button class="bigbtn primary" type="submit">Wejdź <span class="ar">&rarr;</span></button>
+      <p class="gate-error" id="gate-error" hidden>Nieprawidłowe hasło. Sprawdź mail od nas.</p>
+    </form>
+    <p class="gate-foot">Nie masz hasła? Znajdziesz je w pierwszym mailu po zakupie.</p>
+  </div>
+</div>
+
+<main id="app" hidden>
 <nav class="nav">
   <span class="brand">
     <svg width="30" height="30" viewBox="0 0 40 40" aria-hidden="true"><circle cx="19" cy="21" r="15" fill="none" stroke="#1B1A17" stroke-width="2"/><text x="19" y="27" font-family="Funnel Sans" font-weight="700" font-size="17" text-anchor="middle" fill="#1B1A17">m</text><circle cx="32" cy="8" r="5" fill="#DB511D"/></svg>
@@ -333,8 +365,9 @@ const MISJA = {
     <div class="fb-sent" id="fb-sent"></div>
   </section>
 
-  <footer>Claudemaster · makieta strony misji. Plik roboczy, lokalny.</footer>
+  <footer>Claudemaster · zadania praktyczne.</footer>
 </div>
+</main>
 
 <!-- === ZAWARTOŚĆ PLIKÓW FOLDERU (podgląd w eksplorerze, z ogonkami) ===== -->
 <script type="text/plain" class="vfile" data-path="START-TUTAJ-usun.md">
@@ -599,6 +632,36 @@ Po odpaleniu researchu znajdziesz tu: streszczenie rynku, sekcje gracze, ceny, o
   // Redirect = ta sama strona na bieżącej domenie (bez hardkodowania claudemaster.pl).
   $('fb-redirect').value = location.origin + location.pathname + '?ok=1';
   form.addEventListener('submit', function(){ btn.textContent = 'Wysyłam…'; });
+})();
+</script>
+
+<script>
+(function(){
+  "use strict";
+  /* ---------- BRAMKA HASŁEM (grzecznościowa, wspólna dla całego /app) ---------- */
+  var PASSWORD = "claudemaster";
+  var GATE_KEY = "cm_app_gate";
+  var gate = document.getElementById("gate");
+  var app = document.getElementById("app");
+  var form = document.getElementById("gate-form");
+  var input = document.getElementById("gate-input");
+  var gerror = document.getElementById("gate-error");
+
+  function unlock(){ gate.style.display = "none"; app.hidden = false; }
+  try { if (sessionStorage.getItem(GATE_KEY) === "1") unlock(); } catch(e){}
+
+  form.addEventListener("submit", function(ev){
+    ev.preventDefault();
+    if (input.value.trim().toLowerCase() === PASSWORD){
+      try { sessionStorage.setItem(GATE_KEY, "1"); } catch(e){}
+      gerror.hidden = true;
+      unlock();
+    } else {
+      gerror.hidden = false;
+      input.value = "";
+      input.focus();
+    }
+  });
 })();
 </script>
 </body>
