@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Polityka Prywatności · claudemaster</title>
+<meta name="description" content="Polityka prywatności Claudemaster: jak przetwarzamy dane osobowe w związku z kursem online, warsztatami na żywo i społecznością.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#DB511D">
+<link rel="icon" href="../img/hero2.png">
+<link rel="apple-touch-icon" href="../img/hero2.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   claudemaster — Polityka Prywatności (samowystarczalna podstrona)
+   Branding: papier #ECE7DE · pomarańcz #DB511D · żółty #F0BE12 · atrament #1B1A17
+   Funnel Sans, ostre rogi, siatka kropek, dużo oddechu.
+   ============================================================ */
+:root{
+  --paper:#ECE7DE;
+  --paper-card:#F6F3EC;
+  --ink:#1B1A17;
+  --accent:#DB511D;
+  --accent-2:#F0BE12;
+  --on-accent:#FFFDF7;
+  --accent-deep:color-mix(in srgb,var(--accent) 64%,#000);
+  --hair:color-mix(in srgb,var(--ink) 14%,transparent);
+  --hair-soft:color-mix(in srgb,var(--ink) 8%,transparent);
+  --muted:color-mix(in srgb,var(--ink) 58%,transparent);
+  --ink-80:color-mix(in srgb,var(--ink) 84%,transparent);
+  --grid:color-mix(in srgb,var(--ink) 6%,transparent);
+  --sans:"Funnel Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
+body{margin:0;font-family:var(--sans);line-height:1.62;color:var(--ink);
+  background-color:var(--paper);
+  background-image:radial-gradient(var(--grid) 1px, transparent 1.3px);
+  background-size:24px 24px}
+a{color:inherit}
+h1,h2{text-wrap:balance;margin:0}
+p{text-wrap:pretty;margin:0}
+
+/* ---- top bar ---- */
+.topbar{border-bottom:1.5px solid var(--hair);background:var(--paper-card)}
+.topbar-inner{max-width:840px;margin:0 auto;padding:18px 32px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.back{text-decoration:none;font-size:.82rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);transition:color .15s}
+.back:hover{color:var(--ink)}
+
+/* ---- document ---- */
+.doc{max-width:840px;margin:0 auto;padding:64px 32px 40px}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;text-transform:uppercase;letter-spacing:.16em;
+  font-size:.72rem;font-weight:600;color:var(--muted)}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none}
+h1{font-size:clamp(2.1rem,5vw,3rem);font-weight:700;line-height:1.05;letter-spacing:-.025em;margin:16px 0 0}
+h1 .uline{background:linear-gradient(transparent 68%,var(--accent-2) 68% 92%,transparent 92%);padding:0 .04em}
+.doc-meta{margin:18px 0 0;font-size:.92rem;color:var(--muted)}
+.doc-meta b{color:var(--ink-80);font-weight:700}
+
+.intro{margin:34px 0 0;font-size:1.06rem;line-height:1.6;color:var(--ink-80);max-width:66ch}
+
+/* sekcje */
+section{margin:48px 0 0}
+h2{font-size:1.28rem;font-weight:700;letter-spacing:-.01em;line-height:1.2;margin:0 0 4px;
+  padding-bottom:12px;border-bottom:1.5px solid var(--hair);display:flex;gap:12px;align-items:baseline}
+h2 .no{color:var(--accent);font-weight:800;font-size:.92em;flex:none}
+
+/* listy */
+ol.clauses{list-style:none;counter-reset:cl;margin:20px 0 0;padding:0}
+ol.clauses>li{counter-increment:cl;position:relative;padding:0 0 0 40px;margin:0 0 16px}
+ol.clauses>li::before{content:counter(cl) ".";position:absolute;left:0;top:0;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums}
+ol.sub{list-style:none;counter-reset:sub;margin:12px 0 0;padding:0}
+ol.sub>li{counter-increment:sub;position:relative;padding:0 0 0 36px;margin:0 0 10px}
+ol.sub>li::before{content:counter(sub,decimal) ")";position:absolute;left:0;top:0;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
+.data-list{list-style:none;margin:12px 0 0;padding:0}
+.data-list li{position:relative;padding:0 0 0 18px;margin:0 0 6px;color:var(--ink-80)}
+.data-list li::before{content:"";position:absolute;left:0;top:.72em;width:6px;height:6px;background:var(--accent);flex:none}
+.data-list b{color:var(--ink);font-weight:700}
+strong.term{color:var(--ink);font-weight:700}
+
+/* footer */
+.site-footer{border-top:1.5px solid var(--hair);background:var(--paper-card);padding:30px 32px;margin-top:64px}
+.foot-inner{max-width:840px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:.8rem;letter-spacing:.02em;color:var(--muted)}
+.foot-links{display:flex;gap:22px;flex-wrap:wrap}
+.foot-links a{text-decoration:none;transition:color .15s}
+.foot-links a:hover{color:var(--ink)}
+.site-footer .sep{opacity:.5;margin:0 6px}
+code{background:color-mix(in srgb,var(--ink) 7%,transparent);padding:.05em .4em;border-radius:0;font-size:.92em}
+
+@media(max-width:640px){
+  .doc{padding:44px 22px 32px}
+  .topbar-inner{padding:16px 22px}
+  ol.clauses>li{padding-left:34px}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== TOP BAR ===== -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="back" href="../index.html">← Strona główna</a>
+  </div>
+</div>
+
+<main class="doc">
+  <span class="eyebrow">Dokumenty</span>
+  <h1><span class="uline">Polityka Prywatności</span></h1>
+  <p class="doc-meta"><b>Data wejścia w życie:</b> 17 czerwca 2026 r.</p>
+
+  <p class="intro">Polityka Prywatności opisuje zasady przetwarzania danych osobowych osób korzystających z serwisu oraz produktów Claudemaster: kursu online, warsztatów na żywo oraz społeczności. Znajdziesz w niej informacje o administratorze danych, celach i podstawach przetwarzania, odbiorcach danych oraz przysługujących Ci prawach.</p>
+
+  <section>
+    <h2><span class="no">§1</span> Administrator danych</h2>
+    <ol class="clauses">
+      <li>Administratorem danych osobowych jest Mikołaj Abramczuk, prowadzący indywidualną działalność gospodarczą:
+        <ul class="data-list">
+          <li><b>Nazwa:</b> Mikołaj Abramczuk</li>
+          <li><b>Adres:</b> al. Bohaterów Września 18 lok. 15, 02-389 Warszawa</li>
+          <li><b>NIP:</b> 7011268046, <b>REGON:</b> 542150091</li>
+          <li><b>Adres e-mail:</b> mikolaj@mikolajabramczuk.pl</li>
+        </ul>
+      </li>
+      <li>We wszystkich sprawach dotyczących przetwarzania danych osobowych można kontaktować się z Administratorem pod wskazanym adresem e-mail.</li>
+      <li>Niniejsza Polityka Prywatności opisuje zasady przetwarzania danych osobowych osób korzystających z Serwisu oraz Produktów Claudemaster: Kursu online, Warsztatów na żywo oraz Społeczności. Pojęcia pisane wielką literą mają znaczenie nadane im w <a href="../regulamin/">Regulaminie</a>, chyba że z niniejszej Polityki wynika inaczej.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§2</span> Cele i podstawy prawne przetwarzania danych</h2>
+    <p class="intro" style="margin-top:16px;font-size:1rem">Dane osobowe są przetwarzane w następujących celach:</p>
+    <ol class="clauses">
+      <li><strong class="term">Zawarcie i realizacja Umowy</strong> (zakup Kursu, udział w Warsztatach, dostęp do Społeczności), w tym kontakt w sprawie zamówienia i obsługa reklamacji – podstawa prawna: art. 6 ust. 1 lit. b RODO (niezbędność do wykonania umowy).</li>
+      <li><strong class="term">Rozliczenia i obowiązki podatkowo-księgowe</strong>, w tym wystawianie i przechowywanie faktur – podstawa prawna: art. 6 ust. 1 lit. c RODO (obowiązek prawny ciążący na Administratorze).</li>
+      <li><strong class="term">Prowadzenie Warsztatów na żywo</strong>, w tym udostępnienie danych uczestnikom nawzajem oraz nagrywanie ich przebiegu – podstawa prawna: art. 6 ust. 1 lit. b RODO (wykonanie umowy) oraz art. 6 ust. 1 lit. a RODO (zgoda na utrwalenie wizerunku i głosu, wyrażana przed rozpoczęciem Warsztatów).</li>
+      <li><strong class="term">Prowadzenie Społeczności</strong>, w tym udostępnianie imienia, pseudonimu, awatara i publikowanych treści pozostałym uczestnikom – podstawa prawna: art. 6 ust. 1 lit. b RODO.</li>
+      <li><strong class="term">Marketing bezpośredni własnych produktów i usług</strong> (newsletter, lista rezerwowa, informacje o kolejnych edycjach) – podstawa prawna: art. 6 ust. 1 lit. a RODO (zgoda) lub art. 6 ust. 1 lit. f RODO (prawnie uzasadniony interes Administratora w informowaniu dotychczasowych klientów o podobnych produktach).</li>
+      <li><strong class="term">Analiza statystyczna ruchu w Serwisie</strong>, w celu poprawy jego działania i zawartości – podstawa prawna: art. 6 ust. 1 lit. f RODO (prawnie uzasadniony interes Administratora).</li>
+      <li><strong class="term">Ustalenie, dochodzenie lub obrona przed roszczeniami</strong> – podstawa prawna: art. 6 ust. 1 lit. f RODO.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§3</span> Kategorie przetwarzanych danych</h2>
+    <ol class="clauses">
+      <li>Dane podawane przy zamówieniu: imię i nazwisko, adres e-mail, dane do faktury.</li>
+      <li>Dane podawane przy zapisie na Warsztaty: imię lub pseudonim wskazany przez Uczestnika, a w przypadku włączenia kamery i mikrofonu również wizerunek i głos.</li>
+      <li>Dane związane z korzystaniem ze Społeczności: imię lub pseudonim, awatar, treść publikowanych wiadomości.</li>
+      <li>Dane techniczne zbierane automatycznie: zanonimizowane dane o odsłonach, przybliżonej lokalizacji (kraj), przeglądarce i urządzeniu, opisane w §9.</li>
+      <li>Korespondencja: treść wiadomości przesyłanych do Administratora.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§4</span> Odbiorcy danych</h2>
+    <p class="intro" style="margin-top:16px;font-size:1rem">Dane osobowe mogą być powierzane następującym podmiotom przetwarzającym, w zakresie niezbędnym do realizacji celów wskazanych w §2:</p>
+    <ol class="clauses">
+      <li><strong class="term">Stripe</strong> (Stripe Payments Europe, Ltd.) – obsługa płatności online.</li>
+      <li><strong class="term">MailerLite</strong> (UAB „MailerLite", Litwa) – wysyłka newslettera oraz obsługa listy rezerwowej i zapisów. Dane przetwarzane są na terenie Unii Europejskiej.</li>
+      <li><strong class="term">Zoom</strong> (Zoom Video Communications, Inc.) – prowadzenie Warsztatów w formie wideokonferencji.</li>
+      <li><strong class="term">Discord</strong> (Discord Inc., Discord Netherlands B.V.) – działanie Społeczności.</li>
+      <li><strong class="term">Umami</strong> (Umami Software Inc., wersja chmurowa cloud.umami.is) – anonimowa analiza statystyczna ruchu w Serwisie, bez wykorzystania plików cookie i bez zapisywania adresów IP.</li>
+      <li>Dostawcy hostingu Serwisu (Cloudflare, Hostinger) – utrzymanie infrastruktury technicznej strony internetowej.</li>
+      <li>Biuro rachunkowe oraz dostawcy usług IT wspierający bieżącą działalność Administratora, w zakresie niezbędnym do świadczenia tych usług.</li>
+    </ol>
+    <p class="intro" style="margin-top:8px;font-size:.98rem">Podmioty te przetwarzają dane wyłącznie na udokumentowane polecenie Administratora, na podstawie zawartych z nimi umów powierzenia przetwarzania danych.</p>
+  </section>
+
+  <section>
+    <h2><span class="no">§5</span> Przekazywanie danych poza Europejski Obszar Gospodarczy</h2>
+    <ol class="clauses">
+      <li>Część odbiorców wskazanych w §4 (Stripe, Zoom, Discord, Umami) może przetwarzać dane na serwerach zlokalizowanych poza Europejskim Obszarem Gospodarczym, w szczególności w Stanach Zjednoczonych.</li>
+      <li>W takich przypadkach przekazanie danych odbywa się na podstawie standardowych klauzul umownych zatwierdzonych przez Komisję Europejską lub innego mechanizmu zapewniającego odpowiedni stopień ochrony danych, przewidzianego przepisami RODO.</li>
+      <li>Kopię zabezpieczeń stosowanych przez danego odbiorcę można uzyskać, kontaktując się z Administratorem.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§6</span> Okres przechowywania danych</h2>
+    <ol class="clauses">
+      <li>Dane związane z zawarciem i wykonaniem Umowy przechowywane są przez okres jej trwania, a następnie przez okres przedawnienia roszczeń z niej wynikających.</li>
+      <li>Dane zawarte w dokumentach księgowych (fakturach) przechowywane są przez okres wymagany przepisami prawa podatkowego, co do zasady 5 lat, licząc od końca roku kalendarzowego, w którym powstał obowiązek podatkowy.</li>
+      <li>Nagrania Warsztatów przechowywane są przez okres nie dłuższy niż 12 miesięcy od dnia danej edycji, chyba że dłuższe przechowywanie wynika z konieczności ustalenia, dochodzenia lub obrony przed roszczeniami.</li>
+      <li>Dane związane z uczestnictwem w Społeczności przechowywane są przez okres jej funkcjonowania, do czasu wykluczenia Uczestnika lub zaprzestania prowadzenia Społeczności przez Administratora.</li>
+      <li>Dane przetwarzane na podstawie zgody (newsletter, lista rezerwowa) przechowywane są do czasu wycofania zgody.</li>
+      <li>Dane techniczne zbierane w ramach analizy ruchu przechowywane są w formie zanonimizowanej i nie są powiązane z konkretną osobą.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§7</span> Prawa osób, których dane dotyczą</h2>
+    <ol class="clauses">
+      <li>Osobie, której dane dotyczą, przysługuje prawo do:
+        <ol class="sub">
+          <li>dostępu do swoich danych oraz otrzymania ich kopii;</li>
+          <li>sprostowania (poprawiania) danych;</li>
+          <li>usunięcia danych, w zakresie w jakim nie stoi to w sprzeczności z obowiązkami prawnymi Administratora;</li>
+          <li>ograniczenia przetwarzania danych;</li>
+          <li>przenoszenia danych;</li>
+          <li>wniesienia sprzeciwu wobec przetwarzania danych opartego na art. 6 ust. 1 lit. f RODO, w tym wobec profilowania i marketingu bezpośredniego;</li>
+          <li>cofnięcia zgody w dowolnym momencie, bez wpływu na zgodność z prawem przetwarzania dokonanego przed jej cofnięciem;</li>
+          <li>wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych (ul. Stawki 2, 00-193 Warszawa).</li>
+        </ol>
+      </li>
+      <li>W celu skorzystania z powyższych praw należy skontaktować się z Administratorem pod adresem e-mail wskazanym w §1.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§8</span> Dobrowolność podania danych</h2>
+    <ol class="clauses">
+      <li>Podanie danych osobowych jest dobrowolne, jednak niezbędne do zawarcia i realizacji Umowy, udziału w Warsztatach lub korzystania ze Społeczności. Odmowa podania danych może uniemożliwić skorzystanie z danego Produktu.</li>
+      <li>Podanie danych w celach marketingowych (newsletter, lista rezerwowa) jest dobrowolne i nie warunkuje zawarcia Umowy.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§9</span> Pliki cookies i analiza ruchu</h2>
+    <ol class="clauses">
+      <li>Serwis wykorzystuje narzędzie analityczne Umami do zbierania anonimowych, zbiorczych statystyk odwiedzin (liczba odsłon, kraj, typ przeglądarki i urządzenia, źródło ruchu). Narzędzie to nie wykorzystuje plików cookie, nie zapisuje adresów IP i nie umożliwia identyfikacji konkretnej osoby.</li>
+      <li>Serwis nie wykorzystuje plików cookie do celów marketingowych ani do śledzenia użytkowników między stronami internetowymi.</li>
+      <li>W ramach materiałów udostępnianych po zakupie (np. checklisty postępu) Serwis może zapisywać dane wyłącznie lokalnie w przeglądarce Klienta (localStorage), bez przesyłania ich do Administratora.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§10</span> Warsztaty na żywo, wizerunek i głos uczestników</h2>
+    <ol class="clauses">
+      <li>Zasady dotyczące widoczności danych uczestników Warsztatów nawzajem, nagrywania Warsztatów oraz zgody na utrwalenie wizerunku i głosu określa <a href="../regulamin/">Regulamin</a> (§8).</li>
+      <li>Nagranie Warsztatów udostępniane jest wyłącznie uczestnikom danej edycji i nie jest wykorzystywane do celów promocyjnych ani do dalszej sprzedaży.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§11</span> Społeczność</h2>
+    <ol class="clauses">
+      <li>Imię lub pseudonim, awatar oraz treści publikowane przez Uczestnika w Społeczności są widoczne dla pozostałych jej członków.</li>
+      <li>Społeczność działa na platformie Discord, w związku z czym zastosowanie mają również zasady przetwarzania danych stosowane przez Discord Inc.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§12</span> Bezpieczeństwo danych</h2>
+    <ol class="clauses">
+      <li>Administrator stosuje środki techniczne i organizacyjne zapewniające ochronę przetwarzanych danych osobowych, odpowiednie do zagrożeń oraz kategorii danych objętych ochroną, w tym zabezpiecza dane przed dostępem osób nieuprawnionych.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§13</span> Zmiany Polityki Prywatności</h2>
+    <ol class="clauses">
+      <li>Administrator może zmienić Politykę Prywatności, w szczególności w związku ze zmianą przepisów prawa, zakresu usług lub wykorzystywanych narzędzi.</li>
+      <li>O zmianie Administrator informuje poprzez opublikowanie nowej wersji Polityki Prywatności w Serwisie, ze wskazaniem daty jej wejścia w życie.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§14</span> Postanowienia końcowe</h2>
+    <ol class="clauses">
+      <li>Polityka Prywatności obowiązuje od dnia 17 czerwca 2026 r.</li>
+    </ol>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="foot-inner">
+    <div class="foot-links">
+      <a href="../index.html">Strona główna</a>
+      <a href="../regulamin/">Regulamin</a>
+    </div>
+  </div>
+  <div class="foot-inner" style="margin-top:14px"><div>© 2026 Mikołaj Abramczuk. <span class="sep">|</span> Chłopski Rozum.ai.</div></div>
+</footer>
+
+</body>
+</html>

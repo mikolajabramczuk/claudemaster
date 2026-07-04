@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regulamin · claudemaster</title>
+<meta name="description" content="Regulamin sprzedaży i świadczenia usług Claudemaster: kurs online, warsztaty na żywo i społeczność.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#DB511D">
+<link rel="icon" href="../img/hero2.png">
+<link rel="apple-touch-icon" href="../img/hero2.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   claudemaster — Regulamin (samowystarczalna podstrona)
+   Branding: papier #ECE7DE · pomarańcz #DB511D · żółty #F0BE12 · atrament #1B1A17
+   Funnel Sans, ostre rogi, siatka kropek, dużo oddechu.
+   ============================================================ */
+:root{
+  --paper:#ECE7DE;
+  --paper-card:#F6F3EC;
+  --ink:#1B1A17;
+  --accent:#DB511D;
+  --accent-2:#F0BE12;
+  --on-accent:#FFFDF7;
+  --accent-deep:color-mix(in srgb,var(--accent) 64%,#000);
+  --hair:color-mix(in srgb,var(--ink) 14%,transparent);
+  --hair-soft:color-mix(in srgb,var(--ink) 8%,transparent);
+  --muted:color-mix(in srgb,var(--ink) 58%,transparent);
+  --ink-80:color-mix(in srgb,var(--ink) 84%,transparent);
+  --grid:color-mix(in srgb,var(--ink) 6%,transparent);
+  --sans:"Funnel Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
+body{margin:0;font-family:var(--sans);line-height:1.62;color:var(--ink);
+  background-color:var(--paper);
+  background-image:radial-gradient(var(--grid) 1px, transparent 1.3px);
+  background-size:24px 24px}
+a{color:inherit}
+h1,h2{text-wrap:balance;margin:0}
+p{text-wrap:pretty;margin:0}
+
+/* ---- top bar ---- */
+.topbar{border-bottom:1.5px solid var(--hair);background:var(--paper-card)}
+.topbar-inner{max-width:840px;margin:0 auto;padding:18px 32px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.brandmark{display:inline-flex;align-items:center;gap:10px}
+.brandmark .mark{width:34px;height:34px;flex:none}
+.wordmark{font-weight:700;font-size:1.02rem;letter-spacing:-.01em}
+.wordmark b{color:var(--accent);font-weight:800}
+.back{text-decoration:none;font-size:.82rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);transition:color .15s}
+.back:hover{color:var(--ink)}
+
+/* ---- document ---- */
+.doc{max-width:840px;margin:0 auto;padding:64px 32px 40px}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;text-transform:uppercase;letter-spacing:.16em;
+  font-size:.72rem;font-weight:600;color:var(--muted)}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none}
+h1{font-size:clamp(2.1rem,5vw,3rem);font-weight:700;line-height:1.05;letter-spacing:-.025em;margin:16px 0 0}
+h1 .uline{background:linear-gradient(transparent 68%,var(--accent-2) 68% 92%,transparent 92%);padding:0 .04em}
+.doc-meta{margin:18px 0 0;font-size:.92rem;color:var(--muted)}
+.doc-meta b{color:var(--ink-80);font-weight:700}
+
+.intro{margin:34px 0 0;font-size:1.06rem;line-height:1.6;color:var(--ink-80);max-width:66ch}
+
+/* sekcje */
+section{margin:48px 0 0}
+h2{font-size:1.28rem;font-weight:700;letter-spacing:-.01em;line-height:1.2;margin:0 0 4px;
+  padding-bottom:12px;border-bottom:1.5px solid var(--hair);display:flex;gap:12px;align-items:baseline}
+h2 .no{color:var(--accent);font-weight:800;font-size:.92em;flex:none}
+
+/* listy */
+ol.clauses{list-style:none;counter-reset:cl;margin:20px 0 0;padding:0}
+ol.clauses>li{counter-increment:cl;position:relative;padding:0 0 0 40px;margin:0 0 16px}
+ol.clauses>li::before{content:counter(cl) ".";position:absolute;left:0;top:0;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums}
+ol.sub{list-style:none;counter-reset:sub;margin:12px 0 0;padding:0}
+ol.sub>li{counter-increment:sub;position:relative;padding:0 0 0 36px;margin:0 0 10px}
+ol.sub>li::before{content:counter(sub,decimal) ")";position:absolute;left:0;top:0;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
+.data-list{list-style:none;margin:12px 0 0;padding:0}
+.data-list li{position:relative;padding:0 0 0 18px;margin:0 0 6px;color:var(--ink-80)}
+.data-list li::before{content:"";position:absolute;left:0;top:.72em;width:6px;height:6px;background:var(--accent);flex:none}
+.data-list b{color:var(--ink);font-weight:700}
+strong.term{color:var(--ink);font-weight:700}
+
+/* załącznik */
+.annex{margin:52px 0 0;background:var(--paper-card);border:1.5px solid var(--hair);padding:28px 30px}
+.annex h2{border-bottom:none;padding-bottom:0;margin-bottom:10px}
+.annex .note{font-size:.92rem;color:var(--muted);margin:0 0 16px;max-width:60ch}
+.annex .form-field{margin:0 0 12px;color:var(--ink-80)}
+.annex .form-field .lbl{display:block;font-weight:600;color:var(--ink);margin-bottom:4px}
+.annex .fill{display:block;border-bottom:1px dashed var(--hair);height:1.3em}
+
+/* footer */
+.site-footer{border-top:1.5px solid var(--hair);background:var(--paper-card);padding:30px 32px;margin-top:64px}
+.foot-inner{max-width:840px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:.8rem;letter-spacing:.02em;color:var(--muted)}
+.foot-links{display:flex;gap:22px;flex-wrap:wrap}
+.foot-links a{text-decoration:none;transition:color .15s}
+.foot-links a:hover{color:var(--ink)}
+.site-footer .sep{opacity:.5;margin:0 6px}
+code{background:color-mix(in srgb,var(--ink) 7%,transparent);padding:.05em .4em;border-radius:0;font-size:.92em}
+
+@media(max-width:640px){
+  .doc{padding:44px 22px 32px}
+  .topbar-inner{padding:16px 22px}
+  ol.clauses>li{padding-left:34px}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== TOP BAR ===== -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="back" href="../index.html">← Strona główna</a>
+  </div>
+</div>
+
+<main class="doc">
+  <span class="eyebrow">Dokumenty</span>
+  <h1><span class="uline">Regulamin</span></h1>
+  <p class="doc-meta"><b>Data wejścia w życie:</b> 17 czerwca 2026 r.</p>
+
+  <p class="intro">Regulamin określa zasady sprzedaży produktów i świadczenia usług drogą elektroniczną w ramach marki Claudemaster: kursu online, warsztatów na żywo oraz dostępu do społeczności. Znajdziesz w nim informacje o zawieraniu umowy, płatnościach, prawie odstąpienia, reklamacjach i ochronie danych.</p>
+
+  <section>
+    <h2><span class="no">§1</span> Postanowienia ogólne</h2>
+    <ol class="clauses">
+      <li>Regulamin określa zasady sprzedaży produktów i świadczenia usług drogą elektroniczną w ramach marki Claudemaster, a także prawa i obowiązki Klienta oraz Sprzedawcy.</li>
+      <li>Sprzedawcą i usługodawcą jest Mikołaj Abramczuk, prowadzący indywidualną działalność gospodarczą:
+        <ul class="data-list">
+          <li><b>Nazwa:</b> Mikołaj Abramczuk</li>
+          <li><b>Adres:</b> al. Bohaterów Września 18 lok. 15, 02-389 Warszawa</li>
+          <li><b>NIP:</b> 7011268046, <b>REGON:</b> 542150091</li>
+          <li><b>Adres e-mail:</b> mikolaj@mikolajabramczuk.pl</li>
+          <li><b>Adres do reklamacji i korespondencji:</b> al. Bohaterów Września 18 lok. 15, 02-389 Warszawa</li>
+        </ul>
+      </li>
+      <li>Kontakt ze Sprzedawcą odbywa się pod wskazanym adresem e-mail.</li>
+      <li>Regulamin jest udostępniany nieodpłatnie w sposób umożliwiający jego pozyskanie, odtworzenie i utrwalenie przed zawarciem umowy.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§2</span> Definicje</h2>
+    <p class="intro" style="margin-top:16px;font-size:1rem">Użyte w Regulaminie pojęcia oznaczają:</p>
+    <ol class="clauses">
+      <li><strong class="term">Sprzedawca</strong> – podmiot wskazany w §1 ust. 2.</li>
+      <li><strong class="term">Klient</strong> – osoba fizyczna, prawna lub jednostka organizacyjna, która zawiera ze Sprzedawcą umowę lub korzysta z Serwisu.</li>
+      <li><strong class="term">Konsument</strong> – Klient będący osobą fizyczną, dokonujący czynności prawnej niezwiązanej bezpośrednio z jego działalnością gospodarczą lub zawodową.</li>
+      <li><strong class="term">Przedsiębiorca na prawach konsumenta (PPK)</strong> – osoba fizyczna zawierająca umowę bezpośrednio związaną z jej działalnością gospodarczą, gdy z treści umowy wynika, że nie ma ona dla tej osoby charakteru zawodowego. Do PPK stosuje się przepisy o ochronie konsumenta we wskazanym prawem zakresie.</li>
+      <li><strong class="term">Kurs</strong> – nagrany kurs online (treść cyfrowa), oferowany aktualnie w przedsprzedaży.</li>
+      <li><strong class="term">Warsztaty</strong> – odpłatne zajęcia prowadzone na żywo w formie online, w oznaczonym terminie, w grupie o ograniczonej liczbie miejsc.</li>
+      <li><strong class="term">Społeczność</strong> – grupa dla uczestników, umożliwiająca kontakt, wymianę wiedzy i wzajemną pomoc.</li>
+      <li><strong class="term">Serwis</strong> – strona internetowa i aplikacja Claudemaster.</li>
+      <li><strong class="term">Produkt</strong> – Kurs, Warsztaty lub dostęp do Społeczności.</li>
+      <li><strong class="term">Treść cyfrowa</strong> – dane wytwarzane i dostarczane w postaci cyfrowej, w tym nagrania, pliki i dostęp do platformy.</li>
+      <li><strong class="term">Operator płatności</strong> – podmiot obsługujący płatności elektroniczne, wskazany w §6.</li>
+      <li><strong class="term">Trwały nośnik</strong> – materiał lub narzędzie umożliwiające przechowywanie i odtwarzanie informacji (na przykład wiadomość e-mail).</li>
+      <li><strong class="term">Umowa</strong> – umowa sprzedaży Produktu lub o świadczenie usługi, zawierana między Klientem a Sprzedawcą na odległość.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§3</span> Rodzaje i zakres usług</h2>
+    <ol class="clauses">
+      <li>Sprzedawca oferuje:
+        <ol class="sub">
+          <li>sprzedaż Kursu online, obecnie w przedsprzedaży, z dostępem udostępnianym w terminie określonym w §7;</li>
+          <li>sprzedaż udziału w Warsztatach prowadzonych na żywo, w oznaczonym terminie, w grupie o ograniczonej liczbie miejsc podawanej przy danej edycji;</li>
+          <li>dostęp do Społeczności;</li>
+          <li>usługi Serwisu, w tym prowadzenie konta i newsletter, jeżeli Klient z nich korzysta.</li>
+        </ol>
+      </li>
+      <li>Główne cechy każdego Produktu, w tym jego zakres, formę i czas dostępu, Sprzedawca określa w opisie przy sprzedaży oraz w dalszych postanowieniach Regulaminu.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§4</span> Wymagania techniczne</h2>
+    <ol class="clauses">
+      <li>Do korzystania z Produktów i Serwisu niezbędne są: urządzenie z dostępem do internetu, aktualna przeglądarka internetowa oraz aktywny adres e-mail.</li>
+      <li>Udział w Warsztatach wymaga dodatkowo stabilnego łącza internetowego, mikrofonu oraz konta na platformie do wideokonferencji wskazanej przez Sprzedawcę przed Warsztatami.</li>
+      <li>Za sprzęt i łącze po stronie Klienta odpowiada Klient. Problemy techniczne leżące po stronie Klienta nie stanowią podstawy do zwrotu.</li>
+      <li>Klienta obowiązuje zakaz dostarczania treści o charakterze bezprawnym.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§5</span> Zawarcie umowy</h2>
+    <ol class="clauses">
+      <li>Zawarcie Umowy następuje w następujących krokach:
+        <ol class="sub">
+          <li>wybór Produktu i przejście do zamówienia;</li>
+          <li>podanie danych niezbędnych do realizacji zamówienia i wystawienia faktury;</li>
+          <li>zaznaczenie wymaganych zgód, w tym akceptacji Regulaminu i Polityki Prywatności;</li>
+          <li>potwierdzenie zamówienia przyciskiem oznaczonym jako „Kupuję i płacę" lub równoważnym, jednoznacznie wskazującym obowiązek zapłaty, oraz dokonanie płatności.</li>
+        </ol>
+      </li>
+      <li>Umowa zostaje zawarta w chwili skutecznego złożenia i opłacenia zamówienia.</li>
+      <li>Niezwłocznie po zawarciu Umowy Sprzedawca przesyła Klientowi na trwałym nośniku potwierdzenie zawarcia Umowy, obejmujące przedmiot zamówienia, cenę, termin i sposób udostępnienia oraz pouczenie o prawie odstąpienia.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§6</span> Ceny i płatności</h2>
+    <ol class="clauses">
+      <li>Ceny w Serwisie podawane są w złotych polskich i stanowią ceny końcowe należne od Klienta.</li>
+      <li>Sprzedawca korzysta ze zwolnienia z podatku VAT. Podane ceny są cenami końcowymi.</li>
+      <li>Płatności realizowane są online, za pośrednictwem Operatora płatności Stripe (Stripe Payments Europe, Ltd.). Płatność obsługuje Operator płatności na zasadach określonych w jego regulaminie.</li>
+      <li>Fakturę Sprzedawca wystawia na dane wskazane przez Klienta w zamówieniu.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§7</span> Kurs online i przedsprzedaż</h2>
+    <ol class="clauses">
+      <li>Kurs oferowany jest w przedsprzedaży. Klient dokonuje płatności z góry, a dostęp do Kursu zostaje udostępniony w terminie określonym w ust. 2. Zakres Kursu na dzień zakupu Sprzedawca określa w opisie przy sprzedaży.</li>
+      <li>Sprzedawca udostępni pełny dostęp do Kursu najpóźniej do 15 sierpnia 2026 r. W razie konieczności zmiany terminu Sprzedawca poinformuje Klienta drogą e-mail i wskaże nowy termin. Jeżeli nowy termin nie odpowiada Klientowi, może on odstąpić od Umowy i otrzymać zwrot całej wpłaty.</li>
+      <li>Jeżeli Kurs ostatecznie nie powstanie lub Sprzedawca zrezygnuje z jego udostępnienia, Sprzedawca zwraca Klientowi całą wpłatę tą samą metodą płatności, najpóźniej w terminie 14 dni.</li>
+      <li>Sprzedawca może rozwijać i aktualizować program Kursu, z zastrzeżeniem zachowania jego istotnych, obiecanych cech (zakresu tematycznego i formy). W przypadku istotnego ograniczenia zakresu względem stanu z dnia zakupu Klientowi przysługuje prawo rezygnacji i zwrotu wpłaty.</li>
+      <li>Cena przedsprzedażowa (early bird) obowiązuje do 14 lipca 2026 r. Po tym terminie obowiązuje cena regularna w wysokości 1199 zł. Późniejsze obniżenie ceny nie stanowi podstawy do roszczenia o zwrot różnicy dla Klientów, którzy dokonali zakupu wcześniej.</li>
+      <li>Klientowi przysługuje prawo odstąpienia od Umowy na zasadach określonych w §10, niezależnie od tego, czy dostęp do Kursu został już udostępniony.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§8</span> Warsztaty</h2>
+    <ol class="clauses">
+      <li>Przedmiotem Umowy jest udział w zajęciach prowadzonych na żywo, w oznaczonym dniu i o oznaczonej godzinie, w grupie o ograniczonej liczbie miejsc. Warsztaty nie stanowią dostępu do nagrania.</li>
+      <li>Warsztaty odbywają się w formule grupowej. Pozostali uczestnicy oraz prowadzący widzą podane przez Uczestnika imię lub nazwę, a w przypadku włączenia kamery i mikrofonu również jego wizerunek, głos oraz udostępniany ekran. Zasada ta obowiązuje wzajemnie wobec wszystkich uczestników.</li>
+      <li>Uczestnik może występować pod imieniem, pseudonimem lub w sposób ograniczający jego identyfikację. Włączenie kamery i mikrofonu jest co do zasady dobrowolne. Jeżeli określona część Warsztatów wymaga włączonej kamery, Sprzedawca informuje o tym wcześniej.</li>
+      <li>Warsztaty są nagrywane. Sprzedawca informuje o tym przed rozpoczęciem i uzyskuje zgodę Uczestnika na utrwalenie i przechowywanie jego wizerunku i głosu. Nagranie udostępniane jest wyłącznie uczestnikom danej edycji Warsztatów i nie jest wykorzystywane do dalszej sprzedaży ani do celów promocyjnych.</li>
+      <li>Uczestnik nie może nagrywać, utrwalać ani rejestrować przebiegu Warsztatów bez zgody Sprzedawcy, w szczególności z uwagi na ochronę wizerunku i danych pozostałych uczestników. Treści przekazywane przez innych uczestników objęte są poufnością.</li>
+      <li>Prowadzący może wyciszyć lub usunąć z Warsztatów uczestnika, który w sposób istotny zakłóca ich przebieg.</li>
+      <li>W razie zmiany terminu lub odwołania Warsztatów przez Sprzedawcę Uczestnikowi przysługuje, według jego wyboru, udział w nowym terminie albo zwrot całej wpłaty.</li>
+      <li>Rezygnacja zgłoszona co najmniej 7 dni przed terminem Warsztatów uprawnia do zwrotu pełnej kwoty. Rezygnacja zgłoszona krócej niż 7 dni, lecz co najmniej 2 dni przed terminem, uprawnia do zwrotu 50% kwoty. Rezygnacja zgłoszona krócej niż 2 dni przed terminem nie uprawnia do zwrotu. Uczestnik może w każdym czasie przekazać swoje miejsce innej osobie, informując o tym Sprzedawcę drogą e-mail. Nieobecność bez uprzedniej rezygnacji nie uprawnia do zwrotu.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§9</span> Społeczność</h2>
+    <ol class="clauses">
+      <li>W Społeczności obowiązuje zakaz publikowania treści bezprawnych, w tym mowy nienawiści, treści obraźliwych, nękających, spamu, reklam bez zgody Sprzedawcy oraz treści naruszających prawa osób trzecich.</li>
+      <li>Za treści publikowane w Społeczności odpowiada ich autor. Publikując treść, Uczestnik oświadcza, że przysługują mu do niej prawa i że nie narusza ona praw osób trzecich. Uczestnik udziela Sprzedawcy nieodpłatnej, niewyłącznej licencji na wyświetlanie i przechowywanie tej treści w zakresie niezbędnym do funkcjonowania Społeczności. Wykorzystanie treści Uczestnika w innych celach, w tym marketingowych, wymaga odrębnej zgody.</li>
+      <li>Sprzedawca może usuwać treści naruszające Regulamin lub prawo, kierować ostrzeżenia, ograniczać dostęp, a w przypadku poważnych lub powtarzających się naruszeń wykluczyć Uczestnika ze Społeczności. Wykluczenie z przyczyn leżących po stronie Uczestnika nie uprawnia do zwrotu. O podjętej decyzji moderacyjnej Sprzedawca informuje Uczestnika wraz z jej uzasadnieniem.</li>
+      <li>Imię lub pseudonim, awatar oraz publikowane treści Uczestnika są widoczne dla pozostałych członków Społeczności. Szczegółowe informacje o przetwarzaniu danych zawiera Polityka Prywatności.</li>
+      <li>Uczestnika obowiązuje zakaz rozpowszechniania poza Społecznością wypowiedzi innych uczestników oraz materiałów Sprzedawcy.</li>
+      <li>Społeczność działa na platformie Discord, w związku z czym Uczestnika obowiązuje także regulamin Discorda. Sprzedawca nie odpowiada za działanie, dostępność, awarie ani zmiany zasad tej platformy.</li>
+      <li>Dostęp do Społeczności przysługuje bezterminowo, przez okres jej funkcjonowania. Dostęp wygasa w razie naruszenia Regulaminu skutkującego wykluczeniem albo w razie zaprzestania prowadzenia Społeczności przez Sprzedawcę.</li>
+      <li>Treści bezprawne można zgłaszać Sprzedawcy na adres mikolaj@mikolajabramczuk.pl. Sprzedawca rozpatruje zgłoszenia i podejmuje stosowne działania.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§10</span> Prawo odstąpienia od umowy</h2>
+    <ol class="clauses">
+      <li>Klient będący Konsumentem lub PPK może odstąpić od Umowy zawartej na odległość w terminie 14 dni od dnia jej zawarcia, bez podawania przyczyny.</li>
+      <li>Prawo odstąpienia przysługuje niezależnie od tego, czy Klient uzyskał już dostęp do Kursu lub innych treści cyfrowych, oraz niezależnie od stopnia skorzystania z udostępnionych materiałów. Sprzedawca nie korzysta z przewidzianej przepisami możliwości wyłączenia prawa odstąpienia w związku z wcześniejszym rozpoczęciem dostarczania treści cyfrowych.</li>
+      <li>Oświadczenie o odstąpieniu Klient składa na adres e-mail wskazany w §1. Klient może skorzystać z wzoru formularza odstąpienia stanowiącego załącznik do Regulaminu, lecz nie jest to obowiązkowe.</li>
+      <li>Sprzedawca zwraca płatność w terminie 14 dni od otrzymania oświadczenia o odstąpieniu, tą samą metodą płatności.</li>
+      <li>Warsztaty odbywają się w oznaczonym terminie. Niezależnie od prawa odstąpienia określonego w niniejszym paragrafie, zasady rezygnacji i zwrotów dotyczące Warsztatów określa §8, przy czym w każdym przypadku stosuje się rozwiązanie korzystniejsze dla Klienta.</li>
+      <li>W okresie przedsprzedaży Kursu Klientowi przysługuje prawo odstąpienia na zasadach określonych w niniejszym paragrafie, zgodnie z §7 ust. 6.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§11</span> Reklamacje</h2>
+    <ol class="clauses">
+      <li>Reklamacje Klient składa na adres e-mail wskazany w §1, wraz z opisem problemu i danymi zamówienia. Sprzedawca rozpatruje reklamację w terminie 14 dni. Brak odpowiedzi w tym terminie oznacza uznanie reklamacji.</li>
+      <li>Sprzedawca odpowiada za zgodność treści cyfrowych z Umową na zasadach określonych w ustawie o prawach konsumenta. W pierwszej kolejności Sprzedawca doprowadza treść do zgodności z Umową. Jeżeli jest to niemożliwe lub nieskuteczne, Klient może żądać obniżenia ceny albo odstąpić od Umowy, chyba że niezgodność jest nieistotna. Sprzedawca dostarcza aktualizacje niezbędne do zachowania zgodności treści z Umową.</li>
+      <li>Reklamacje dotyczące Warsztatów oraz Społeczności rozpatrywane są w tym samym trybie i terminie.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§12</span> Prawa autorskie</h2>
+    <ol class="clauses">
+      <li>Materiały Kursu, Warsztatów i Społeczności podlegają ochronie prawnoautorskiej i stanowią własność Sprzedawcy lub podmiotów, z którymi Sprzedawca współpracuje.</li>
+      <li>Klient uzyskuje licencję niewyłączną, uprawniającą do korzystania z materiałów wyłącznie na własny użytek. Zakazane jest ich kopiowanie w celu dalszego udostępniania, publikowanie nagrań oraz odsprzedaż.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§13</span> Dane osobowe</h2>
+    <ol class="clauses">
+      <li>Sprzedawca przetwarza dane osobowe Klientów w celu realizacji zamówień, prowadzenia Warsztatów i Społeczności, kontaktu oraz rozliczenia sprzedaży.</li>
+      <li>W przetwarzaniu danych Sprzedawca korzysta z podmiotów przetwarzających, w tym Operatora płatności, systemu do wysyłki wiadomości oraz platformy do wideokonferencji, przy czym część z nich może przetwarzać dane poza Europejskim Obszarem Gospodarczym.</li>
+      <li>Klientowi przysługują prawa wynikające z przepisów o ochronie danych, w tym prawo dostępu do danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, sprzeciwu, cofnięcia zgody oraz wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych.</li>
+      <li>Szczegółowe informacje dotyczące administratora, celów, podstaw prawnych, odbiorców, okresu przechowywania oraz praw osób, których dane dotyczą, zawiera <a href="../polityka-prywatnosci/">Polityka Prywatności</a>.</li>
+      <li>Zapis na newsletter stanowi odrębną, dobrowolną zgodę i nie warunkuje zawarcia Umowy.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§14</span> Pozasądowe rozwiązywanie sporów</h2>
+    <ol class="clauses">
+      <li>Sprzedawca dąży do polubownego rozwiązywania sporów. W pierwszej kolejności zaleca się kontakt ze Sprzedawcą.</li>
+      <li>Klient będący Konsumentem może skorzystać z pozasądowych sposobów rozpatrywania reklamacji i dochodzenia roszczeń, w tym z pomocy powiatowego lub miejskiego rzecznika konsumentów oraz z postępowania polubownego. Informacje dostępne są na stronie Urzędu Ochrony Konkurencji i Konsumentów: <code>polubowne.uokik.gov.pl</code>.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§15</span> Odpowiedzialność</h2>
+    <ol class="clauses">
+      <li>Sprzedawca zapewnia sprawne działanie Serwisu oraz rzetelność udostępnianych materiałów.</li>
+      <li>Sprzedawca nie gwarantuje osiągnięcia przez Klienta określonych efektów gospodarczych, które zależą również od czynników po stronie Klienta.</li>
+      <li>Odpowiedzialność Sprzedawcy wobec Konsumentów oraz PPK nie podlega wyłączeniom ani ograniczeniom sprzecznym z bezwzględnie obowiązującymi przepisami.</li>
+      <li>Sprzedawca może wprowadzać przerwy techniczne. O istotnych przerwach informuje z wyprzedzeniem.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§16</span> Zmiany regulaminu</h2>
+    <ol class="clauses">
+      <li>Sprzedawca może zmienić Regulamin z ważnych przyczyn, w szczególności zmiany przepisów, zakresu usług lub sposobu płatności.</li>
+      <li>O zmianie Sprzedawca informuje z wyprzedzeniem drogą e-mail lub w Serwisie.</li>
+      <li>Do Umów zawartych przed wejściem w życie zmiany stosuje się Regulamin w brzmieniu dotychczasowym.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><span class="no">§17</span> Postanowienia końcowe</h2>
+    <ol class="clauses">
+      <li>Regulamin obowiązuje od dnia 17 czerwca 2026 r.</li>
+      <li>W sprawach nieuregulowanych stosuje się prawo polskie, z zastrzeżeniem że nie pozbawia to Konsumenta ochrony wynikającej z bezwzględnie obowiązujących przepisów prawa państwa jego zwykłego pobytu.</li>
+      <li>Jeżeli którekolwiek postanowienie Regulaminu okaże się nieważne lub bezskuteczne, pozostałe postanowienia zachowują moc.</li>
+    </ol>
+  </section>
+
+  <div class="annex">
+    <h2>Załącznik: wzór formularza odstąpienia od umowy</h2>
+    <p class="note">Formularz należy wypełnić i odesłać wyłącznie w przypadku chęci odstąpienia od Umowy. Skorzystanie z formularza nie jest obowiązkowe.</p>
+    <div class="form-field"><span class="lbl">Adresat</span>Mikołaj Abramczuk, al. Bohaterów Września 18 lok. 15, 02-389 Warszawa, mikolaj@mikolajabramczuk.pl</div>
+    <div class="form-field"><span class="lbl">Niniejszym informuję o odstąpieniu od umowy sprzedaży następującego Produktu / o świadczenie następującej usługi:</span><span class="fill"></span></div>
+    <div class="form-field"><span class="lbl">Data zawarcia umowy / udostępnienia:</span><span class="fill"></span></div>
+    <div class="form-field"><span class="lbl">Imię i nazwisko Konsumenta:</span><span class="fill"></span></div>
+    <div class="form-field"><span class="lbl">Adres Konsumenta:</span><span class="fill"></span></div>
+    <div class="form-field"><span class="lbl">Data:</span><span class="fill"></span></div>
+    <div class="form-field"><span class="lbl">Podpis (tylko jeżeli formularz przesyłany jest w wersji papierowej):</span><span class="fill"></span></div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="foot-inner">
+    <div class="foot-links">
+      <a href="../index.html">Strona główna</a>
+      <a href="../polityka-prywatnosci/">Polityka Prywatności</a>
+    </div>
+  </div>
+  <div class="foot-inner" style="margin-top:14px"><div>© 2026 Mikołaj Abramczuk. <span class="sep">|</span> Chłopski Rozum.ai.</div></div>
+</footer>
+
+</body>
+</html>
