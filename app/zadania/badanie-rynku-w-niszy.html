@@ -33,7 +33,7 @@ const MISJA = {
   pobierz: {
     tytul: "Pobierz folder startowy",
     opis: "Rozpakuj i odpal w nim Claude Code. Wszystko jest już w środku.",
-    plik: "badanie-rynku-w-niszy.zip", // realny plik do pobrania, leży obok tej strony
+    plik: "badanie-rynku-w-niszy.zip?v=1", // ?v=N = świeży klucz cache (Cloudflare cache'uje 404 z okna deployu); atrybut download i tak zapisze czystą nazwę
   },
 
   checklistaTytul: "Zrób to po kolei",
@@ -477,7 +477,7 @@ Po odpaleniu researchu znajdziesz tu: streszczenie rynku, sekcje gracze, ceny, o
   // Realne pobranie folderu .zip: anchor z atrybutem download. Puste M.pobierz.plik = makieta (przycisk wyłączony).
   (function(){
     var dl = $('pobierz');
-    if(M.pobierz.plik){ dl.setAttribute('href', M.pobierz.plik); dl.setAttribute('download',''); }
+    if(M.pobierz.plik){ dl.setAttribute('href', M.pobierz.plik); dl.setAttribute('download', M.pobierz.plik.split('?')[0].split('/').pop()); }
     else { dl.classList.add('is-off'); dl.removeAttribute('href'); }
   })();
   $('checklista-tytul').textContent = M.checklistaTytul;
