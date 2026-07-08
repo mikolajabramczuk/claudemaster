@@ -297,6 +297,20 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
 .ed-btn.ed-closed{background:transparent;color:color-mix(in srgb,var(--paper) 55%,transparent);border:1.5px solid color-mix(in srgb,var(--paper) 22%,transparent);box-shadow:none}
 .ed-btn.ed-closed:hover{transform:none}
 
+/* ---- tryb: warsztaty wyprzedane, kurs nadal w sprzedaży (?wsold=1 / WORKSHOPS_SOLD_OUT) ---- */
+.pc-tag{flex:none;font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;
+  padding:4px 9px;border:1.5px solid var(--ink);color:var(--ink);border-radius:0;line-height:1}
+.pc-avail{margin:16px 0 0;font-size:.92rem;line-height:1.5;color:var(--ink-80)}
+.pc-avail b{font-weight:800;color:var(--ink)}
+.pricecard.feature .pc-avail{color:color-mix(in srgb,var(--paper) 82%,transparent)}
+.pricecard.feature .pc-avail b{color:var(--accent-2)}
+.ws-sold #ws-card .price-row{opacity:.5}
+.ws-sold #course-note{display:none}   /* info o sierpniu niesie już .pc-avail wyżej */
+.ws-sold #ws-editions{display:none}   /* zamiast zamkniętego terminu pokazujemy jasny przycisk listy */
+.ws-sold #ws-card .pc-note{display:none}
+.ws-sold #course-buy{background:var(--accent);color:var(--on-accent);border:none;box-shadow:0 4px 0 var(--accent-deep)}
+.ws-sold #course-buy:hover{transform:translateY(-2px)}
+
 /* rozwijana tabela porównawcza */
 .cmp-collapse{margin-top:28px;border:1.5px solid var(--ink);background:var(--paper-card)}
 .cmp-collapse>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:18px 22px;font-weight:700;font-size:1.02rem}
@@ -369,14 +383,14 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
 
 /* ============== WAITLIST MODAL ============== */
 .wl-overlay{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:24px;
-  background:rgba(27,26,23,.55);backdrop-filter:blur(3px);opacity:0;transition:opacity .22s ease}
+  background:rgba(27,26,23,.55);opacity:0;pointer-events:none;transition:opacity .22s ease}
 .wl-overlay.open{display:flex}
-.wl-overlay.show{opacity:1}
+.wl-overlay.show{opacity:1;backdrop-filter:blur(3px);pointer-events:auto}
 .wl-modal{position:relative;width:100%;max-width:460px;background:var(--paper-card);border:2px solid var(--ink);border-radius:0;
   box-shadow:8px 8px 0 var(--accent);transform:translateY(12px);transition:transform .28s cubic-bezier(.16,1,.3,1)}
 .wl-overlay.show .wl-modal{transform:translateY(0)}
 .wl-content{position:relative;padding:36px 36px 32px}
-.wl-close{position:absolute;top:14px;right:16px;width:34px;height:34px;border:1.5px solid var(--hair);
+.wl-close{position:absolute;top:14px;right:16px;z-index:2;width:34px;height:34px;border:1.5px solid var(--hair);
   background:transparent;border-radius:0;cursor:pointer;display:grid;place-items:center;color:var(--ink);transition:background .15s}
 .wl-close:hover{background:color-mix(in srgb,var(--accent) 12%,transparent)}
 .wl-close svg{width:14px;height:14px}
@@ -719,7 +733,7 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
 
   <div class="pricing">
     <!-- KURS -->
-    <article class="pricecard">
+    <article class="pricecard" id="course-card">
       <div class="pc-head"><span class="pc-kind">Kurs</span></div>
       <p class="pc-tagline">Przerabiasz w swoim czasie. Masz też dostęp do grupy i aplikacji.</p>
       <div class="price-row">
@@ -730,6 +744,7 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
         <span class="ebc-label">Cena przedsprzedaży kończy się za</span>
         <span class="ebc-clock"><b id="ebc-d">–</b> d · <b id="ebc-h">–</b> g · <b id="ebc-m">–</b> m · <b id="ebc-s">–</b> s</span>
       </div>
+      <p class="pc-avail" id="course-avail" hidden>Kupujesz w cenie przedsprzedaży. Materiały udostępniamy <b>z początkiem sierpnia</b>.</p>
       <ul class="incl">
         <li><span class="ic">✦</span> Pełen kurs nagranych lekcji (wideo, tekstowe i 'zadaniowe') </li>
         <li><span class="ic">✦</span> Interaktywna aplikacja Claudemaster (kompan w nauce pracy agentowej)</li>
@@ -742,8 +757,8 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
     </article>
 
     <!-- WARSZTATY -->
-    <article class="pricecard feature">
-      <div class="pc-head"><span class="pc-kind">Warsztaty + kurs</span></div>
+    <article class="pricecard feature" id="ws-card">
+      <div class="pc-head"><span class="pc-kind">Warsztaty + kurs</span><span class="pc-tag" id="ws-tag" hidden>Wyprzedane</span></div>
       <p class="pc-tagline">Wszystko z kursu + dwa spotkania po 2h na żywo i indywidualny kontakt.</p>
       <div class="price-row">
         <span class="price"><span class="cur">zł</span><span id="ws-eb">899</span></span>
@@ -757,6 +772,7 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
       </ul>
       <div class="pc-foot">
         <div class="ed-list" id="ws-editions"><!-- terminy wstawia JS z OFFER --></div>
+        <a class="btn ghost" id="ws-waitlist" href="#" data-wl-open hidden style="width:100%" data-umami-event="waitlist-otworz">Zapisz się na listę zainteresowanych →</a>
         <p class="pc-note">Udział możesz wykupić maksymalnie do 3 godzin przed startem edycji, lub do wyczerpania miejsc.</p>
       </div>
     </article>
@@ -878,8 +894,10 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
    • buyUrl — link płatności ("#" = placeholder do podmiany)
    • editions — terminy warsztatów; soldOut:true → przycisk wiedzie na listę rezerwową
    • heroSpots — liczba w badge hero („Zostało X miejsc…")
-   • Globalny tryb wyprzedane: dopisz ?soldout=1 do adresu albo ustaw SOLD_OUT=true. */
+   • Globalny tryb wyprzedane (chowa cały cennik): dopisz ?soldout=1 albo ustaw SOLD_OUT=true.
+   • Warsztaty wyprzedane, kurs nadal w sprzedaży: dopisz ?wsold=1 albo ustaw WORKSHOPS_SOLD_OUT=true. */
 var SOLD_OUT = false;
+var WORKSHOPS_SOLD_OUT = true;
 var OFFER = {
   earlyBirdEnds: "2026-07-14T23:59:59+02:00",
   // Liczbę wolnych miejsc ustawiasz osobno przy każdej edycji niżej (pole `spots`).
@@ -901,6 +919,13 @@ var OFFER = {
   var ebEnd=new Date(OFFER.earlyBirdEnds);
   var isEB=now < ebEnd;
 
+  // Tryb: warsztaty wyprzedane, kurs nadal w sprzedaży
+  var wsSold = WORKSHOPS_SOLD_OUT || /[?&]wsold=1/.test(location.search);
+  if(wsSold){
+    document.body.classList.add("ws-sold");
+    OFFER.editions.forEach(function(ed){ ed.soldOut=true; });   // przyciski terminów → lista rezerwowa
+  }
+
   function fmt(n){return Number(n).toLocaleString("pl-PL");}
   function dayMonth(d){return d.getDate()+" "+MONTHS[d.getMonth()];}
   function miejsca(n){                              // polska odmiana: 1 miejsce / 2-4 miejsca / 5+ miejsc
@@ -921,7 +946,9 @@ var OFFER = {
 
   // Badge na górze: liczba wolnych miejsc dla dwóch najbliższych edycji (dane z OFFER.editions)
   var spotsEl=document.getElementById("hero-spots"), eds=OFFER.editions||[];
-  if(spotsEl && eds.length>=2){
+  if(spotsEl && wsSold){
+    spotsEl.innerHTML="Warsztaty <b>wyprzedane</b>";
+  } else if(spotsEl && eds.length>=2){
     spotsEl.innerHTML="Zostało <b>"+eds[0].spots+"</b> i <b>"+eds[1].spots+"</b> "+miejsca(eds[1].spots)+" na dwie edycje";
   } else if(spotsEl && eds.length===1){
     spotsEl.innerHTML=cap(zostalo(eds[0].spots))+" <b>"+eds[0].spots+"</b> "+miejsca(eds[0].spots)+" na najbliższą edycję";
@@ -934,6 +961,30 @@ var OFFER = {
   if(noteEl) noteEl.textContent="Dostęp od startu kursu, "+OFFER.course.availableNote+".";
   var buyEl=document.getElementById("course-buy");
   if(buyEl && OFFER.course.buyUrl) buyEl.setAttribute("href",OFFER.course.buyUrl);
+
+  if(wsSold){
+    // przenosimy akcent z warsztatów na kurs + odsłaniamy komunikaty
+    var cCard=document.getElementById("course-card"), wCard=document.getElementById("ws-card");
+    if(cCard) cCard.classList.add("feature");
+    if(wCard) wCard.classList.remove("feature");
+    ["course-avail","ws-tag","ws-waitlist"].forEach(function(id){
+      var el=document.getElementById(id); if(el) el.hidden=false;
+    });
+    // główne CTA (hero + finalne) prowadzą na cennik, gdzie kurs ma przycisk zakupu
+    document.querySelectorAll(".hero .cta-row .btn.primary, .final .btn").forEach(function(a){
+      a.setAttribute("href","#cennik");
+      a.textContent="Dołączam w przedsprzedaży →";
+      a.setAttribute("data-umami-event","cta-cennik-wsold");
+    });
+    // drugi przycisk w hero: scroll do kafla warsztatów, tam dopiero pop-up listy
+    var ghost=document.querySelector(".hero .cta-row .btn.ghost");
+    if(ghost){
+      ghost.setAttribute("href","#ws-card");
+      ghost.removeAttribute("data-wl-open");
+      ghost.textContent="Wolę kolejną edycję na żywo →";
+      ghost.setAttribute("data-umami-event","cta-warsztaty-wsold");
+    }
+  }
 
   renderEditions();
 
