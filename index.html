@@ -772,7 +772,7 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
       </ul>
       <div class="pc-foot">
         <div class="ed-list" id="ws-editions"><!-- terminy wstawia JS z OFFER --></div>
-        <a class="btn ghost" id="ws-waitlist" href="#" data-wl-open hidden style="width:100%" data-umami-event="waitlist-otworz">Zapisz się na listę zainteresowanych →</a>
+        <a class="btn ghost" id="ws-waitlist" href="#" data-wl-open data-wl-list="wyprzedane" hidden style="width:100%" data-umami-event="waitlist-otworz">Zapisz się na listę zainteresowanych →</a>
         <p class="pc-note">Udział możesz wykupić maksymalnie do 3 godzin przed startem edycji, lub do wyczerpania miejsc.</p>
       </div>
     </article>
@@ -973,7 +973,7 @@ var OFFER = {
     // główne CTA (hero + finalne) prowadzą na cennik, gdzie kurs ma przycisk zakupu
     document.querySelectorAll(".hero .cta-row .btn.primary, .final .btn").forEach(function(a){
       a.setAttribute("href","#cennik");
-      a.textContent="Dołączam w przedsprzedaży →";
+      a.textContent="Kurs w przedsprzedaży";
       a.setAttribute("data-umami-event","cta-cennik-wsold");
     });
     // drugi przycisk w hero: scroll do kafla warsztatów, tam dopiero pop-up listy
@@ -981,7 +981,7 @@ var OFFER = {
     if(ghost){
       ghost.setAttribute("href","#ws-card");
       ghost.removeAttribute("data-wl-open");
-      ghost.textContent="Wolę kolejną edycję na żywo →";
+      ghost.textContent="Warsztaty na żywo";
       ghost.setAttribute("data-umami-event","cta-warsztaty-wsold");
     }
   }
@@ -1021,6 +1021,7 @@ var OFFER = {
       } else {
         a.setAttribute("href","#lista-rezerwowa");
         a.setAttribute("data-wl-open","");
+        if(ed.soldOut) a.setAttribute("data-wl-list","wyprzedane");   // wyprzedane → automat „(wyprzedane)", nie „(nie pasuje data)"
         a.innerHTML='<span class="ed-when">'+ed.label+'</span><span class="ed-go">'+(ed.soldOut?"Brak miejsc":"Zapisy zamknięte")+' · lista →</span>';
       }
       c.appendChild(a);
@@ -1102,7 +1103,12 @@ var OFFER = {
 
 /* ====== WAITLIST MODAL ====== */
 (function(){
-  var SUBSCRIBE_URL="https://assets.mailerlite.com/jsonp/2452468/forms/190610432523765508/subscribe";
+  // Dwie listy oczekujących = dwa różne maile powitalne (osobne automatyzacje MailerLite):
+  //  • domyślna „nie pasuje data" — z paska „Żaden z terminów nie pasuje?"
+  //  • „wyprzedane" — gdy edycja/warsztaty się wyprzedały (wyzwalacz z data-wl-list="wyprzedane")
+  var URL_DATA="https://assets.mailerlite.com/jsonp/2452468/forms/190610432523765508/subscribe";
+  var URL_SOLD="https://assets.mailerlite.com/jsonp/2452468/forms/190790391316874825/subscribe";
+  var SUBSCRIBE_URL=URL_DATA;
   var overlay=document.getElementById("wl-overlay");
   if(!overlay) return;
   var form=document.getElementById("wl-form"),
@@ -1113,8 +1119,9 @@ var OFFER = {
       stepDone=overlay.querySelector('[data-wl-step="done"]'),
       lastFocus=null;
 
-  function open(e){
+  function open(e,trigger){
     if(e) e.preventDefault();
+    SUBSCRIBE_URL=(trigger && trigger.getAttribute("data-wl-list")==="wyprzedane") ? URL_SOLD : URL_DATA;
     lastFocus=document.activeElement;
     overlay.classList.add("open"); overlay.setAttribute("aria-hidden","false");
     requestAnimationFrame(function(){overlay.classList.add("show")});
@@ -1135,7 +1142,7 @@ var OFFER = {
 
   // delegacja: łapie też przyciski terminów dorenderowane przez JS
   document.addEventListener("click",function(e){
-    var t=e.target.closest("[data-wl-open]"); if(t) open(e);
+    var t=e.target.closest("[data-wl-open]"); if(t) open(e,t);
     var x=e.target.closest("[data-wl-close]"); if(x) close();
   });
   overlay.addEventListener("click",function(e){if(e.target===overlay) close()});
