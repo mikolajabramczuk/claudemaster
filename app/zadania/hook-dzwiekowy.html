@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claudemaster · Misja: Dźwięk, gdy Claude skończy</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet">
+
+<!-- ====================================================================== -->
+<!-- === TREŚĆ MISJI (edytuj tutaj, bez ruszania logiki niżej) ============ -->
+<!-- Zawartość plików folderu jest w <script type="text/plain"> na dole.    -->
+<!-- ====================================================================== -->
+<script>
+const MISJA = {
+  powrot: "Zadania",
+  powrotHref: "../", // wraca do siatki zadań (app/index.html)
+  poziom: "Łatwe",
+  czas: "do 10 min",
+  tytul: "Hook dźwiękowy, gdy Claude skończy pracę",
+  tytulMark: "Hook dźwiękowy",
+  lead: "Uczysz Claude Code, żeby sygnalizował zakończoną odpowiedź subtelnym dźwiękiem, który mówi Ci, że czeka na Ciebie :). Będzie to ustawienie globalne, czyli dostępne w każdym projekcie.",
+
+  tematyTytul: "Omawiane tematy",
+  tematy: [
+    "Hooki w Claude Code",
+    "Event Stop (koniec odpowiedzi)",
+    "Event Notification (czeka na Ciebie)",
+    "Globalne ustawienia (~/.claude/settings.json)",
+    "Dobór dźwięku pod Twój system",
+  ],
+
+  pobierz: {
+    tytul: "Pobierz folder startowy",
+    opis: "Rozpakuj i odpal w nim Claude Code. Cała instrukcja jest w środku.",
+    plik: "hook-dzwiekowy.zip?v=1", // ?v=N = świeży klucz cache (Cloudflare cache'uje 404 z okna deployu); atrybut download i tak zapisze czystą nazwę
+  },
+
+  checklistaTytul: "Zrób to po kolei",
+  checklist: [
+    "Rozpakuj folder i odpal w nim Claude Code",
+    "Przeczytaj plik START-TUTAJ-usun.md, żeby wiedzieć, co ustawiasz",
+    "Poproś Claude, żeby ustawił globalnie hook dźwiękowy: gdy skończy odpowiadać i gdy czeka na Twoją odpowiedź (np. w pytaniu z wyborem, AskUserQuestion)",
+    "Sprawdź, że Claude dopisał hooki do ~/.claude/settings.json (globalnie, dla każdego projektu)",
+    "Usłysz dźwięk, gdy Claude skończy odpowiadać",
+    "Usłysz inny dźwięk, gdy Claude o coś dopyta (np. w pytaniu z wyborem)",
+    "Otwórz inny, dowolny projekt i sprawdź, że dźwięk dalej działa",
+  ],
+
+  checklistaOptTytul: "Dla chętnych",
+  checklistOpcjonalna: [
+    "Poproś Claude, żeby zbudował prostą stronę HTML z listą wszystkich wbudowanych dźwięków i przyciskiem odsłuchania każdego",
+    "Wybierz ulubiony dźwięk uchem i powiedz Claude, żeby ustawił go jako dźwięk zrobione",
+    "Poproś Claude, żeby wypisał wszystkie dostępne rodzaje hooków razem z praktycznymi przykładami zastosowań dla nie-programisty",
+  ],
+
+  podpowiedziTytul: "Utknąłeś? Podpowiedzi",
+  podpowiedzi: [
+    {
+      q: "Gotowy prompt do wklejenia",
+      a: "Ustaw mi globalnie hook dźwiękowy, gdy skończysz odpowiadać, i inny, gdy czekasz na moją decyzję. Zapisz to w ~/.claude/settings.json, żeby działało w każdym projekcie.",
+    },
+    {
+      q: "Gdzie siedzą hooki",
+      a: "Hooki, w tym dźwięk, trzyma plik ~/.claude/settings.json. Wersja globalna działa w każdym projekcie. Odpowiednik projektowy leży w folderze .claude danego projektu i działa tylko tam.",
+    },
+    {
+      q: "Nie słyszysz dźwięku?",
+      a: "Sprawdź, czy dźwięk w systemie jest włączony i czy hook trafił do ~/.claude/settings.json. Zmiany łapią się bez restartu. Możesz poprosić Claude, żeby przetestował dźwięk jednym poleceniem.",
+    },
+    {
+      q: "Pełne rozwiązanie krok po kroku",
+      a: "1. Odpal Claude Code w folderze i przeczytaj START-TUTAJ-usun.md. 2. Napisz: ustaw mi globalnie dźwięk, gdy skończysz odpowiadać, i inny, gdy czekasz na moją decyzję. 3. Claude wykryje Twój system i dopisze hooki do ~/.claude/settings.json. 4. Przetestuj: zadaj dowolne pytanie i posłuchaj, potem sprawdź dźwięk, gdy o coś dopyta. 5. Otwórz inny projekt i upewnij się, że działa dalej.",
+    },
+  ],
+
+  // Feedback od wczesnych użytkowników (leci mailem przez Web3Forms, jak app/opinie).
+  feedbackTytul: "Jak Ci poszło z tym zadaniem?",
+  feedbackOpis: "Napisz szczerze, co było jasne, co nie, gdzie utknąłeś. Z góry dzięki",
+  feedbackPlaceholder: "np. Zaciąłem się, gdy trzeba było przetestować dźwięk, bo…",
+  feedbackEmailLabel: "E-mail (opcjonalnie, gdybym chciał dopytać)",
+  feedbackWyslij: "Wyślij feedback",
+  feedbackDzieki: "Dzięki! Twój feedback do mnie trafił. Właśnie z takich uwag robię kolejne wersje lepszymi.",
+
+  // Drzewo plików. typ: file | folder. opis = wyjaśnienie na chłopski rozum.
+  drzewo: [
+    { name: "START-TUTAJ-usun.md", path: "START-TUTAJ-usun.md", typ: "file", depth: 0,
+      opis: "Przeczytaj na start. Mówi, co ustawiasz i jak, potem skasuj ten plik." },
+    { name: ".claude", path: ".claude", typ: "folder", depth: 0,
+      opis: "Folder konfiguracyjny Claude Code. Tu siedzi instrukcja dla Claude'a." },
+    { name: "CLAUDE.md", path: ".claude/CLAUDE.md", typ: "file", depth: 1,
+      opis: "Instrukcja dla Claude'a: jak ustawić dźwięk globalnie. Możesz ją przeczytać, żeby wiedzieć, co się dzieje." },
+  ],
+  domyslnyPlik: "START-TUTAJ-usun.md",
+  folderPusty: "(pusty folder)",
+};
+</script>
+
+<style>
+  :root{
+    --paper:#ECE7DE; --paper-card:#F6F3EC; --ink:#1B1A17;
+    --accent:#DB511D; --accent-2:#F0BE12; --on-accent:#FFFDF7;
+    --ok:#3B7A4B; --bad:#C23B2E;
+    --hair:color-mix(in srgb,var(--ink) 14%,transparent);
+    --hair-soft:color-mix(in srgb,var(--ink) 8%,transparent);
+    --muted:color-mix(in srgb,var(--ink) 60%,transparent);
+    --ink-80:color-mix(in srgb,var(--ink) 84%,transparent);
+    --grid:color-mix(in srgb,var(--ink) 6%,transparent);
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
+  body{font-family:"Funnel Sans",system-ui,sans-serif;color:var(--ink);line-height:1.6;
+    background-color:var(--paper);
+    background-image:radial-gradient(var(--grid) 1px, transparent 1.3px);
+    background-size:22px 22px;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 40px}
+
+  /* ===== BRAMKA HASŁEM (bramka grzecznościowa, nie realne zabezpieczenie) ===== */
+  .gate{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:24px;
+    background-color:var(--paper);
+    background-image:radial-gradient(var(--grid) 1px, transparent 1.3px);background-size:22px 22px}
+  .gate-card{width:100%;max-width:430px;background:var(--paper-card);border:1.5px solid var(--ink);padding:34px 30px;
+    box-shadow:8px 8px 0 var(--ink)}
+  .gate-card h1{font-size:26px;font-weight:600;letter-spacing:-.01em;margin:12px 0 8px;line-height:1.1}
+  .gate-card p{font-size:15px;color:var(--ink-80);margin-bottom:22px}
+  .gate-form{display:flex;flex-direction:column;gap:12px}
+  .gate-form input{font:inherit;font-size:16px;padding:13px 15px;border:1.5px solid var(--ink);background:#fff;color:var(--ink)}
+  .gate-form input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%,transparent)}
+  .gate-error{color:var(--bad);font-size:13.5px;font-weight:600;margin-top:6px}
+  .gate-foot{margin-top:20px;font-size:12px;color:var(--muted)}
+  .gate .ar{font-size:15px}
+
+  .nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:20px;
+    padding:15px 40px;background:color-mix(in srgb,var(--paper) 86%,transparent);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--hair)}
+  .nav .brand{display:flex;align-items:center;gap:10px;margin-right:auto}
+  .wordmark{font-weight:600;font-size:18px}
+  .back{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:600;color:var(--ink);text-decoration:none;
+    border:1.5px solid var(--ink);padding:9px 15px}
+  .back:hover{background:var(--ink);color:var(--paper)}
+
+  /* hero: dwie kolumny (tytuł+opis | omawiane tematy) */
+  .hero-grid{display:grid;grid-template-columns:1.9fr 1fr;gap:48px;align-items:start;padding:46px 0 14px}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.16em;font-size:11px;font-weight:600;color:var(--muted)}
+  .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent)}
+  .tags{display:flex;gap:9px;flex-wrap:wrap;margin:15px 0 0}
+  .tag{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;padding:6px 12px}
+  .tag.ok{background:var(--ok);color:#fff}
+  .tag.ghost{background:transparent;color:var(--muted);border:1px solid var(--hair)}
+  .hero-l h1{font-size:clamp(25px,2.7vw,33px);font-weight:600;line-height:1.12;letter-spacing:-.015em;margin:13px 0 13px;text-wrap:balance}
+  .hero-l h1 mark{background:linear-gradient(transparent 62%, var(--accent-2) 62% 92%, transparent 92%);color:inherit;padding:0 .05em}
+  .hero-l .lead{font-size:17px;color:var(--ink-80)}
+  .topics{border-left:1px solid var(--hair);padding-left:26px;margin-top:6px}
+  .topics h2{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);font-weight:700;margin-bottom:6px}
+  .topics ul{list-style:none}
+  .topics li{display:flex;gap:11px;align-items:flex-start;font-size:15px;color:var(--ink-80);padding:8px 0;border-top:1px solid var(--hair-soft)}
+  .topics li:first-child{border-top:none}
+  .topics li::before{content:"";flex:none;width:7px;height:7px;background:var(--accent);margin-top:8px}
+
+  section{padding:38px 0;border-top:1px solid var(--hair)}
+  h2.sec{font-size:22px;font-weight:600;letter-spacing:-.01em;margin:0 0 6px}
+  .sec-sub{font-size:15px;color:var(--muted);margin-bottom:20px;max-width:64ch}
+
+  /* eksplorer plików (uproszczony VS Code) */
+  .explorer{border:1px solid var(--hair);background:var(--paper-card);display:grid;grid-template-columns:262px 1fr;min-height:340px;overflow:hidden}
+  .exp-side{border-right:1px solid var(--hair);display:flex;flex-direction:column;min-width:0;background:color-mix(in srgb,var(--ink) 2.5%,var(--paper-card))}
+  .exp-side .side-h{font-size:10.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);padding:13px 16px 9px}
+  .tree{padding:0 8px 12px;overflow:auto}
+  /* pliki */
+  .tree .row.file{display:flex;align-items:center;gap:9px;width:100%;text-align:left;font:inherit;font-size:13.5px;color:var(--ink-80);
+    background:none;border:none;cursor:pointer;padding:7px 10px;border-left:2px solid transparent}
+  .tree .row.file:hover{background:color-mix(in srgb,var(--ink) 5%,transparent)}
+  .tree .row.file.active{background:color-mix(in srgb,var(--accent) 13%,transparent);border-left-color:var(--accent);color:var(--ink);font-weight:600}
+  .tree .row .ic{flex:none;width:17px;height:17px}
+  /* domyślnie plikowa ikona (fallback) przygaszona; kolorowe ikony (.on) zawsze pełne */
+  .tree .row.file .ic{opacity:.55;color:var(--muted)}
+  .tree .row.file.active .ic{opacity:1;color:var(--accent)}
+  .tree .row .ic.on{opacity:1}
+  /* foldery: wyraźnie inne, wyglądają na nagłówek grupy, nie na klikalny plik */
+  .tree .row.folder{display:flex;align-items:center;gap:9px;width:100%;font-size:12.5px;font-weight:700;letter-spacing:.02em;color:var(--ink);
+    background:color-mix(in srgb,var(--ink) 6%,transparent);border:none;cursor:default;padding:8px 10px;margin-top:4px}
+  .tree .row.folder .ic{color:var(--accent)}
+  .tree .row.folder .fslash{color:var(--muted);font-weight:600}
+
+  .exp-main{display:flex;flex-direction:column;min-width:0}
+  .exp-tab{display:flex;align-items:center;gap:9px;padding:11px 16px;border-bottom:1px solid var(--hair-soft);font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+  .exp-tab .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);flex:none}
+  /* pasek "co to za plik" z ikonką ? */
+  .exp-desc{display:flex;gap:11px;align-items:flex-start;padding:13px 16px;background:color-mix(in srgb,var(--accent) 7%,transparent);border-bottom:1px solid var(--hair-soft);font-size:13.5px;color:var(--ink-80)}
+  .exp-desc .qm{flex:none;width:21px;height:21px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:800;font-size:12px;margin-top:1px}
+  .exp-view{padding:15px 18px;overflow:auto;max-height:430px}
+  .exp-view pre{font-family:var(--mono);font-size:12.5px;line-height:1.65;color:var(--ink-80);white-space:pre-wrap;word-break:break-word}
+
+  /* pobierz: wyśrodkowany pod eksplorerem */
+  .dl-row{display:flex;flex-direction:column;align-items:center;gap:11px;margin-top:24px;text-align:center}
+  .bigbtn{font:inherit;font-weight:700;font-size:14px;letter-spacing:.07em;text-transform:uppercase;border:none;padding:16px 34px;cursor:pointer;display:inline-flex;align-items:center;gap:10px;text-decoration:none}
+  .bigbtn.is-off{background:color-mix(in srgb,var(--ink) 15%,var(--paper));color:var(--muted);box-shadow:none;cursor:not-allowed;pointer-events:none}
+  .bigbtn.primary{background:var(--accent);color:var(--on-accent);box-shadow:0 4px 0 color-mix(in srgb,var(--accent) 65%,#000)}
+  .bigbtn.primary:active{transform:translateY(2px);box-shadow:0 2px 0 color-mix(in srgb,var(--accent) 65%,#000)}
+  .bigbtn:disabled{background:color-mix(in srgb,var(--ink) 18%,var(--paper));color:var(--muted);box-shadow:none;cursor:not-allowed}
+  .dl-note{font-size:13.5px;color:var(--muted);max-width:40ch}
+
+  /* checklista: numerowane kroki, delikatny akcent */
+  .prog{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+  .prog .bar{flex:1;height:4px;background:color-mix(in srgb,var(--ink) 10%,#fff);overflow:hidden}
+  .prog .bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s}
+  .prog .lbl{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+  .checks{margin-top:4px}
+  .check{display:flex;align-items:center;gap:15px;width:100%;text-align:left;font:inherit;font-size:16px;color:var(--ink);
+    background:none;border:none;border-bottom:1px solid var(--hair-soft);cursor:pointer;padding:14px 8px;transition:background .12s}
+  .check:last-child{border-bottom:none}
+  .check:hover{background:color-mix(in srgb,var(--accent) 5%,transparent)}
+  .check .box{flex:none;width:27px;height:27px;border:1.5px solid var(--hair);display:grid;place-items:center;font-size:13px;font-weight:700;color:var(--muted);transition:all .12s}
+  .check.done .box{background:var(--accent);border-color:var(--accent);color:#fff}
+  .check.done .lbl{color:var(--muted)}
+  .check .lbl{flex:1}
+  /* opcjonalna: kółka, zielony */
+  .check.opt .box{border-radius:50%}
+  .check.opt.done .box{background:var(--ok);border-color:var(--ok)}
+
+  /* podpowiedzi */
+  .hints{display:flex;flex-direction:column;gap:12px}
+  .hint{border:1px solid var(--hair-soft);border-left:3px solid var(--accent);background:var(--paper-card)}
+  .hint summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:15px 18px;font-weight:600;font-size:15.5px}
+  .hint summary::-webkit-details-marker{display:none}
+  .hint summary .chev{margin-left:auto;transition:transform .2s;color:var(--muted)}
+  .hint[open] summary .chev{transform:rotate(180deg)}
+  .hint summary .qi{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--accent);flex:none}
+  .hint .a{padding:0 18px 18px 42px;font-size:15px;color:var(--ink-80)}
+  .hint .a .promptbox{font-family:var(--mono);font-size:12.5px;display:block;background:var(--paper);border:1px solid var(--hair-soft);padding:12px 14px;margin-top:6px;white-space:pre-wrap;line-height:1.6}
+
+  /* feedback wczesnych użytkowników (Web3Forms) */
+  .fbform{display:flex;flex-direction:column;gap:13px;max-width:660px}
+  .fbform textarea{font:inherit;font-size:15px;color:var(--ink);background:var(--paper-card);border:1.5px solid var(--hair);padding:14px 16px;min-height:118px;resize:vertical;line-height:1.55}
+  .fbform textarea:focus{outline:none;border-color:var(--accent)}
+  .fbform .fb-email{font:inherit;font-size:15px;color:var(--ink);background:var(--paper-card);border:1.5px solid var(--hair);padding:11px 16px;max-width:360px}
+  .fbform .fb-email:focus{outline:none;border-color:var(--accent)}
+  .fbform label{font-size:13px;color:var(--muted);font-weight:600;margin-bottom:-6px}
+  .fbform .bigbtn{align-self:flex-start;margin-top:4px}
+  .fb-hp{position:absolute!important;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .fb-sent{display:none;margin-top:2px;border-left:3px solid var(--ok);background:color-mix(in srgb,var(--ok) 10%,transparent);padding:14px 16px;font-size:14.5px}
+  .fb-sent.show{display:block}
+
+  footer{padding:44px 0 70px;color:var(--muted);font-size:13px;border-top:1px solid var(--hair);margin-top:10px}
+
+  @media (max-width:860px){
+    .wrap{padding:0 22px}
+    .hero-grid{grid-template-columns:1fr;gap:24px}
+    .topics{border-left:none;padding-left:0;border-top:1px solid var(--hair);padding-top:18px}
+    .explorer{grid-template-columns:1fr}
+    .exp-side{border-right:none;border-bottom:1px solid var(--hair)}
+    .exp-view{max-height:300px}
+    .nav{padding:12px 22px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== BRAMKA HASŁEM ===================== -->
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <div class="eyebrow">Materiały dla uczestników</div>
+    <h1>Zadania praktyczne</h1>
+    <p>Ta strona jest dla osób, które kupiły dostęp do Claudemaster. Wpisz hasło, które dostałeś w mailu.</p>
+    <form class="gate-form" id="gate-form" autocomplete="off">
+      <input type="password" id="gate-input" placeholder="Hasło" aria-label="Hasło" autofocus>
+      <button class="bigbtn primary" type="submit">Wejdź <span class="ar">&rarr;</span></button>
+      <p class="gate-error" id="gate-error" hidden>Nieprawidłowe hasło. Sprawdź mail od nas.</p>
+    </form>
+    <p class="gate-foot">Nie masz hasła? Znajdziesz je w pierwszym mailu po zakupie.</p>
+  </div>
+</div>
+
+<main id="app" hidden>
+<nav class="nav">
+  <span class="brand">
+    <svg width="30" height="30" viewBox="0 0 40 40" aria-hidden="true"><circle cx="19" cy="21" r="15" fill="none" stroke="#1B1A17" stroke-width="2"/><text x="19" y="27" font-family="Funnel Sans" font-weight="700" font-size="17" text-anchor="middle" fill="#1B1A17">m</text><circle cx="32" cy="8" r="5" fill="#DB511D"/></svg>
+    <span class="wordmark">claude<b>master</b></span>
+  </span>
+  <a class="back" id="back" href="#">← <span id="back-lbl"></span></a>
+</nav>
+
+<div class="wrap">
+  <div class="hero-grid">
+    <div class="hero-l">
+      <span class="eyebrow">Misja praktyczna</span>
+      <div class="tags">
+        <span class="tag ok" id="t-poziom"></span>
+        <span class="tag ghost" id="t-czas"></span>
+      </div>
+      <h1 id="tytul"></h1>
+      <p class="lead" id="lead"></p>
+    </div>
+    <div class="topics">
+      <h2 id="tematy-tytul"></h2>
+      <ul id="tematy"></ul>
+    </div>
+  </div>
+
+  <section>
+    <h2 class="sec">Zajrzyj do środka</h2>
+    <p class="sec-sub">Zobacz każdy plik i jego zawartość, zanim pobierzesz folder. Kliknij plik po lewej.</p>
+    <div class="explorer">
+      <div class="exp-side">
+        <div class="side-h">Folder misji</div>
+        <div class="tree" id="tree"></div>
+      </div>
+      <div class="exp-main">
+        <div class="exp-tab"><span class="dot"></span><span id="exp-name"></span></div>
+        <div class="exp-desc"><span class="qm">?</span><span id="exp-desc-txt"></span></div>
+        <div class="exp-view"><pre id="exp-view"></pre></div>
+      </div>
+    </div>
+    <div class="dl-row">
+      <a class="bigbtn primary" id="pobierz"></a>
+      <span class="dl-note" id="pobierz-opis"></span>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec" id="checklista-tytul"></h2>
+    <p class="sec-sub">Odhaczaj, w miarę jak robisz. To Twój ślad postępu, zapisuje się lokalnie.</p>
+    <div class="prog">
+      <div class="bar"><i id="prog-bar"></i></div>
+      <span class="lbl" id="prog-lbl"></span>
+    </div>
+    <div class="checks" id="checks"></div>
+  </section>
+
+  <section>
+    <h2 class="sec" id="opt-tytul"></h2>
+    <p class="sec-sub">Nieobowiązkowe. Wejdź głębiej, jeśli złapałeś bakcyla.</p>
+    <div class="checks" id="checks-opt"></div>
+  </section>
+
+  <section>
+    <h2 class="sec" id="hints-tytul"></h2>
+    <div class="hints" id="hints"></div>
+  </section>
+
+  <section>
+    <h2 class="sec" id="fb-tytul"></h2>
+    <p class="sec-sub" id="fb-opis"></p>
+    <form class="fbform" id="fb-form" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="ad6bc06e-cca8-46d4-a769-4e6832e87fb8">
+      <input type="hidden" name="subject" id="fb-subject" value="Feedback o zadaniu (Claudemaster)">
+      <input type="hidden" name="from_name" value="claudemaster · zadania">
+      <input type="hidden" name="zadanie" id="fb-zadanie" value="">
+      <input type="hidden" name="redirect" id="fb-redirect" value="">
+      <input type="checkbox" name="botcheck" class="fb-hp" tabindex="-1" autocomplete="off">
+      <textarea name="feedback" id="fb-text" required></textarea>
+      <label for="fb-email" id="fb-email-lbl"></label>
+      <input type="email" name="email" id="fb-email" class="fb-email" autocomplete="email" placeholder="ty@przyklad.pl">
+      <button type="submit" class="bigbtn primary" id="fb-submit"></button>
+    </form>
+    <div class="fb-sent" id="fb-sent"></div>
+  </section>
+
+  <footer>Claudemaster · zadania praktyczne.</footer>
+</div>
+</main>
+
+<!-- === ZAWARTOŚĆ PLIKÓW FOLDERU (podgląd w eksplorerze, z ogonkami) ===== -->
+<script type="text/plain" class="vfile" data-path="START-TUTAJ-usun.md">
+# Start tutaj (przeczytaj i usuń ten plik)
+
+W tym zadaniu ustawisz jedną, bardzo przydatną rzecz: Claude Code będzie wydawał dźwięk, gdy skończy odpowiadać, i inny, gdy czeka na Twoją decyzję. Dzięki temu możesz zająć się czymś innym i wracać dokładnie wtedy, gdy trzeba.
+
+Ustawimy to globalnie, czyli tak, że zadziała w każdym Twoim projekcie, nie tylko w tym folderze.
+
+## Co zrobić
+1. Odpal Claude Code w tym folderze.
+2. Napisz: ustaw mi globalnie hook dźwiękowy, gdy skończysz odpowiadać, i inny, gdy czekasz na moją decyzję.
+3. Gdy skończy, przetestuj: zadaj dowolne pytanie i posłuchaj. Potem otwórz inny projekt i sprawdź, że dźwięk dalej działa.
+
+Gdy to przeczytasz, skasuj ten plik, żeby nie mieszał Claude'owi w kontekście. Resztą zajmie się Claude, prowadzi go instrukcja w .claude/CLAUDE.md.
+</script>
+
+<script type="text/plain" class="vfile" data-path=".claude/CLAUDE.md">
+# Instrukcja dla Claude: ustaw dźwięk (hook) globalnie
+
+To folder ćwiczeniowy. Użytkownik uczy się ustawiać dźwiękowy hook w Claude Code. Twoje zadanie: pomóż mu ustawić to GLOBALNIE i przetestować. Zrób całą konfigurację, ale tłumacz krótko, co robisz.
+
+## Co ustawić
+- Dwa różne dźwięki, żeby dało się je rozróżnić:
+  - event Stop = sygnał, że skończyłeś odpowiadać (zrobione),
+  - event Notification = sygnał, że czekasz na decyzję użytkownika (Twoja kolej).
+- Zapisz to GLOBALNIE w ~/.claude/settings.json, w bloku hooks. Nie w tym folderze, bo ma działać w każdym projekcie.
+
+## Jak to zrobić dobrze
+- Zanim wpiszesz konfigurację, potwierdź aktualną strukturę hooków w oficjalnej dokumentacji (code.claude.com/docs/en/hooks). Nie zgaduj kształtu pliku.
+- Wykryj system użytkownika i dobierz polecenie odtwarzające dźwięk:
+  - macOS: afplay /System/Library/Sounds/Glass.aiff (Stop) oraz afplay /System/Library/Sounds/Submarine.aiff (Notification).
+  - Windows (PowerShell): odtwórz dwa różne wbudowane dźwięki .wav z C:\Windows\Media (np. chimes.wav i notify.wav) przez powershell -c (New-Object Media.SoundPlayer '<plik>').PlaySync().
+- Po zapisaniu poproś użytkownika, żeby przetestował. Zmiany w settings.json łapią się bez restartu.
+- Gdy użytkownik pyta, jakie hooki są dostępne, podaj aktualną, pełną listę na podstawie dokumentacji, nie z pamięci.
+
+## Bonus (jeśli użytkownik chce)
+- Zbuduj prostą stronę HTML z listą wszystkich wbudowanych dźwięków systemowych i przyciskiem odsłuchania każdego, żeby użytkownik wybrał ulubiony uchem, a potem ustawił go jako dźwięk Stop.
+</script>
+
+<!-- === LOGIKA (zwykle jej nie trzeba ruszać) =========================== -->
+<script>
+(function(){
+  const M = MISJA;
+  const $ = id => document.getElementById(id);
+  const KEY = 'cm_misja_' + M.tytul.replace(/\s+/g,'-').toLowerCase();
+
+  let st = { checked: [], checkedOpt: [] };
+  try { st = Object.assign(st, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch(e){}
+  const save = () => { try{ localStorage.setItem(KEY, JSON.stringify(st)); }catch(e){} };
+
+  $('back-lbl').textContent = M.powrot;
+  $('t-poziom').textContent = M.poziom;
+  $('t-czas').textContent = M.czas;
+  $('tytul').innerHTML = M.tytulMark
+    ? M.tytul.replace(M.tytulMark, '<mark>'+M.tytulMark+'</mark>')
+    : M.tytul;
+  $('lead').textContent = M.lead;
+  $('tematy-tytul').textContent = M.tematyTytul;
+  $('pobierz').textContent = M.pobierz.tytul;
+  $('pobierz-opis').textContent = M.pobierz.opis;
+  // Realne pobranie folderu .zip: anchor z atrybutem download. Puste M.pobierz.plik = makieta (przycisk wyłączony).
+  (function(){
+    var dl = $('pobierz');
+    if(M.pobierz.plik){ dl.setAttribute('href', M.pobierz.plik); dl.setAttribute('download', M.pobierz.plik.split('?')[0].split('/').pop()); }
+    else { dl.classList.add('is-off'); dl.removeAttribute('href'); }
+  })();
+  $('checklista-tytul').textContent = M.checklistaTytul;
+  $('opt-tytul').textContent = M.checklistaOptTytul;
+  $('hints-tytul').textContent = M.podpowiedziTytul;
+
+  M.tematy.forEach(t => {
+    const li = document.createElement('li');
+    li.textContent = t;
+    $('tematy').appendChild(li);
+  });
+
+  const files = {};
+  document.querySelectorAll('script.vfile').forEach(s => {
+    files[s.dataset.path] = s.textContent.replace(/^\n/, '').replace(/\s+$/,'');
+  });
+  // Ikony jak w VS Code: markdown = niebieski, CLAUDE.md = pomarańczowy spark, .claude folder = spark.
+  const icoFile = '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 3H7a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V7z"/><path d="M14 3v4h4"/></svg>';
+  const icoFolder = '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M3 6a1 1 0 0 1 1-1h5l2 2h8a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg>';
+  const icoMd = '<svg class="ic on" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="2.5" stroke="#3E8BD4" stroke-width="1.7"/><path d="M6 16V10l3 3.2 3-3.2v6" stroke="#3E8BD4" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/><path d="M16.6 10v5" stroke="#3E8BD4" stroke-width="1.7" stroke-linecap="round"/><path d="M14.4 12.9l2.2 2.2 2.2-2.2" stroke="#3E8BD4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const icoSpark = '<svg class="ic on" viewBox="0 0 24 24" fill="none" stroke="#DB511D" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="3.4" x2="12" y2="20.6"/><line x1="3.4" y1="12" x2="20.6" y2="12"/><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>';
+  function iconFor(node){
+    if(node.typ === 'folder') return node.name === '.claude' ? icoSpark : icoFolder;
+    if(node.name === 'CLAUDE.md') return icoSpark;
+    if(/\.md$/i.test(node.name)) return icoMd;
+    return icoFile;
+  }
+
+  const byPath = {}; M.drzewo.forEach(n => byPath[n.path] = n);
+  let activePath = M.domyslnyPlik;
+  function renderTree(){
+    const t = $('tree'); t.innerHTML = '';
+    M.drzewo.forEach(node => {
+      const row = document.createElement(node.typ === 'file' ? 'button' : 'div');
+      row.className = 'row ' + node.typ + (node.typ==='file' && node.path===activePath ? ' active' : '');
+      row.style.paddingLeft = (10 + node.depth*18) + 'px';
+      if(node.typ === 'folder'){
+        row.innerHTML = iconFor(node) + '<span></span><span class="fslash">/</span>';
+        row.children[1].textContent = node.name;
+      } else {
+        row.innerHTML = iconFor(node) + '<span></span>';
+        row.lastChild.textContent = node.name;
+        row.addEventListener('click', () => { activePath = node.path; renderTree(); showFile(); });
+      }
+      t.appendChild(row);
+    });
+  }
+  function showFile(){
+    const node = byPath[activePath];
+    $('exp-name').textContent = activePath;
+    $('exp-desc-txt').textContent = node ? node.opis : '';
+    const content = files[activePath] || M.folderPusty;
+    $('exp-view').textContent = content;
+  }
+  renderTree(); showFile();
+
+  function renderChecks(wrapId, items, stateKey, opt){
+    const wrap = $(wrapId); wrap.innerHTML = '';
+    items.forEach((tekst, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      const done = st[stateKey].includes(i);
+      b.className = 'check' + (opt?' opt':'') + (done?' done':'');
+      b.innerHTML = '<span class="box"></span><span class="lbl"></span>';
+      b.querySelector('.box').textContent = done ? '✓' : (opt ? '' : (i+1));
+      b.querySelector('.lbl').textContent = tekst;
+      b.addEventListener('click', () => {
+        const arr = st[stateKey];
+        const idx = arr.indexOf(i);
+        if(idx===-1) arr.push(i); else arr.splice(idx,1);
+        save(); renderChecks(wrapId, items, stateKey, opt); if(!opt) refreshProgress();
+      });
+      wrap.appendChild(b);
+    });
+  }
+  function refreshProgress(){
+    const total = M.checklist.length, done = st.checked.length;
+    const pct = total ? Math.round(done/total*100) : 0;
+    $('prog-bar').style.width = pct + '%';
+    $('prog-lbl').textContent = done + ' z ' + total;
+  }
+  renderChecks('checks', M.checklist, 'checked', false);
+  renderChecks('checks-opt', M.checklistOpcjonalna, 'checkedOpt', true);
+  refreshProgress();
+
+  M.podpowiedzi.forEach((p, i) => {
+    const d = document.createElement('details'); d.className = 'hint';
+    const s = document.createElement('summary');
+    s.innerHTML = '<span class="qi">'+(i+1)+'</span><span></span><span class="chev">▾</span>';
+    s.children[1].textContent = p.q;
+    const a = document.createElement('div'); a.className = 'a';
+    if(p.q.toLowerCase().includes('prompt')){
+      const box = document.createElement('span'); box.className='promptbox'; box.textContent = p.a; a.appendChild(box);
+    } else { a.textContent = p.a; }
+    d.appendChild(s); d.appendChild(a);
+    $('hints').appendChild(d);
+  });
+
+  // Strzałka wstecz prowadzi do siatki zadań (M.powrotHref). Na czystej makiecie zostaje "#".
+  $('back').setAttribute('href', M.powrotHref || '#');
+})();
+</script>
+
+<!-- === FEEDBACK WCZESNYCH UŻYTKOWNIKÓW (Web3Forms, natywny POST jak app/opinie) === -->
+<script>
+(function(){
+  var M = MISJA;
+  var $ = function(id){ return document.getElementById(id); };
+  $('fb-tytul').textContent = M.feedbackTytul;
+  $('fb-opis').textContent = M.feedbackOpis;
+  $('fb-text').placeholder = M.feedbackPlaceholder;
+  $('fb-email-lbl').textContent = M.feedbackEmailLabel;
+  $('fb-submit').textContent = M.feedbackWyslij;
+  // Temat maila i pole "zadanie" biorą nazwę misji, żeby feedback był rozróżnialny per zadanie.
+  $('fb-subject').value = 'Feedback zadania: ' + M.tytul + ' (Claudemaster)';
+  $('fb-zadanie').value = M.tytul;
+
+  var form = $('fb-form'), sent = $('fb-sent'), btn = $('fb-submit');
+
+  // Powrót z Web3Forms (?ok=1) — pokaż podziękowanie zamiast formularza. Działa też bez JS.
+  if(/[?&]ok=1/.test(location.search)){
+    form.style.display = 'none';
+    sent.textContent = M.feedbackDzieki;
+    sent.classList.add('show');
+    sent.scrollIntoView({block:'center'});
+    return;
+  }
+  // Redirect = ta sama strona na bieżącej domenie (bez hardkodowania claudemaster.pl).
+  $('fb-redirect').value = location.origin + location.pathname + '?ok=1';
+  form.addEventListener('submit', function(){ btn.textContent = 'Wysyłam…'; });
+})();
+</script>
+
+<script>
+(function(){
+  "use strict";
+  /* ---------- BRAMKA HASŁEM (grzecznościowa, wspólna dla całego /app) ---------- */
+  var PASSWORD = "claudemaster";
+  var GATE_KEY = "cm_app_gate";
+  var gate = document.getElementById("gate");
+  var app = document.getElementById("app");
+  var form = document.getElementById("gate-form");
+  var input = document.getElementById("gate-input");
+  var gerror = document.getElementById("gate-error");
+
+  function unlock(){ gate.style.display = "none"; app.hidden = false; }
+  try { if (sessionStorage.getItem(GATE_KEY) === "1") unlock(); } catch(e){}
+
+  form.addEventListener("submit", function(ev){
+    ev.preventDefault();
+    if (input.value.trim().toLowerCase() === PASSWORD){
+      try { sessionStorage.setItem(GATE_KEY, "1"); } catch(e){}
+      gerror.hidden = true;
+      unlock();
+    } else {
+      gerror.hidden = false;
+      input.value = "";
+      input.focus();
+    }
+  });
+})();
+</script>
+</body>
+</html>
