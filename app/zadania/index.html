@@ -64,9 +64,15 @@
   .head p{font-size:16.5px;color:var(--ink-80);max-width:56ch;margin-top:10px}
 
   /* --- zadanie polecane (jedno, gotowe) --- */
-  .feature{display:grid;grid-template-columns:1.55fr 1fr;gap:0;text-decoration:none;color:var(--ink);
+  .feature{position:relative;display:grid;grid-template-columns:1.55fr 1fr;gap:0;text-decoration:none;color:var(--ink);
     background:var(--paper-card);border:1.5px solid var(--hair);
     transition:border-color .15s,transform .12s,box-shadow .15s}
+  .feature.is-new{overflow:hidden;margin-top:16px}
+  /* narożna wstążka "nowe" pod 45 stopni */
+  .ribbon{position:absolute;top:17px;right:-42px;z-index:2;transform:rotate(45deg);
+    background:var(--accent);color:var(--on-accent);font-size:11px;font-weight:800;
+    letter-spacing:.14em;text-transform:uppercase;padding:6px 50px;
+    box-shadow:0 2px 6px color-mix(in srgb,var(--ink) 22%,transparent)}
   .feature:hover{border-color:var(--ink);transform:translateY(-2px);box-shadow:0 6px 0 color-mix(in srgb,var(--ink) 8%,transparent)}
   .feat-l{padding:30px 30px 28px;display:flex;flex-direction:column;gap:14px}
   .eyebrow{display:inline-flex;align-items:center;gap:9px;text-transform:uppercase;letter-spacing:.15em;
@@ -166,6 +172,25 @@
         <div class="step"><span class="n">1</span><span class="t">Pobierasz folder i odpalasz w nim Claude Code</span></div>
         <div class="step"><span class="n">2</span><span class="t">Jednym poleceniem puszczasz pięciu badaczy naraz</span></div>
         <div class="step"><span class="n">3</span><span class="t">Składacz zbiera notatki w jeden raport z rekomendacją</span></div>
+      </div>
+    </a>
+
+    <a class="feature is-new" href="/app/zadania/hook-dzwiekowy.html">
+      <span class="ribbon">Nowe</span>
+      <div class="feat-l">
+        <span class="eyebrow">Szybka wygrana</span>
+        <h2>Hook <mark>dźwiękowy</mark>, gdy Claude skończy</h2>
+        <p class="desc">Uczysz Claude Code, żeby wydawał subtelny dźwięk, gdy skończy odpowiadać, i inny, gdy czeka na Twoją decyzję. Ustawiasz raz, działa w każdym projekcie.</p>
+        <span class="meta"><span class="dot easy"></span>Łatwe<span class="sep"></span>do 10 min</span>
+        <span class="cta">Otwórz zadanie
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </div>
+      <div class="feat-r">
+        <div class="rh">Co zrobisz</div>
+        <div class="step"><span class="n">1</span><span class="t">Pobierasz folder i odpalasz w nim Claude Code</span></div>
+        <div class="step"><span class="n">2</span><span class="t">Prosisz, żeby ustawił globalnie hook dźwiękowy</span></div>
+        <div class="step"><span class="n">3</span><span class="t">Słyszysz dźwięk, gdy skończy i gdy czeka na Ciebie</span></div>
       </div>
     </a>
 
