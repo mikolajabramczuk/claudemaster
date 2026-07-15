@@ -740,7 +740,7 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
   <div class="pricing">
     <!-- KURS -->
     <article class="pricecard" id="course-card">
-      <div class="pc-head"><span class="pc-kind">Kurs</span><span class="pc-tag" id="course-tag" hidden>Sprzedaż zamknięta</span></div>
+      <div class="pc-head"><span class="pc-kind">Kurs</span><span class="pc-tag" id="course-tag" hidden>Przedsprzedaż zamknięta</span></div>
       <p class="pc-tagline">Przerabiasz w swoim czasie. Masz też dostęp do grupy i aplikacji.</p>
       <div class="price-row">
         <span class="price"><span class="cur">zł</span><span id="course-eb">599</span></span>
@@ -1007,14 +1007,14 @@ var OFFER = {
     var csBuy=document.getElementById("course-buy"); if(csBuy) csBuy.hidden=true;
     var csWait=document.getElementById("course-waitlist"); if(csWait) csWait.hidden=false;
     var csNote=document.getElementById("course-note");
-    if(csNote) csNote.textContent="Sprzedaż zamknięta. Zostaw e-mail, dam znać, gdy ruszą zapisy na kolejną edycję.";
+    if(csNote) csNote.textContent="Przedsprzedaż zamknięta. Startujemy z początkiem sierpnia. Zostaw e-mail, dam znać, gdy ruszą zapisy.";
     // nic nie jest teraz do kupienia → górny badge i główne CTA kierują na listę
-    if(spotsEl) spotsEl.innerHTML="Zapisy <b>zamknięte</b>";
+    if(spotsEl) spotsEl.innerHTML="Przedsprzedaż <b>zamknięta</b>";
     document.querySelectorAll(".hero .cta-row .btn.primary, .final .btn").forEach(function(a){
       a.setAttribute("href","#");
       a.setAttribute("data-wl-open","");
       a.setAttribute("data-wl-list","wyprzedane");
-      a.textContent="Zapisy zamknięte · dołącz do listy";
+      a.textContent="Przedsprzedaż zamknięta · dołącz do listy";
       a.setAttribute("data-umami-event","cta-waitlist-closed");
     });
   }
