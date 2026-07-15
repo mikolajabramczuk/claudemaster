@@ -311,6 +311,12 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
 .ws-sold #course-buy{background:var(--accent);color:var(--on-accent);border:none;box-shadow:0 4px 0 var(--accent-deep)}
 .ws-sold #course-buy:hover{transform:translateY(-2px)}
 
+/* ---- tryb: kurs również zamknięty — kafel zostaje wyszarzony (?csold=1 / COURSE_SOLD_OUT) ---- */
+.cs-sold #course-card .price-row{opacity:.5}
+.cs-sold #course-countdown{display:none}
+.cs-sold #course-avail{display:none}
+.cs-sold #course-note{display:block}
+
 /* rozwijana tabela porównawcza */
 .cmp-collapse{margin-top:28px;border:1.5px solid var(--ink);background:var(--paper-card)}
 .cmp-collapse>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:18px 22px;font-weight:700;font-size:1.02rem}
@@ -734,7 +740,7 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
   <div class="pricing">
     <!-- KURS -->
     <article class="pricecard" id="course-card">
-      <div class="pc-head"><span class="pc-kind">Kurs</span></div>
+      <div class="pc-head"><span class="pc-kind">Kurs</span><span class="pc-tag" id="course-tag" hidden>Sprzedaż zamknięta</span></div>
       <p class="pc-tagline">Przerabiasz w swoim czasie. Masz też dostęp do grupy i aplikacji.</p>
       <div class="price-row">
         <span class="price"><span class="cur">zł</span><span id="course-eb">599</span></span>
@@ -752,6 +758,7 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
       </ul>
       <div class="pc-foot">
         <a class="btn ghost" id="course-buy" href="#" style="width:100%" data-umami-event="kup-kurs">Kupuję kurs →</a>
+        <a class="btn ghost" id="course-waitlist" href="#" data-wl-open data-wl-list="wyprzedane" hidden style="width:100%" data-umami-event="waitlist-otworz">Powiadom mnie o kolejnej edycji →</a>
         <p class="pc-note" id="course-note">⚠️ Kurs w przedsprzedaży. Dostęp do materiałów z początkiem sierpnia.</p>
       </div>
     </article>
@@ -895,9 +902,11 @@ header.hero{max-width:1120px;margin:0 auto;padding:80px 36px 60px}
    • editions — terminy warsztatów; soldOut:true → przycisk wiedzie na listę rezerwową
    • heroSpots — liczba w badge hero („Zostało X miejsc…")
    • Globalny tryb wyprzedane (chowa cały cennik): dopisz ?soldout=1 albo ustaw SOLD_OUT=true.
-   • Warsztaty wyprzedane, kurs nadal w sprzedaży: dopisz ?wsold=1 albo ustaw WORKSHOPS_SOLD_OUT=true. */
+   • Warsztaty wyprzedane, kurs nadal w sprzedaży: dopisz ?wsold=1 albo ustaw WORKSHOPS_SOLD_OUT=true.
+   • Kurs też zamknięty (kafel zostaje, wyszarzony, bez zakupu → zapis na listę): ?csold=1 albo COURSE_SOLD_OUT=true. */
 var SOLD_OUT = false;
 var WORKSHOPS_SOLD_OUT = true;
+var COURSE_SOLD_OUT = true;
 var OFFER = {
   earlyBirdEnds: "2026-07-14T23:59:59+02:00",
   // Liczbę wolnych miejsc ustawiasz osobno przy każdej edycji niżej (pole `spots`).
@@ -921,6 +930,7 @@ var OFFER = {
 
   // Tryb: warsztaty wyprzedane, kurs nadal w sprzedaży
   var wsSold = WORKSHOPS_SOLD_OUT || /[?&]wsold=1/.test(location.search);
+  var csSold = COURSE_SOLD_OUT || /[?&]csold=1/.test(location.search);
   if(wsSold){
     document.body.classList.add("ws-sold");
     OFFER.editions.forEach(function(ed){ ed.soldOut=true; });   // przyciski terminów → lista rezerwowa
@@ -963,27 +973,50 @@ var OFFER = {
   if(buyEl && OFFER.course.buyUrl) buyEl.setAttribute("href",OFFER.course.buyUrl);
 
   if(wsSold){
-    // przenosimy akcent z warsztatów na kurs + odsłaniamy komunikaty
-    var cCard=document.getElementById("course-card"), wCard=document.getElementById("ws-card");
-    if(cCard) cCard.classList.add("feature");
+    // warsztaty zamknięte: zdejmij akcent z kafla warsztatów, odsłoń tag i przycisk listy
+    var wCard=document.getElementById("ws-card");
     if(wCard) wCard.classList.remove("feature");
-    ["course-avail","ws-tag","ws-waitlist"].forEach(function(id){
+    ["ws-tag","ws-waitlist"].forEach(function(id){
       var el=document.getElementById(id); if(el) el.hidden=false;
     });
-    // główne CTA (hero + finalne) prowadzą na cennik, gdzie kurs ma przycisk zakupu
-    document.querySelectorAll(".hero .cta-row .btn.primary, .final .btn").forEach(function(a){
-      a.setAttribute("href","#cennik");
-      a.textContent="Kurs w przedsprzedaży";
-      a.setAttribute("data-umami-event","cta-cennik-wsold");
-    });
-    // drugi przycisk w hero: scroll do kafla warsztatów, tam dopiero pop-up listy
-    var ghost=document.querySelector(".hero .cta-row .btn.ghost");
-    if(ghost){
-      ghost.setAttribute("href","#ws-card");
-      ghost.removeAttribute("data-wl-open");
-      ghost.textContent="Warsztaty na żywo";
-      ghost.setAttribute("data-umami-event","cta-warsztaty-wsold");
+    if(!csSold){
+      // kurs nadal w sprzedaży → przenosimy na niego akcent i kierujemy tam CTA
+      var cCard=document.getElementById("course-card");
+      if(cCard) cCard.classList.add("feature");
+      var avEl=document.getElementById("course-avail"); if(avEl) avEl.hidden=false;
+      document.querySelectorAll(".hero .cta-row .btn.primary, .final .btn").forEach(function(a){
+        a.setAttribute("href","#cennik");
+        a.textContent="Kurs w przedsprzedaży";
+        a.setAttribute("data-umami-event","cta-cennik-wsold");
+      });
+      // drugi przycisk w hero: scroll do kafla warsztatów, tam dopiero pop-up listy
+      var ghost=document.querySelector(".hero .cta-row .btn.ghost");
+      if(ghost){
+        ghost.setAttribute("href","#ws-card");
+        ghost.removeAttribute("data-wl-open");
+        ghost.textContent="Warsztaty na żywo";
+        ghost.setAttribute("data-umami-event","cta-warsztaty-wsold");
+      }
     }
+  }
+
+  if(csSold){
+    // kurs również zamknięty: kafel zostaje, wyszarzony, bez zakupu — komunikat + zapis na listę
+    document.body.classList.add("cs-sold");
+    var csTag=document.getElementById("course-tag"); if(csTag) csTag.hidden=false;
+    var csBuy=document.getElementById("course-buy"); if(csBuy) csBuy.hidden=true;
+    var csWait=document.getElementById("course-waitlist"); if(csWait) csWait.hidden=false;
+    var csNote=document.getElementById("course-note");
+    if(csNote) csNote.textContent="Sprzedaż zamknięta. Zostaw e-mail, dam znać, gdy ruszą zapisy na kolejną edycję.";
+    // nic nie jest teraz do kupienia → górny badge i główne CTA kierują na listę
+    if(spotsEl) spotsEl.innerHTML="Zapisy <b>zamknięte</b>";
+    document.querySelectorAll(".hero .cta-row .btn.primary, .final .btn").forEach(function(a){
+      a.setAttribute("href","#");
+      a.setAttribute("data-wl-open","");
+      a.setAttribute("data-wl-list","wyprzedane");
+      a.textContent="Zapisy zamknięte · dołącz do listy";
+      a.setAttribute("data-umami-event","cta-waitlist-closed");
+    });
   }
 
   renderEditions();
@@ -1162,7 +1195,7 @@ var OFFER = {
       .then(function(){stepForm.hidden=true; stepDone.hidden=false;
         if(window.umami) umami.track("waitlist-zapis");})
       .catch(function(){
-        errEl.textContent="Coś nie zadziałało. Spróbuj jeszcze raz za chwilę.";
+        errEl.textContent="Nie udało się zapisać. Zwykle blokuje to wtyczka od reklam lub VPN. Wyłącz ją i spróbuj ponownie.";
         submitEl.disabled=false; submitEl.textContent="Zapisz mnie →";
       });
   });
@@ -1218,7 +1251,7 @@ var OFFER = {
     body.append("fields[email]",v); body.append("ml-submit","1"); body.append("anticsrf","true");
     fetch(WL_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:body.toString()})
       .then(function(){form.hidden=true; err.textContent=""; done.hidden=false; if(window.umami) umami.track("lista-rezerwowa-zapis");})
-      .catch(function(){err.textContent="Coś nie zadziałało. Spróbuj jeszcze raz.";btn.disabled=false;btn.textContent="Zapisz mnie na listę →";});
+      .catch(function(){err.textContent="Nie udało się zapisać. Zwykle blokuje to wtyczka od reklam lub VPN. Wyłącz ją i spróbuj ponownie.";btn.disabled=false;btn.textContent="Zapisz mnie na listę →";});
   });
 })();
 </script>
