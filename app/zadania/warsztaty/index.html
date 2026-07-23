@@ -1,489 +1,761 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zadania warsztatowe · Claudemaster</title>
 <meta name="robots" content="noindex, nofollow">
+<script>
+/* anty-FOUC: motyw z localStorage przed pierwszym renderem, domyślnie jasny */
+(function(){
+  try{
+    if(localStorage.getItem("cm_theme_e")==="dark"){
+      document.documentElement.setAttribute("data-theme","dark");
+    }
+  }catch(e){}
+})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#ECE7DE;
-    --paper-card:#F6F3EC;
-    --ink:#1B1A17;
-    --accent:#DB511D;
-    --accent-2:#F0BE12;
-    --on-accent:#FFFDF7;
-    --ok:#3B7A4B;
-    --bad:#C23B2E;
-    --hair:color-mix(in srgb,var(--ink) 14%,transparent);
-    --hair-soft:color-mix(in srgb,var(--ink) 8%,transparent);
-    --muted:color-mix(in srgb,var(--ink) 60%,transparent);
-    --ink-80:color-mix(in srgb,var(--ink) 84%,transparent);
-    --grid:color-mix(in srgb,var(--ink) 6%,transparent);
+    --bg:#F7F6F3;
+    --panel:#F0EFEA;
+    --pill:#ECEAE5;
+    --ink:#1A1A1A;
+    --sub:#696760;
+    --hair:rgba(26,26,23,.09);
+    --btn-bg:#1A1A1A;
+    --btn-fg:#FFFFFF;
+    --acc:#DB511D;
+    --win-sh:rgba(26,26,23,.07);
+    --fs-h:clamp(28px,3.6vw,32px);
+    --fs-body:16px;
+    --fs-small:14px;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
   }
+  html[data-theme="dark"]{
+    --bg:#141413;
+    --panel:#1E1E1C;
+    --pill:#262624;
+    --ink:#EDECE8;
+    --sub:#9A988F;
+    --hair:rgba(237,236,232,.10);
+    --btn-bg:#FFFFFF;
+    --btn-fg:#141413;
+    --acc:#F26430;
+    --win-sh:rgba(0,0,0,.4);
+  }
+
   *{box-sizing:border-box;margin:0;padding:0}
-  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
-  body{font-family:"Funnel Sans",system-ui,sans-serif;color:var(--ink);line-height:1.6;
-    background-color:var(--paper);
-    background-image:radial-gradient(var(--grid) 1px, transparent 1.3px);
-    background-size:22px 22px;}
-  a{color:var(--accent)}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  body{
+    font-family:"Funnel Sans",system-ui,sans-serif;
+    background:var(--bg);color:var(--ink);
+    font-size:var(--fs-body);line-height:1.6;
+    transition:background-color .2s ease-out,color .2s ease-out;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:0 24px}
+  a{color:inherit}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radius:999px}
 
-  .wrap{max-width:800px;margin:0 auto;padding:44px 24px 0}
-  .eyebrow{display:inline-flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.16em;font-size:11px;font-weight:600;color:var(--muted)}
-  .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent)}
-  mark,.uline{background:linear-gradient(transparent 62%, var(--accent-2) 62% 92%, transparent 92%);color:inherit;padding:0 .05em}
+  /* ---------- topbar (sticky) ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:color-mix(in srgb,var(--bg) 86%,transparent);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--hair);
+    transition:background-color .2s ease-out;
+  }
+  .topbar-in{
+    max-width:880px;margin:0 auto;padding:12px 24px;
+    display:flex;align-items:center;gap:16px;
+  }
+  .wordmark{font-weight:600;font-size:15px;letter-spacing:.01em}
+  .top-spacer{flex:1}
 
-  /* przyciski */
-  .bigbtn{font:inherit;font-weight:700;font-size:13.5px;letter-spacing:.05em;text-transform:uppercase;border:none;border-radius:0;
-    padding:13px 22px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:9px;text-decoration:none}
-  .bigbtn.primary{background:var(--accent);color:var(--on-accent);box-shadow:0 4px 0 color-mix(in srgb,var(--accent) 65%,#000)}
-  .bigbtn.primary:hover{transform:translateY(1px);box-shadow:0 3px 0 color-mix(in srgb,var(--accent) 65%,#000)}
-  .bigbtn .ar{font-size:15px}
+  /* zegar: sticky w topbarze, wyraźny, bez mono */
+  .timer{
+    display:flex;align-items:center;gap:10px;
+    background:var(--pill);border-radius:999px;
+    padding:6px 6px 6px 16px;
+  }
+  .timer[hidden]{display:none}
+  .t-label{font-size:13px;font-weight:500;color:var(--sub);white-space:nowrap}
+  .t-time{
+    font-size:18px;font-weight:650;color:var(--ink);
+    font-variant-numeric:tabular-nums;min-width:54px;text-align:center;
+  }
+  .timer.t-done{background:color-mix(in srgb,var(--acc) 14%,var(--pill))}
+  .timer.t-done .t-time,.timer.t-done .t-label{color:var(--acc)}
+  .t-btn{
+    width:28px;height:28px;border-radius:999px;border:none;cursor:pointer;
+    background:var(--bg);color:var(--ink);
+    font-family:inherit;font-size:11px;font-weight:700;
+    display:grid;place-items:center;flex:none;
+    transition:background-color .18s ease-out;
+  }
+  .t-btn:hover{background:color-mix(in srgb,var(--bg) 80%,var(--ink) 8%)}
 
-  /* ===== BRAMKA HASŁEM (bramka grzecznościowa, nie realne zabezpieczenie) ===== */
-  .gate{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:24px;
-    background-color:var(--paper);
-    background-image:radial-gradient(var(--grid) 1px, transparent 1.3px);background-size:22px 22px}
-  .gate-card{width:100%;max-width:430px;background:var(--paper-card);border:1.5px solid var(--ink);padding:34px 30px;
-    box-shadow:8px 8px 0 var(--ink)}
-  .gate-card h1{font-size:26px;font-weight:600;letter-spacing:-.01em;margin:12px 0 8px;line-height:1.1}
-  .gate-card p{font-size:15px;color:var(--ink-80);margin-bottom:22px}
-  .gate-form{display:flex;flex-direction:column;gap:12px}
-  .gate-form input{font:inherit;font-size:16px;padding:13px 15px;border:1.5px solid var(--ink);background:#fff;color:var(--ink);border-radius:0}
-  .gate-form input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%,transparent)}
-  .gate-error{color:var(--bad);font-size:13.5px;font-weight:600;margin-top:6px}
-  .gate-foot{margin-top:20px;font-size:12px;color:var(--muted)}
+  .theme-btn{
+    width:36px;height:36px;border-radius:999px;border:none;cursor:pointer;
+    background:var(--pill);color:var(--ink);
+    display:grid;place-items:center;flex:none;
+    transition:background-color .18s ease-out,color .18s ease-out;
+  }
+  .theme-btn:hover{background:color-mix(in srgb,var(--pill) 80%,var(--ink) 8%)}
+  .theme-btn svg{display:block;width:16px;height:16px}
+  .theme-btn .ic-sun{display:none}
+  .theme-btn .ic-moon{display:block}
+  html[data-theme="dark"] .theme-btn .ic-sun{display:block}
+  html[data-theme="dark"] .theme-btn .ic-moon{display:none}
 
-  /* ===== POBIERANIE ===== */
-  .dl{padding:24px;border:1.5px solid var(--ink);background:var(--paper-card);box-shadow:6px 6px 0 var(--ink);
-    display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
-  .dl p{font-size:14.5px;color:var(--ink-80);max-width:44ch}
-  .dl p code{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;background:color-mix(in srgb,var(--ink) 7%,transparent);padding:2px 6px}
+  /* ---------- brama hasłem (grzecznościowa, wspólny klucz z /app) ---------- */
+  .gate{
+    position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:24px;
+    background:var(--bg);
+  }
+  .gate-card{
+    width:100%;max-width:400px;background:var(--panel);border-radius:20px;padding:36px 32px;
+  }
+  .gate-card h1{font-size:22px;font-weight:650;letter-spacing:-.012em;line-height:1.2;margin-bottom:8px}
+  .gate-card p{font-size:var(--fs-small);color:var(--sub);margin-bottom:20px;text-wrap:pretty}
+  .gate-form{display:flex;flex-direction:column;gap:10px}
+  .gate-form input{
+    font:inherit;font-size:16px;padding:12px 16px;
+    border:1px solid var(--hair);border-radius:12px;background:var(--bg);color:var(--ink);
+  }
+  .gate-form input:focus{outline:none;border-color:var(--ink)}
+  .gate-error{color:var(--acc);font-size:13px;font-weight:600;margin-top:4px}
+  .gate-foot{margin-top:16px;font-size:12px;color:var(--sub)}
 
-  /* ===== PRZEŁĄCZNIK ZADANIE 1 / ZADANIE 2 (CSS-only) ===== */
-  .zad-radio{position:absolute;opacity:0;pointer-events:none}
-  .seg{display:grid;grid-template-columns:1fr 1fr;border:1.5px solid var(--ink);margin:34px 0 6px;background:var(--paper-card)}
-  .seg label{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;text-align:center;
-    padding:14px 10px;cursor:pointer;transition:.15s;color:var(--ink)}
-  .seg label + label{border-left:1.5px solid var(--ink)}
-  #zad1:checked ~ .seg label[for="zad1"],
-  #zad2:checked ~ .seg label[for="zad2"]{background:var(--ink);color:var(--on-accent)}
-  .panel{display:none}
-  #zad1:checked ~ .panel-z1{display:block}
-  #zad2:checked ~ .panel-z2{display:block}
+  /* ---------- nagłówek + przełączniki ---------- */
+  .head{padding:48px 0 24px}
+  .head-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .head h1{font-size:var(--fs-h);font-weight:650;letter-spacing:-.02em;line-height:1.2;text-wrap:balance}
+  .progress{margin-left:auto;font-size:var(--fs-small);color:var(--sub)}
 
-  /* ===== KROKI ===== */
-  main{padding-bottom:40px}
-  .step{background:var(--paper-card);border:1.5px solid var(--hair);margin:20px 0;transition:border-color .2s}
-  .step.done{border-color:color-mix(in srgb,var(--ok) 55%,var(--hair))}
-  .step-head{display:flex;align-items:flex-start;gap:16px;padding:22px 24px 6px}
-  .step-num{flex:none;width:34px;height:34px;border:2px solid var(--ink);display:grid;place-items:center;
-    font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;transition:.2s}
-  .step.done .step-num{background:var(--ok);border-color:var(--ok);color:#fff}
-  .step-headings{flex:1;min-width:0}
-  .step-headings h2{font-size:20px;font-weight:600;letter-spacing:-.01em;line-height:1.2}
+  /* pixel duszek (box-shadow pixele, siatka 4px); hover = podskok i mrugnięcie */
+  .pixel-buddy{position:relative;width:32px;height:28px;flex:none;cursor:pointer}
+  .pixel-buddy:hover{animation:pbHop .6s ease-out}
+  @keyframes pbHop{0%,100%{transform:translateY(0)}30%{transform:translateY(-7px)}55%{transform:translateY(0)}78%{transform:translateY(-3px)}}
+  .pb-body,.pb-eyes{position:absolute;top:0;left:0;width:4px;height:4px;background:transparent}
+  .pb-body{box-shadow:
+    8px 0 var(--acc),12px 0 var(--acc),16px 0 var(--acc),20px 0 var(--acc),
+    4px 4px var(--acc),8px 4px var(--acc),12px 4px var(--acc),16px 4px var(--acc),20px 4px var(--acc),24px 4px var(--acc),
+    0 8px var(--acc),4px 8px var(--acc),8px 8px var(--acc),12px 8px var(--acc),16px 8px var(--acc),20px 8px var(--acc),24px 8px var(--acc),28px 8px var(--acc),
+    0 12px var(--acc),4px 12px var(--acc),8px 12px var(--acc),12px 12px var(--acc),16px 12px var(--acc),20px 12px var(--acc),24px 12px var(--acc),28px 12px var(--acc),
+    0 16px var(--acc),4px 16px var(--acc),8px 16px var(--acc),12px 16px var(--acc),16px 16px var(--acc),20px 16px var(--acc),24px 16px var(--acc),28px 16px var(--acc),
+    0 20px var(--acc),4px 20px var(--acc),8px 20px var(--acc),12px 20px var(--acc),16px 20px var(--acc),20px 20px var(--acc),24px 20px var(--acc),28px 20px var(--acc),
+    0 24px var(--acc),4px 24px var(--acc),12px 24px var(--acc),16px 24px var(--acc),24px 24px var(--acc),28px 24px var(--acc)}
+  .pb-eyes{box-shadow:8px 8px var(--bg),20px 8px var(--bg),8px 12px var(--bg),20px 12px var(--bg);animation:pbBlink 4.6s infinite}
+  .pixel-buddy:hover .pb-eyes{animation:pbWink .6s ease-out}
+  @keyframes pbBlink{0%,90%,100%{opacity:1}93%,96%{opacity:0}}
+  @keyframes pbWink{0%,40%,100%{opacity:1}55%,78%{opacity:0}}
 
-  .step-check{flex:none;display:inline-flex;align-items:center;gap:9px;font:inherit;cursor:pointer;
-    background:transparent;border:1.5px solid var(--hair);color:var(--ink-80);border-radius:0;padding:8px 13px;transition:.15s}
-  .step-check:hover{border-color:var(--ink)}
-  .step-check .mk{width:20px;height:20px;border:2px solid var(--hair);background:#fff;display:grid;place-items:center;
-    font-size:12px;color:transparent;transition:.15s}
-  .step-check .ck-txt{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
-  .step.done .step-check{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 10%,#fff)}
-  .step.done .step-check .mk{background:var(--ok);border-color:var(--ok);color:#fff}
-  .step.done .step-check .ck-txt{color:var(--ok)}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+  .tab{
+    font-family:inherit;font-size:14px;font-weight:600;
+    color:var(--sub);background:var(--panel);
+    border:none;border-radius:999px;padding:10px 17px;cursor:pointer;
+    display:inline-flex;align-items:center;gap:7px;
+    transition:background-color .18s ease-out,color .18s ease-out;
+  }
+  .tab:hover{background:var(--pill);color:var(--ink)}
+  .tab.active{background:var(--btn-bg);color:var(--btn-fg)}
+  .tab .tk{display:none;font-size:11px}
+  .tab.done .tk{display:inline;color:var(--acc)}
+  .tab.active.done .tk{color:var(--btn-fg)}
 
-  .step-body{padding:8px 24px 26px 74px}
-  .step-body p{font-size:15.5px;color:var(--ink-80);margin:10px 0}
-  .step-body ol,.step-body ul{margin:10px 0 10px 2px;padding-left:20px}
-  .step-body li{font-size:15.5px;color:var(--ink-80);margin:7px 0;line-height:1.5}
-  .step-body strong{color:var(--ink);font-weight:700}
-  .step-body code{font-family:ui-monospace,Menlo,monospace;font-size:13.5px;background:color-mix(in srgb,var(--ink) 7%,transparent);
-    padding:2px 6px;border-radius:0}
-  .step-actions{margin:16px 0 4px}
+  /* ---------- widok zadania ---------- */
+  .task{
+    display:none;
+    background:var(--panel);border-radius:20px;
+    padding:28px 32px 30px;
+    transition:background-color .2s ease-out;
+  }
+  .task.active{display:block}
+  .task-top{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding-bottom:8px}
+  .task-top h2{font-size:20px;font-weight:650;letter-spacing:-.012em;line-height:1.3;flex:1;text-wrap:balance}
+  .task.is-done .task-top h2::after{content:"✓";color:var(--acc);margin-left:10px;font-size:16px;vertical-align:2px}
+  .tstart{
+    display:inline-flex;align-items:center;gap:8px;flex:none;
+    font-family:inherit;font-size:13px;font-weight:600;color:var(--ink);
+    background:var(--bg);border:1px solid var(--hair);border-radius:999px;
+    padding:9px 16px;cursor:pointer;white-space:nowrap;
+    transition:background-color .18s ease-out,border-color .18s ease-out;
+  }
+  .tstart:hover{border-color:var(--ink)}
+  .tstart::before{content:"▶";font-size:9px;color:var(--sub)}
 
-  /* cicha notatka */
-  .quiet{font-size:13.5px;color:var(--muted);border-left:2px solid var(--hair);padding:2px 0 2px 14px;margin:14px 0}
-  .quiet strong{color:var(--ink-80)}
-  .quiet code{font-size:12.5px}
+  /* kroki */
+  .stp{display:flex;align-items:flex-start;gap:14px;padding:14px 0}
+  .stp + .stp{border-top:1px solid var(--hair)}
+  .stp-check{
+    flex:none;width:22px;height:22px;margin-top:1px;border-radius:999px;
+    border:1.5px solid color-mix(in srgb,var(--sub) 46%,transparent);background:var(--bg);
+    cursor:pointer;display:grid;place-items:center;
+    color:transparent;font-size:11px;line-height:1;
+    transition:background-color .15s ease-out,border-color .15s ease-out,color .15s ease-out;
+  }
+  .stp-check:hover{border-color:var(--ink)}
+  .stp.done .stp-check{background:var(--acc);border-color:var(--acc);color:#fff}
+  .stp-num{flex:none;font-size:13px;font-weight:600;color:var(--sub);width:20px;line-height:25px}
+  .stp-tx{flex:1;min-width:0;font-size:var(--fs-body);line-height:1.55}
+  .stp.done .stp-tx > p:first-child{color:var(--sub);text-decoration:line-through;text-decoration-thickness:1px}
+  .stp-tx strong{font-weight:650}
+  .stp-tx code{font-family:var(--mono);font-size:13px;background:var(--pill);padding:2px 6px;border-radius:6px}
+  .stp-tx .note{font-size:var(--fs-small);color:var(--sub);margin-top:8px;text-wrap:pretty}
+  .bpill{
+    display:inline-block;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+    color:var(--sub);border:1px solid var(--hair);border-radius:999px;padding:2px 9px;
+    margin-bottom:6px;
+  }
 
-  /* udawane pole prompta */
-  .prompt-demo{border:1.5px solid var(--ink);background:#fff;margin:16px 0 6px}
-  .prompt-demo .pd-top{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:9px 14px;border-bottom:1px solid var(--hair-soft)}
-  .prompt-demo .pd-row{display:flex;align-items:flex-start;gap:10px;padding:14px}
-  .prompt-demo .pd-caret{color:var(--accent);font-weight:800}
-  .prompt-demo .pd-text{font-size:15px;color:var(--ink)}
-  .prompt-demo .pd-enter{margin-left:auto;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);border:1px solid var(--hair);padding:4px 9px;flex:none}
+  /* przyciski-akcje w krokach */
+  .act{margin:12px 0 4px}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    text-decoration:none;border:none;cursor:pointer;
+    font-family:inherit;font-size:13px;font-weight:600;letter-spacing:.01em;
+    padding:10px 18px;border-radius:999px;
+    background:var(--btn-bg);color:var(--btn-fg);
+    transition:background-color .18s ease-out,transform .18s ease-out;
+  }
+  .btn:hover{background:color-mix(in srgb,var(--btn-bg) 86%,var(--bg))}
+  .btn:active{transform:scale(.98)}
+  .btn svg{width:13px;height:13px;transition:transform .18s ease-out}
+  .btn:hover svg{transform:translateX(3px)}
 
-  /* kroki bonusowe (nie liczą się do postępu) */
-  .step.optional:not(.done) .step-num{border-color:var(--hair);color:var(--muted);font-weight:700}
-  .step.optional.done .step-num{color:#fff}
-  .opt-tag{display:inline-block;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin-bottom:3px}
+  /* mini-okno z promptem + Kopiuj */
+  .win{
+    background:var(--bg);border:1px solid var(--hair);border-radius:10px;
+    box-shadow:0 10px 26px var(--win-sh);
+    margin:12px 0 4px;max-width:600px;
+    transition:background-color .2s ease-out;
+  }
+  .win-bar{display:flex;align-items:center;gap:5px;padding:8px 10px;border-bottom:1px solid var(--hair)}
+  .win-bar i{width:7px;height:7px;border-radius:999px;background:var(--hair);flex:none}
+  .win-bar span{margin-left:4px;font-family:var(--mono);font-size:10px;color:var(--sub);letter-spacing:.02em}
+  .copy{
+    margin-left:auto;flex:none;font-family:inherit;font-size:11px;font-weight:600;color:var(--sub);
+    background:transparent;border:1px solid var(--hair);border-radius:999px;padding:3px 10px;cursor:pointer;
+    transition:color .15s ease-out,border-color .15s ease-out;
+  }
+  .copy:hover{color:var(--ink);border-color:var(--ink)}
+  .copy.ok{color:var(--acc);border-color:var(--acc)}
+  .win-prompt{padding:12px 14px;font-family:var(--mono);font-size:12.5px;line-height:1.6;color:var(--ink)}
+  .win-prompt::before{content:"> ";color:var(--sub);font-weight:700}
 
-  /* linki pomocnicze */
-  .linklist{margin:34px 0 6px;border:1.5px solid var(--hair);background:var(--paper-card)}
-  .linklist a{display:flex;align-items:baseline;gap:12px;padding:15px 20px;text-decoration:none;color:var(--ink);border-bottom:1px solid var(--hair-soft);transition:background .15s}
-  .linklist a:last-child{border-bottom:none}
-  .linklist a:hover{background:color-mix(in srgb,var(--accent) 5%,var(--paper-card))}
-  .linklist .ln-name{font-weight:700;flex:none}
-  .linklist .ln-desc{font-size:13.5px;color:var(--muted)}
-  .linklist .ln-ar{margin-left:auto;color:var(--accent);font-weight:800;flex:none}
+  /* ---------- linki (per zadanie, widoczne tylko przy swoim zadaniu) ---------- */
+  .links{
+    display:none;
+    background:var(--panel);border-radius:20px;
+    padding:28px 28px;margin-top:24px;
+    transition:background-color .2s ease-out;
+  }
+  .links.active{display:block}
+  .links h2{font-size:16px;font-weight:650;letter-spacing:-.012em;margin-bottom:10px}
+  .lnk{
+    display:flex;align-items:baseline;gap:12px;
+    padding:14px 0;text-decoration:none;
+  }
+  .lnk + .lnk{border-top:1px solid var(--hair)}
+  .lnk .ln-name{font-weight:600;flex:none}
+  .lnk .ln-desc{font-size:var(--fs-small);color:var(--sub)}
+  .lnk .ln-ar{margin-left:auto;color:var(--sub);font-weight:700;flex:none;transition:transform .18s ease-out,color .18s ease-out}
+  .lnk:hover .ln-ar{transform:translateX(3px);color:var(--ink)}
 
-  /* stopka */
-  .footer-row{display:flex;align-items:center;justify-content:flex-end;
-    padding:22px 0 60px;border-top:1px solid var(--hair);margin-top:24px}
-  .reset-btn{font:inherit;font-size:12.5px;color:var(--muted);background:transparent;border:none;border-bottom:1px solid var(--hair);cursor:pointer;padding:0 0 1px}
-  .reset-btn:hover{color:var(--bad);border-color:var(--bad)}
+  footer{
+    margin-top:48px;padding:24px 0 64px;
+    border-top:1px solid var(--hair);
+    font-size:var(--fs-small);color:var(--sub);
+    display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  }
+  .reset-btn{
+    font-family:inherit;font-size:12.5px;color:var(--sub);
+    background:transparent;border:none;cursor:pointer;
+    text-decoration:underline;text-underline-offset:3px;
+    padding:0;
+  }
+  .reset-btn:hover{color:var(--acc)}
 
-  @media (max-width:640px){
-    .step-head{flex-wrap:wrap;gap:12px}
-    .step-check{margin-left:50px}
-    .step-body{padding-left:24px}
-    .gate-card{box-shadow:5px 5px 0 var(--ink)}
-    .prompt-demo .pd-enter{display:none}
-    .dl{flex-direction:column;align-items:flex-start}
+  /* ---------- responsywność ---------- */
+  @media(max-width:720px){
+    .wrap{padding:0 16px}
+    .topbar-in{padding:10px 16px;gap:10px}
+    .head{padding:36px 0 20px}
+    .task{padding:22px 18px 24px}
+    .tab{padding:9px 14px}
+  }
+  @media(max-width:520px){
+    .t-label{display:none}
+    .timer{padding-left:12px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{transition:none !important;animation:none !important}
   }
 </style>
 </head>
 <body>
 
 <!-- ===================== BRAMKA HASŁEM ===================== -->
-<!-- Bramka grzecznościowa (hasło w kodzie), wspólny klucz sesji z resztą /app. -->
 <div class="gate" id="gate">
   <div class="gate-card">
-    <div class="eyebrow">Materiały dla uczestników</div>
     <h1>Zadania warsztatowe</h1>
-    <p>Ta strona jest dla uczestników warsztatów live. Wpisz hasło, które dostałeś w mailu.</p>
+    <p>Strona dla uczestników warsztatów live. Wpisz hasło, które dostałeś w mailu.</p>
     <form class="gate-form" id="gate-form" autocomplete="off">
       <input type="password" id="gate-input" placeholder="Hasło" aria-label="Hasło" autofocus>
-      <button class="bigbtn primary" type="submit">Wejdź <span class="ar">&rarr;</span></button>
+      <button class="btn" type="submit">Wejdź
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
       <p class="gate-error" id="gate-error" hidden>Nieprawidłowe hasło. Sprawdź mail od nas.</p>
     </form>
     <p class="gate-foot">Nie masz hasła? Znajdziesz je w pierwszym mailu po zakupie warsztatów.</p>
   </div>
 </div>
 
-<!-- ===================== TREŚĆ ===================== -->
-<main id="app" hidden>
-  <div class="wrap">
-
-    <input type="radio" name="zad" id="zad1" class="zad-radio" checked>
-    <input type="radio" name="zad" id="zad2" class="zad-radio">
-
-    <div class="dl">
-      <p>Rozpakuj i otwórz folder <code>strona-trenera</code> w VS Code: <strong>File &rarr; Open Folder...</strong></p>
-      <a class="bigbtn primary" href="/app/zadania/warsztaty/strona-trenera.zip?v=2" download>Pobierz folder (.zip) <span class="ar">&darr;</span></a>
+<!-- ===================== TOPBAR ===================== -->
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="wordmark">Claudemaster</div>
+    <div class="top-spacer"></div>
+    <div class="timer" id="timer" hidden aria-live="polite">
+      <span class="t-label" id="t-label"></span>
+      <span class="t-time" id="t-time">00:00</span>
+      <button class="t-btn" id="t-pause" type="button" aria-label="Wstrzymaj lub wznów zegar">II</button>
+      <button class="t-btn" id="t-close" type="button" aria-label="Wyłącz zegar">✕</button>
     </div>
-
-    <div class="seg">
-      <label for="zad1">Zadanie 1 · Auto-weryfikacja</label>
-      <label for="zad2">Zadanie 2 · Stres tester</label>
-    </div>
-
-    <!-- ===================== ZADANIE 1 ===================== -->
-    <section class="panel panel-z1">
-
-      <!-- KROK 1 -->
-      <article class="step" data-step="0">
-        <div class="step-head">
-          <span class="step-num">1</span>
-          <div class="step-headings">
-            <h2>Zainstaluj Chrome DevTools MCP w Claude Code</h2>
-          </div>
-          <button class="step-check" type="button"><span class="mk">&#10003;</span><span class="ck-txt">Odhacz</span></button>
-        </div>
-        <div class="step-body">
-          <p>Chrome DevTools MCP daje Claude'owi kontrolę nad przeglądarką Chrome: agent może otwierać strony, klikać, wypełniać formularze i robić zrzuty ekranu. Nie musisz znać żadnych komend. Wejdź na oficjalną stronę, skopiuj jej adres i poproś Claude'a o instalację:</p>
-          <div class="step-actions">
-            <a class="bigbtn primary" href="https://developer.chrome.com/blog/chrome-devtools-mcp?hl=pl" target="_blank" rel="noopener">Otwórz stronę Chrome DevTools MCP <span class="ar">&rarr;</span></a>
-          </div>
-          <div class="prompt-demo">
-            <div class="pd-top">Panel Claude Code</div>
-            <div class="pd-row">
-              <span class="pd-caret">&gt;</span>
-              <span class="pd-text">zainstaluj mi to MCP: https://developer.chrome.com/blog/chrome-devtools-mcp</span>
-              <span class="pd-enter">Enter</span>
-            </div>
-          </div>
-          <p>Po instalacji <strong>zamknij i otwórz VS Code ponownie</strong>.</p>
-        </div>
-      </article>
-
-      <!-- KROK 2 -->
-      <article class="step" data-step="1">
-        <div class="step-head">
-          <span class="step-num">2</span>
-          <div class="step-headings">
-            <h2>Poproś o wypisanie wszystkiego, co to MCP umożliwia</h2>
-          </div>
-          <button class="step-check" type="button"><span class="mk">&#10003;</span><span class="ck-txt">Odhacz</span></button>
-        </div>
-        <div class="step-body">
-          <div class="prompt-demo">
-            <div class="pd-top">Panel Claude Code</div>
-            <div class="pd-row">
-              <span class="pd-caret">&gt;</span>
-              <span class="pd-text">wypisz mi wszystko, co umożliwia ci Chrome DevTools MCP</span>
-              <span class="pd-enter">Enter</span>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- KROK 3 -->
-      <article class="step" data-step="2">
-        <div class="step-head">
-          <span class="step-num">3</span>
-          <div class="step-headings">
-            <h2>Przetestuj, czy działa</h2>
-          </div>
-          <button class="step-check" type="button"><span class="mk">&#10003;</span><span class="ck-txt">Odhacz</span></button>
-        </div>
-        <div class="step-body">
-          <div class="prompt-demo">
-            <div class="pd-top">Panel Claude Code</div>
-            <div class="pd-row">
-              <span class="pd-caret">&gt;</span>
-              <span class="pd-text">otwórz stronę webflow.com i zrób zrzut ekranu</span>
-              <span class="pd-enter">Enter</span>
-            </div>
-          </div>
-          <p>Jeśli otworzy się okno Chrome i Claude opisze Ci, co widzi na zrzucie, działa.</p>
-        </div>
-      </article>
-
-      <!-- KROK 4 -->
-      <article class="step" data-step="3">
-        <div class="step-head">
-          <span class="step-num">4</span>
-          <div class="step-headings">
-            <h2>Zapoznaj się z obecną wersją strony</h2>
-          </div>
-          <button class="step-check" type="button"><span class="mk">&#10003;</span><span class="ck-txt">Odhacz</span></button>
-        </div>
-        <div class="step-body">
-          <p>W folderze zadania otwórz plik <code>index.html</code> w przeglądarce (prawy przycisk na pliku albo przeciągnij go na okno Chrome).</p>
-        </div>
-      </article>
-
-      <!-- KROK 5 -->
-      <article class="step" data-step="4">
-        <div class="step-head">
-          <span class="step-num">5</span>
-          <div class="step-headings">
-            <h2>Znajdź inspirację designu</h2>
-          </div>
-          <button class="step-check" type="button"><span class="mk">&#10003;</span><span class="ck-txt">Odhacz</span></button>
-        </div>
-        <div class="step-body">
-          <p>Wejdź na jedną ze stron zbierających gotowe designy i wybierz taki, który Ci się podoba.</p>
-          <div class="step-actions">
-            <a class="bigbtn primary" href="https://webflow.com/templates" target="_blank" rel="noopener">Otwórz Webflow Templates <span class="ar">&rarr;</span></a>
-          </div>
-        </div>
-      </article>
-
-      <!-- KROK 6 -->
-      <article class="step" data-step="5">
-        <div class="step-head">
-          <span class="step-num">6</span>
-          <div class="step-headings">
-            <h2>Zrób zrzut ekranu strony-inspiracji</h2>
-          </div>
-          <button class="step-check" type="button"><span class="mk">&#10003;</span><span class="ck-txt">Odhacz</span></button>
-        </div>
-        <div class="step-body">
-          <p>Najwygodniej wtyczką <strong>GoFullPage</strong>: robi zrzut całej strony od góry do dołu, nie tylko widocznego kawałka.</p>
-          <div class="step-actions">
-            <a class="bigbtn primary" href="https://chromewebstore.google.com/detail/gofullpage-full-page-scre/fdpohaocaechififmbbbbbknoalclacl" target="_blank" rel="noopener">Zainstaluj GoFullPage <span class="ar">&rarr;</span></a>
-          </div>
-          <p class="quiet">Alternatywa: zamiast zrzutu skopiuj style strony (podejrzyj jej kod i CSS) i podaj je Claude'owi jako wzór.</p>
-        </div>
-      </article>
-
-      <!-- KROK 7 -->
-      <article class="step" data-step="6">
-        <div class="step-head">
-          <span class="step-num">7</span>
-          <div class="step-headings">
-            <h2>Spromptuj Claude'a: nowy design + auto-weryfikacja</h2>
-          </div>
-          <button class="step-check" type="button"><span class="mk">&#10003;</span><span class="ck-txt">Odhacz</span></button>
-        </div>
-        <div class="step-body">
-          <p>Przeciągnij zrzut inspiracji prosto do pola rozmowy i poproś o przeniesienie obecnej zawartości strony do nowego designu. Wskaż, żeby:</p>
-          <ul>
-            <li>robił <strong>zrzuty ekranu</strong>, żeby samodzielnie się weryfikować,</li>
-            <li>odwzorowanie designu było <strong>pixel-perfect</strong>.</li>
-          </ul>
-          <div class="prompt-demo">
-            <div class="pd-top">Panel Claude Code · przykładowy prompt</div>
-            <div class="pd-row">
-              <span class="pd-caret">&gt;</span>
-              <span class="pd-text">przerób design strony index.html na taki jak na załączonym zrzucie. Cała obecna zawartość i teksty zostają. Po każdej zmianie otwórz stronę, zrób zrzut ekranu przez Chrome DevTools i porównuj z inspiracją, aż odwzorowanie będzie pixel-perfect</span>
-              <span class="pd-enter">Enter</span>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- KROK 8 (BONUS) -->
-      <article class="step optional" data-opt="0">
-        <div class="step-head">
-          <span class="step-num">8</span>
-          <div class="step-headings">
-            <span class="opt-tag">Bonus</span>
-            <h2>Zapisz auto-weryfikację jako zasadę w CLAUDE.md</h2>
-          </div>
-          <button class="step-check" type="button"><span class="mk">&#10003;</span><span class="ck-txt">Odhacz</span></button>
-        </div>
-        <div class="step-body">
-          <div class="prompt-demo">
-            <div class="pd-top">Panel Claude Code</div>
-            <div class="pd-row">
-              <span class="pd-caret">&gt;</span>
-              <span class="pd-text">dopisz do CLAUDE.md zasadę: po każdej zmianie wyglądu strony robisz zrzut ekranu przez Chrome DevTools i sprawdzasz, czy efekt się zgadza</span>
-              <span class="pd-enter">Enter</span>
-            </div>
-          </div>
-        </div>
-      </article>
-
-    </section>
-
-    <!-- ===================== ZADANIE 2 ===================== -->
-    <section class="panel panel-z2">
-
-      <!-- KROK 1 -->
-      <article class="step" data-step="7">
-        <div class="step-head">
-          <span class="step-num">1</span>
-          <div class="step-headings">
-            <h2>Stwórz subagenta stres testera</h2>
-          </div>
-          <button class="step-check" type="button"><span class="mk">&#10003;</span><span class="ck-txt">Odhacz</span></button>
-        </div>
-        <div class="step-body">
-          <p>Subagent to osobny, wyspecjalizowany agent z własną instrukcją, którego Claude odpala do konkretnej roboty. Najprościej poprosić Claude'a, żeby sam go napisał:</p>
-          <div class="prompt-demo">
-            <div class="pd-top">Panel Claude Code</div>
-            <div class="pd-row">
-              <span class="pd-caret">&gt;</span>
-              <span class="pd-text">stwórz w .claude/agents/ subagenta o nazwie stres-tester, który testuje strony w przeglądarce przez Chrome DevTools MCP: wypełnia formularze różnymi danymi (także błędnymi), klika wszystkie linki i przyciski, zmienia rozmiar okna od telefonu po duży monitor i czyta błędy w konsoli. Ma być bezlitosny: próbuje zepsuć wszystko, co się da, i robi naprawdę holistyczny test. Na końcu raportuje listę znalezionych problemów</span>
-              <span class="pd-enter">Enter</span>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- KROK 2 -->
-      <article class="step" data-step="8">
-        <div class="step-head">
-          <span class="step-num">2</span>
-          <div class="step-headings">
-            <h2>Zajrzyj do pliku subagenta</h2>
-          </div>
-          <button class="step-check" type="button"><span class="mk">&#10003;</span><span class="ck-txt">Odhacz</span></button>
-        </div>
-        <div class="step-body">
-          <p>Otwórz <code>.claude/agents/stres-tester.md</code>: opis roli, kiedy ma być używany, jakie ma narzędzia. Tak wygląda subagent od środka. Możesz poprawić jego instrukcję jak zwykły tekst.</p>
-        </div>
-      </article>
-
-      <!-- KROK 3 -->
-      <article class="step" data-step="9">
-        <div class="step-head">
-          <span class="step-num">3</span>
-          <div class="step-headings">
-            <h2>Wpuść go na stronę</h2>
-          </div>
-          <button class="step-check" type="button"><span class="mk">&#10003;</span><span class="ck-txt">Odhacz</span></button>
-        </div>
-        <div class="step-body">
-          <div class="prompt-demo">
-            <div class="pd-top">Panel Claude Code</div>
-            <div class="pd-row">
-              <span class="pd-caret">&gt;</span>
-              <span class="pd-text">przetestuj stronę index.html stres testerem</span>
-              <span class="pd-enter">Enter</span>
-            </div>
-          </div>
-          <p>Podejrzyj jego pracę: subagent krok po kroku klika po stronie, wypełnia formularz i zmienia rozmiar okna.</p>
-        </div>
-      </article>
-
-      <!-- KROK 4 -->
-      <article class="step" data-step="10">
-        <div class="step-head">
-          <span class="step-num">4</span>
-          <div class="step-headings">
-            <h2>Przeczytaj raport błędów</h2>
-          </div>
-          <button class="step-check" type="button"><span class="mk">&#10003;</span><span class="ck-txt">Odhacz</span></button>
-        </div>
-        <div class="step-body">
-          <p>Ile problemów znalazł? Na tej stronie naprawdę jest co znaleźć :)</p>
-        </div>
-      </article>
-
-      <!-- KROK 5 (BONUS) -->
-      <article class="step optional" data-opt="1">
-        <div class="step-head">
-          <span class="step-num">5</span>
-          <div class="step-headings">
-            <span class="opt-tag">Bonus</span>
-            <h2>Napraw błędy i puść testera drugi raz</h2>
-          </div>
-          <button class="step-check" type="button"><span class="mk">&#10003;</span><span class="ck-txt">Odhacz</span></button>
-        </div>
-        <div class="step-body">
-          <p>Poproś o naprawienie znalezionych problemów, a potem odpal stres testera jeszcze raz. Powtarzaj, aż raport będzie czysty.</p>
-        </div>
-      </article>
-
-    </section>
-
-    <!-- ===================== LINKI ===================== -->
-    <div class="linklist">
-      <a href="https://webflow.com/templates" target="_blank" rel="noopener">
-        <span class="ln-name">Webflow Templates</span>
-        <span class="ln-desc">gotowe designy stron do inspiracji</span>
-        <span class="ln-ar">&rarr;</span>
-      </a>
-      <a href="https://developer.chrome.com/blog/chrome-devtools-mcp?hl=pl" target="_blank" rel="noopener">
-        <span class="ln-name">Chrome DevTools MCP</span>
-        <span class="ln-desc">oficjalny opis od zespołu Chrome</span>
-        <span class="ln-ar">&rarr;</span>
-      </a>
-      <a href="https://chromewebstore.google.com/detail/gofullpage-full-page-scre/fdpohaocaechififmbbbbbknoalclacl" target="_blank" rel="noopener">
-        <span class="ln-name">GoFullPage</span>
-        <span class="ln-desc">wtyczka do zrzutów całej strony</span>
-        <span class="ln-ar">&rarr;</span>
-      </a>
-    </div>
-
-    <div class="footer-row">
-      <button class="reset-btn" id="reset" type="button">Wyczyść mój postęp</button>
-    </div>
-
+    <button class="theme-btn" id="theme-btn" type="button" aria-label="Przełącz motyw jasny lub ciemny">
+      <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+      </svg>
+      <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+      </svg>
+    </button>
   </div>
+</header>
+
+<main class="wrap" id="app" hidden>
+
+  <div class="head">
+    <div class="head-row">
+      <h1>Zadania warsztatowe.</h1>
+      <div class="pixel-buddy" aria-hidden="true"><i class="pb-body"></i><i class="pb-eyes"></i></div>
+      <p class="progress" id="progress" hidden></p>
+    </div>
+  </div>
+
+  <nav class="tabs" id="tabs" aria-label="Wybierz zadanie">
+    <button class="tab" type="button" data-tab="claude-md-globalne">1<span class="tk">✓</span></button>
+    <button class="tab" type="button" data-tab="folder-ustawien">2<span class="tk">✓</span></button>
+    <button class="tab" type="button" data-tab="skill-oferty">3<span class="tk">✓</span></button>
+    <button class="tab" type="button" data-tab="zewnetrzny-skill">4<span class="tk">✓</span></button>
+    <button class="tab" type="button" data-tab="petla-autoweryfikacji">5<span class="tk">✓</span></button>
+    <button class="tab" type="button" data-tab="sygnal-dzwiekowy">6<span class="tk">✓</span></button>
+    <button class="tab" type="button" data-tab="stres-tester">7<span class="tk">✓</span></button>
+  </nav>
+
+  <!-- ===================== 1 · GLOBALNE CLAUDE.MD ===================== -->
+  <section class="task" data-task="claude-md-globalne" data-nr="1">
+    <div class="task-top">
+      <h2>Globalne CLAUDE.md</h2>
+      <button class="tstart" type="button" data-min="7" data-label="Zadanie 1" aria-label="Włącz zegar: 7 minut">7 min</button>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">1</span>
+      <div class="stp-tx"><p>Otwórz nową rozmowę z Claude'em, w dowolnym projekcie.</p></div>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">2</span>
+      <div class="stp-tx">
+        <p>Poproś Claude'a o zapisanie jednej zasady <strong>GLOBALNIE</strong>.</p>
+        <div class="win">
+          <div class="win-bar"><i></i><i></i><i></i><span>claude</span><button class="copy" type="button">Kopiuj</button></div>
+          <div class="win-prompt">zapisz mi GLOBALNĄ zasadę, która ma obowiązywać we wszystkich moich projektach: [Twoja zasada]</div>
+        </div>
+      </div>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">3</span>
+      <div class="stp-tx"><p>Może to być fakt o Tobie, Twój główny cel, albo zasada „zawsze patrz w dokumentację i nie używaj em-dashes".</p></div>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">4</span>
+      <div class="stp-tx"><p>Otwórz nową rozmowę i sprawdź, czy wszystko działa.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== 2 · BAZOWY FOLDER USTAWIEŃ ===================== -->
+  <section class="task" data-task="folder-ustawien" data-nr="2">
+    <div class="task-top">
+      <h2>Bazowy folder ustawień</h2>
+      <button class="tstart" type="button" data-min="5" data-label="Zadanie 2" aria-label="Włącz zegar: 5 minut">5 min</button>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">1</span>
+      <div class="stp-tx"><p>Otwórz boczny pasek <strong>Explorer</strong> w swoim VS Code (tak, żeby było widać pliki w folderze).</p></div>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">2</span>
+      <div class="stp-tx"><p>Prawym przyciskiem albo na górnym pasku stwórz nowy folder i nazwij go dokładnie: <code>.claude</code></p></div>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">3</span>
+      <div class="stp-tx"><p>Przenieś do tego folderu plik <code>CLAUDE.md</code>.</p></div>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">4</span>
+      <div class="stp-tx"><p>Utwórz dwa dodatkowe pod-foldery: <code>skills</code> i <code>agents</code>.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== 3 · SKILL TWORZENIA OFERTY ===================== -->
+  <section class="task" data-task="skill-oferty" data-nr="3">
+    <div class="task-top">
+      <h2>Skill tworzenia oferty</h2>
+      <button class="tstart" type="button" data-min="7" data-label="Zadanie 3" aria-label="Włącz zegar: 7 minut">7 min</button>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">1</span>
+      <div class="stp-tx"><p>Wróć do projektu przygotowywania oferty.</p></div>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">2</span>
+      <div class="stp-tx">
+        <p>Poproś Claude'a o wypisanie, na podstawie CLAUDE.md, procesu krok po kroku, jak przygotowujecie oferty.</p>
+        <div class="win">
+          <div class="win-bar"><i></i><i></i><i></i><span>claude</span><button class="copy" type="button">Kopiuj</button></div>
+          <div class="win-prompt">wypisz mi, na podstawie CLAUDE.md, proces krok po kroku, jak przygotowujemy oferty</div>
+        </div>
+      </div>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">3</span>
+      <div class="stp-tx">
+        <p>Poproś Claude'a o zrobienie z tego <strong>lokalnego skilla</strong>.</p>
+        <div class="win">
+          <div class="win-bar"><i></i><i></i><i></i><span>claude</span><button class="copy" type="button">Kopiuj</button></div>
+          <div class="win-prompt">zrób z tego procesu lokalny skill</div>
+        </div>
+      </div>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">4</span>
+      <div class="stp-tx"><p>Zapoznaj się z nowopowstałym <code>SKILL.md</code>.</p></div>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">5</span>
+      <div class="stp-tx"><p>Przetestuj w nowej rozmowie, czy skill ładuje się poprawnie.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== 4 · ZAINSTALUJ ZEWNĘTRZNY SKILL ===================== -->
+  <section class="task" data-task="zewnetrzny-skill" data-nr="4">
+    <div class="task-top">
+      <h2>Zainstaluj zewnętrzny skill</h2>
+      <button class="tstart" type="button" data-min="12" data-label="Zadanie 4" aria-label="Włącz zegar: 12 minut">12 min</button>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">1</span>
+      <div class="stp-tx">
+        <p>Wejdź na stronę skillta.com albo znajdź samemu skill, który może Ci się przydać.</p>
+        <div class="act">
+          <a class="btn" href="https://skillta.com" target="_blank" rel="noopener">Otwórz skillta.com
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">2</span>
+      <div class="stp-tx"><p>Odfiltruj skille wyłącznie dla <strong>Claude Code'a</strong>.</p></div>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">3</span>
+      <div class="stp-tx"><p>Wybierz jeden skill, który Cię interesuje, i wejdź bezpośrednio na jego repo na GitHubie.</p></div>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">4</span>
+      <div class="stp-tx">
+        <p>Przeklej link i wskaż Claude'owi, żeby sprawdził, na czym polega ten skill i czy jest bezpieczny (<strong>bez instalacji</strong>).</p>
+        <div class="win">
+          <div class="win-bar"><i></i><i></i><i></i><span>claude</span><button class="copy" type="button">Kopiuj</button></div>
+          <div class="win-prompt">sprawdź, na czym polega ten skill i czy jest bezpieczny. Niczego jeszcze nie instaluj: [link do repo]</div>
+        </div>
+      </div>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">5</span>
+      <div class="stp-tx"><p>Jeśli wszystko ok, poproś Claude'a, żeby zainstalował tylko to, co może Ci się przydać (jeśli to biblioteka skilli, a nie jeden).</p></div>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">6</span>
+      <div class="stp-tx"><p>Przetestuj skill na swoim zastosowaniu.</p></div>
+    </div>
+    <div class="stp" data-bonus="1">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">7</span>
+      <div class="stp-tx">
+        <span class="bpill">Bonus</span>
+        <p>Zrób skill do oceniania i weryfikacji skilli (na przyszłość).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 5 · PĘTLA AUTO-WERYFIKACJI ===================== -->
+  <section class="task" data-task="petla-autoweryfikacji" data-nr="5">
+    <div class="task-top">
+      <h2>Pętla auto-weryfikacji</h2>
+      <button class="tstart" type="button" data-min="20" data-label="Zadanie 5" aria-label="Włącz zegar: 20 minut">20 min</button>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">1</span>
+      <div class="stp-tx">
+        <p>Zainstaluj <strong>Chrome DevTools MCP</strong> w Claude Code. Nie musisz znać żadnych komend: skopiuj adres oficjalnej strony i poproś o instalację.</p>
+        <div class="act">
+          <a class="btn" href="https://developer.chrome.com/blog/chrome-devtools-mcp?hl=pl" target="_blank" rel="noopener">Otwórz stronę Chrome DevTools MCP
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+        <div class="win">
+          <div class="win-bar"><i></i><i></i><i></i><span>claude</span><button class="copy" type="button">Kopiuj</button></div>
+          <div class="win-prompt">zainstaluj mi to MCP: https://developer.chrome.com/blog/chrome-devtools-mcp</div>
+        </div>
+        <p class="note">Po instalacji zamknij i otwórz VS Code ponownie.</p>
+      </div>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">2</span>
+      <div class="stp-tx">
+        <p>Poproś o wypisanie wszystkiego, co to MCP umożliwia.</p>
+        <div class="win">
+          <div class="win-bar"><i></i><i></i><i></i><span>claude</span><button class="copy" type="button">Kopiuj</button></div>
+          <div class="win-prompt">wypisz mi wszystko, co umożliwia ci Chrome DevTools MCP</div>
+        </div>
+      </div>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">3</span>
+      <div class="stp-tx">
+        <p>Przetestuj, czy działa.</p>
+        <div class="win">
+          <div class="win-bar"><i></i><i></i><i></i><span>claude</span><button class="copy" type="button">Kopiuj</button></div>
+          <div class="win-prompt">otwórz stronę webflow.com i zrób zrzut ekranu</div>
+        </div>
+      </div>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">4</span>
+      <div class="stp-tx">
+        <p>Pobierz folder zadania, rozpakuj i otwórz folder <code>strona-trenera</code> w VS Code (<strong>File &rarr; Open Folder...</strong>). Potem otwórz <code>index.html</code> w przeglądarce i zapoznaj się z obecną wersją strony.</p>
+        <div class="act">
+          <a class="btn" href="/app/zadania/warsztaty/strona-trenera.zip?v=2" download>Pobierz folder (.zip)
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">5</span>
+      <div class="stp-tx">
+        <p>Wejdź na jedną ze stron zbierających strony-inspiracje i wybierz design, który Ci się podoba.</p>
+        <div class="act">
+          <a class="btn" href="https://webflow.com/templates" target="_blank" rel="noopener">Otwórz Webflow Templates
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">6</span>
+      <div class="stp-tx">
+        <p>Zrób zrzut ekranu strony-inspiracji. Najwygodniej wtyczką <strong>GoFullPage</strong> (zrzut całej strony, nie tylko widocznego kawałka).</p>
+        <div class="act">
+          <a class="btn" href="https://chromewebstore.google.com/detail/gofullpage-full-page-scre/fdpohaocaechififmbbbbbknoalclacl" target="_blank" rel="noopener">Zainstaluj GoFullPage
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+        <p class="note">Alternatywa: zamiast zrzutu skopiuj style strony (podejrzyj jej kod i CSS) i podaj je Claude'owi jako wzór.</p>
+      </div>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">7</span>
+      <div class="stp-tx">
+        <p>Przeciągnij zrzut inspiracji prosto do pola rozmowy i spromptuj Claude'a, żeby przeniósł obecną zawartość strony do nowego designu. Wskaż, żeby robił <strong>zrzuty ekranu</strong> do samodzielnej weryfikacji, a odwzorowanie było <strong>pixel-perfect</strong>.</p>
+        <div class="win">
+          <div class="win-bar"><i></i><i></i><i></i><span>claude</span><button class="copy" type="button">Kopiuj</button></div>
+          <div class="win-prompt">przerób design strony index.html na taki jak na załączonym zrzucie. Cała obecna zawartość i teksty zostają. Po każdej zmianie otwórz stronę, zrób zrzut ekranu przez Chrome DevTools i porównuj z inspiracją, aż odwzorowanie będzie pixel-perfect</div>
+        </div>
+      </div>
+    </div>
+    <div class="stp" data-bonus="1">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">8</span>
+      <div class="stp-tx">
+        <span class="bpill">Bonus</span>
+        <p>Zapisz robienie zrzutów ekranu jako formę auto-weryfikacji, jako zasadę w CLAUDE.md.</p>
+        <div class="win">
+          <div class="win-bar"><i></i><i></i><i></i><span>claude</span><button class="copy" type="button">Kopiuj</button></div>
+          <div class="win-prompt">dopisz do CLAUDE.md zasadę: po każdej zmianie wyglądu strony robisz zrzut ekranu przez Chrome DevTools i sprawdzasz, czy efekt się zgadza</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 6 · GLOBALNY SYGNAŁ DŹWIĘKOWY ===================== -->
+  <section class="task" data-task="sygnal-dzwiekowy" data-nr="6">
+    <div class="task-top">
+      <h2>Globalny sygnał dźwiękowy</h2>
+      <button class="tstart" type="button" data-min="7" data-label="Zadanie 6" aria-label="Włącz zegar: 7 minut">7 min</button>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">1</span>
+      <div class="stp-tx"><p>Otwórz dowolny projekt w Claude Code.</p></div>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">2</span>
+      <div class="stp-tx">
+        <p>Spromptuj go, by zainstalował sobie <strong>GLOBALNY</strong> hook dźwiękowy, który będzie Cię informował o zakończonej odpowiedzi i o oczekiwaniu na odpowiedź (np. w ankiecie).</p>
+        <div class="win">
+          <div class="win-bar"><i></i><i></i><i></i><span>claude</span><button class="copy" type="button">Kopiuj</button></div>
+          <div class="win-prompt">zainstaluj mi globalny hook dźwiękowy: subtelny dźwięk, gdy skończysz odpowiadać, i inny, gdy czekasz na moją odpowiedź (np. przy pytaniu z wyborem)</div>
+        </div>
+      </div>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">3</span>
+      <div class="stp-tx"><p>Otwórz nową rozmowę i sprawdź, czy hook działa.</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== 7 · SUBAGENT STRES TESTER ===================== -->
+  <section class="task" data-task="stres-tester" data-nr="7">
+    <div class="task-top">
+      <h2>Subagent stres tester</h2>
+      <button class="tstart" type="button" data-min="12" data-label="Zadanie 7" aria-label="Włącz zegar: 12 minut">12 min</button>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">1</span>
+      <div class="stp-tx">
+        <p>Stwórz subagenta stres testera. Subagent to osobny, wyspecjalizowany agent z własną instrukcją, którego Claude odpala do konkretnej roboty. Najprościej poprosić Claude'a, żeby sam go napisał:</p>
+        <div class="win">
+          <div class="win-bar"><i></i><i></i><i></i><span>claude</span><button class="copy" type="button">Kopiuj</button></div>
+          <div class="win-prompt">stwórz w .claude/agents/ subagenta o nazwie stres-tester, który testuje strony w przeglądarce przez Chrome DevTools MCP: wypełnia formularze różnymi danymi (także błędnymi), klika wszystkie linki i przyciski, zmienia rozmiar okna od telefonu po duży monitor i czyta błędy w konsoli. Ma być bezlitosny: próbuje zepsuć wszystko, co się da, i robi naprawdę holistyczny test. Na końcu raportuje listę znalezionych problemów</div>
+        </div>
+      </div>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">2</span>
+      <div class="stp-tx"><p>Zajrzyj do pliku <code>.claude/agents/stres-tester.md</code>: opis roli, kiedy ma być używany, jakie ma narzędzia. Tak wygląda subagent od środka. Możesz poprawić jego instrukcję jak zwykły tekst.</p></div>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">3</span>
+      <div class="stp-tx">
+        <p>Wpuść go na stronę i podejrzyj jego pracę: subagent krok po kroku klika po stronie, wypełnia formularz i zmienia rozmiar okna.</p>
+        <div class="win">
+          <div class="win-bar"><i></i><i></i><i></i><span>claude</span><button class="copy" type="button">Kopiuj</button></div>
+          <div class="win-prompt">przetestuj stronę index.html stres testerem</div>
+        </div>
+      </div>
+    </div>
+    <div class="stp">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">4</span>
+      <div class="stp-tx"><p>Przeczytaj raport błędów. Ile problemów znalazł? Na tej stronie naprawdę jest co znaleźć :)</p></div>
+    </div>
+    <div class="stp" data-bonus="1">
+      <button class="stp-check" type="button" aria-label="Odhacz krok">✓</button>
+      <span class="stp-num">5</span>
+      <div class="stp-tx">
+        <span class="bpill">Bonus</span>
+        <p>Poproś o naprawienie znalezionych problemów, a potem odpal stres testera jeszcze raz. Powtarzaj, aż raport będzie czysty.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== LINKI PER ZADANIE ===================== -->
+  <section class="links" data-for="zewnetrzny-skill">
+    <h2>Przydatne linki do tego zadania</h2>
+    <a class="lnk" href="https://skillta.com" target="_blank" rel="noopener">
+      <span class="ln-name">skillta.com</span>
+      <span class="ln-desc">biblioteka gotowych skilli</span>
+      <span class="ln-ar">&rarr;</span>
+    </a>
+  </section>
+
+  <section class="links" data-for="petla-autoweryfikacji">
+    <h2>Przydatne linki do tego zadania</h2>
+    <a class="lnk" href="https://webflow.com/templates" target="_blank" rel="noopener">
+      <span class="ln-name">Webflow Templates</span>
+      <span class="ln-desc">gotowe designy stron do inspiracji</span>
+      <span class="ln-ar">&rarr;</span>
+    </a>
+    <a class="lnk" href="https://developer.chrome.com/blog/chrome-devtools-mcp?hl=pl" target="_blank" rel="noopener">
+      <span class="ln-name">Chrome DevTools MCP</span>
+      <span class="ln-desc">oficjalny opis od zespołu Chrome</span>
+      <span class="ln-ar">&rarr;</span>
+    </a>
+    <a class="lnk" href="https://chromewebstore.google.com/detail/gofullpage-full-page-scre/fdpohaocaechififmbbbbbknoalclacl" target="_blank" rel="noopener">
+      <span class="ln-name">GoFullPage</span>
+      <span class="ln-desc">wtyczka do zrzutów całej strony</span>
+      <span class="ln-ar">&rarr;</span>
+    </a>
+  </section>
+
+  <footer>
+    <span>Claudemaster · zadania warsztatowe</span>
+    <button class="reset-btn" id="reset" type="button">Wyczyść mój postęp</button>
+  </footer>
+
 </main>
 
 <script>
 (function(){
   "use strict";
 
-  /* ---------- BRAMKA HASŁEM (grzecznościowa) ---------- */
+  /* ---------- BRAMKA HASŁEM (grzecznościowa, wspólny klucz z /app) ---------- */
   var PASSWORD = "claudemaster";
-  var GATE_KEY = "cm_app_gate";           // wspólny klucz z resztą /app
+  var GATE_KEY = "cm_app_gate";
   var gate = document.getElementById("gate");
   var app = document.getElementById("app");
-  var form = document.getElementById("gate-form");
-  var input = document.getElementById("gate-input");
+  var gform = document.getElementById("gate-form");
+  var ginput = document.getElementById("gate-input");
   var gerror = document.getElementById("gate-error");
 
   function unlock(){
@@ -492,88 +764,197 @@
   }
   try { if (sessionStorage.getItem(GATE_KEY) === "1") unlock(); } catch(e){}
 
-  form.addEventListener("submit", function(ev){
+  gform.addEventListener("submit", function(ev){
     ev.preventDefault();
-    if (input.value.trim().toLowerCase() === PASSWORD){
+    if (ginput.value.trim().toLowerCase() === PASSWORD){
       try { sessionStorage.setItem(GATE_KEY, "1"); } catch(e){}
       gerror.hidden = true;
       unlock();
     } else {
       gerror.hidden = false;
-      input.value = "";
-      input.focus();
+      ginput.value = "";
+      ginput.focus();
     }
   });
 
-  /* ---------- CHECKLISTA (localStorage, bez paska postępu) ---------- */
-  var KEY = "cm_zadania_warsztaty";
-  var steps = Array.prototype.slice.call(document.querySelectorAll(".step:not(.optional)"));
-
-  var state = load();
-  function load(){
-    try { var s = JSON.parse(localStorage.getItem(KEY) || "{}"); if (!s.checked) s.checked = []; return s; }
-    catch(e){ return { checked: [] }; }
-  }
-  function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){} }
-
-  function render(){
-    steps.forEach(function(step, i){
-      var on = state.checked.indexOf(i) !== -1;
-      step.classList.toggle("done", on);
-      var txt = step.querySelector(".ck-txt");
-      if (txt) txt.textContent = on ? "Zrobione" : "Odhacz";
-    });
-  }
-  steps.forEach(function(step, i){
-    var btn = step.querySelector(".step-check");
-    if (btn) btn.addEventListener("click", function(){
-      var idx = state.checked.indexOf(i);
-      if (idx === -1) state.checked.push(i); else state.checked.splice(idx, 1);
-      save();
-      render();
-    });
+  /* ---------- MOTYW ---------- */
+  var tbtn = document.getElementById("theme-btn");
+  var root = document.documentElement;
+  tbtn.addEventListener("click", function(){
+    var dark = root.getAttribute("data-theme") === "dark";
+    if (dark){ root.removeAttribute("data-theme"); }
+    else { root.setAttribute("data-theme","dark"); }
+    try { localStorage.setItem("cm_theme_e", dark ? "light" : "dark"); } catch(e){}
   });
 
-  /* ---------- KROKI BONUSOWE (osobny stan) ---------- */
-  var OPT_KEY = "cm_zadania_warsztaty_opt";
-  var osteps = Array.prototype.slice.call(document.querySelectorAll(".step.optional"));
-  var optState = loadOpt();
-  function loadOpt(){
-    try { var s = JSON.parse(localStorage.getItem(OPT_KEY) || "{}"); if (!s.checked) s.checked = []; return s; }
-    catch(e){ return { checked: [] }; }
+  /* ---------- PRZEŁĄCZNIKI ZADAŃ (routing po #zadanie-N) ---------- */
+  var sections = Array.prototype.slice.call(document.querySelectorAll("section.task"));
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
+
+  function currentSlug(){
+    var m = (location.hash || "").match(/^#zadanie-(\d+)$/);
+    if (m){
+      var sec = document.querySelector('section.task[data-nr="' + m[1] + '"]');
+      if (sec) return sec.getAttribute("data-task");
+    }
+    return sections[0].getAttribute("data-task");
   }
-  function saveOpt(){ try { localStorage.setItem(OPT_KEY, JSON.stringify(optState)); } catch(e){} }
-  function renderOpt(){
-    osteps.forEach(function(step, i){
-      var on = optState.checked.indexOf(i) !== -1;
-      step.classList.toggle("done", on);
-      var txt = step.querySelector(".ck-txt");
-      if (txt) txt.textContent = on ? "Zrobione" : "Odhacz";
+  function showTask(slug){
+    sections.forEach(function(sec){
+      sec.classList.toggle("active", sec.getAttribute("data-task") === slug);
+    });
+    tabs.forEach(function(t){
+      t.classList.toggle("active", t.getAttribute("data-tab") === slug);
+    });
+    document.querySelectorAll(".links[data-for]").forEach(function(l){
+      l.classList.toggle("active", l.getAttribute("data-for") === slug);
     });
   }
-  osteps.forEach(function(step, i){
-    var btn = step.querySelector(".step-check");
-    if (btn) btn.addEventListener("click", function(){
-      var idx = optState.checked.indexOf(i);
-      if (idx === -1) optState.checked.push(i); else optState.checked.splice(idx, 1);
-      saveOpt();
-      renderOpt();
+  tabs.forEach(function(t){
+    t.addEventListener("click", function(){
+      var sec = document.querySelector('section.task[data-task="' + t.getAttribute("data-tab") + '"]');
+      location.hash = "zadanie-" + sec.getAttribute("data-nr");
+    });
+  });
+  window.addEventListener("hashchange", function(){ showTask(currentSlug()); });
+  showTask(currentSlug());
+
+  /* ---------- CHECKLISTA KROKÓW (localStorage) ---------- */
+  var KEY = "cm_wz2_steps";
+  var TOTAL_TASKS = sections.length;
+  var prog = document.getElementById("progress");
+
+  function load(){
+    try { var s = JSON.parse(localStorage.getItem(KEY) || "{}"); return (s && typeof s === "object") ? s : {}; }
+    catch(e){ return {}; }
+  }
+  function save(s){ try { localStorage.setItem(KEY, JSON.stringify(s)); } catch(e){} }
+  var state = load();
+
+  function render(){
+    var doneTasks = 0;
+    sections.forEach(function(task){
+      var slug = task.getAttribute("data-task");
+      var checked = state[slug] || [];
+      var steps = Array.prototype.slice.call(task.querySelectorAll(".stp"));
+      var mainAll = true;
+      steps.forEach(function(stp, i){
+        var on = checked.indexOf(i) > -1;
+        stp.classList.toggle("done", on);
+        if (!stp.hasAttribute("data-bonus") && !on) mainAll = false;
+      });
+      task.classList.toggle("is-done", mainAll);
+      var tab = document.querySelector('.tab[data-tab="' + slug + '"]');
+      if (tab) tab.classList.toggle("done", mainAll);
+      if (mainAll) doneTasks++;
+    });
+    if (doneTasks){
+      prog.hidden = false;
+      prog.textContent = doneTasks + " z " + TOTAL_TASKS + " zrobione";
+    } else {
+      prog.hidden = true;
+    }
+  }
+
+  sections.forEach(function(task){
+    var slug = task.getAttribute("data-task");
+    var steps = Array.prototype.slice.call(task.querySelectorAll(".stp"));
+    steps.forEach(function(stp, i){
+      var btn = stp.querySelector(".stp-check");
+      if (!btn) return;
+      btn.addEventListener("click", function(){
+        var checked = state[slug] || (state[slug] = []);
+        var at = checked.indexOf(i);
+        if (at > -1) checked.splice(at, 1); else checked.push(i);
+        save(state);
+        render();
+      });
     });
   });
 
   document.getElementById("reset").addEventListener("click", function(){
     if (confirm("Na pewno wyczyścić cały postęp?")){
-      state = { checked: [] };
-      save();
+      state = {};
+      save(state);
       render();
-      optState = { checked: [] };
-      saveOpt();
-      renderOpt();
     }
   });
 
   render();
-  renderOpt();
+
+  /* ---------- ZEGAR (sticky w topbarze) ---------- */
+  var timer = document.getElementById("timer");
+  var tLabel = document.getElementById("t-label");
+  var tTime = document.getElementById("t-time");
+  var tPause = document.getElementById("t-pause");
+  var tClose = document.getElementById("t-close");
+  var tInt = null, tLeft = 0, tPaused = false;
+
+  function fmt(s){
+    var m = Math.floor(s / 60), r = s % 60;
+    return (m < 10 ? "0" : "") + m + ":" + (r < 10 ? "0" : "") + r;
+  }
+  function update(){ tTime.textContent = fmt(tLeft); }
+  function stopInt(){ if (tInt){ clearInterval(tInt); tInt = null; } }
+
+  function startTimer(label, minutes){
+    stopInt();
+    tLeft = minutes * 60;
+    tPaused = false;
+    timer.classList.remove("t-done");
+    tLabel.textContent = label;
+    tPause.textContent = "II";
+    update();
+    timer.hidden = false;
+    tInt = setInterval(function(){
+      if (tPaused) return;
+      tLeft--;
+      if (tLeft <= 0){
+        tLeft = 0;
+        update();
+        stopInt();
+        timer.classList.add("t-done");
+        tLabel.textContent = "czas minął";
+      } else {
+        update();
+      }
+    }, 1000);
+  }
+
+  tPause.addEventListener("click", function(){
+    if (!tInt && tLeft <= 0) return;
+    tPaused = !tPaused;
+    tPause.textContent = tPaused ? "▶" : "II";
+  });
+  tClose.addEventListener("click", function(){
+    stopInt();
+    timer.hidden = true;
+  });
+
+  document.querySelectorAll(".tstart").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      startTimer(btn.getAttribute("data-label"), parseInt(btn.getAttribute("data-min"), 10));
+    });
+  });
+
+  /* ---------- KOPIUJ PROMPT ---------- */
+  document.querySelectorAll(".copy").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var win = btn.closest(".win");
+      var txt = win ? win.querySelector(".win-prompt").textContent.trim() : "";
+      function ok(){
+        btn.classList.add("ok");
+        btn.textContent = "Skopiowane ✓";
+        setTimeout(function(){
+          btn.classList.remove("ok");
+          btn.textContent = "Kopiuj";
+        }, 1600);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(txt).then(ok).catch(function(){});
+      }
+    });
+  });
 })();
 </script>
 </body>
