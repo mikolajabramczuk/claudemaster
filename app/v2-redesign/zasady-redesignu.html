@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zasady redesignu V2 · handoff dla Łukasza</title>
+<meta name="robots" content="noindex, nofollow">
+<script>(function(){try{if(localStorage.getItem("cm_theme_e")==="dark"){document.documentElement.setAttribute("data-theme","dark")}}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Sans:wght@300..800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F7F6F3;--panel:#F0EFEA;--pill:#ECEAE5;--ink:#1A1A1A;--sub:#696760;
+    --hair:rgba(26,26,23,.09);--btn-bg:#1A1A1A;--btn-fg:#FFFFFF;--acc:#DB511D;
+    --win-sh:rgba(26,26,23,.07);
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  html[data-theme="dark"]{
+    --bg:#141413;--panel:#1E1E1C;--pill:#262624;--ink:#EDECE8;--sub:#9A988F;
+    --hair:rgba(237,236,232,.10);--btn-bg:#FFFFFF;--btn-fg:#141413;--acc:#F26430;
+    --win-sh:rgba(0,0,0,.4);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  body{font-family:"Funnel Sans",system-ui,sans-serif;background:var(--bg);color:var(--ink);
+    font-size:16px;line-height:1.62;transition:background-color .2s ease-out,color .2s ease-out}
+  a{color:var(--acc)}
+  .wrap{max-width:820px;margin:0 auto;padding:60px 28px 120px}
+
+  .theme-btn{position:fixed;right:20px;top:20px;z-index:5;width:36px;height:36px;border-radius:999px;border:none;cursor:pointer;
+    background:var(--pill);color:var(--ink);display:grid;place-items:center}
+  .theme-btn svg{display:block;width:16px;height:16px}
+  .theme-btn .ic-sun{display:none}.theme-btn .ic-moon{display:block}
+  html[data-theme="dark"] .theme-btn .ic-sun{display:block}
+  html[data-theme="dark"] .theme-btn .ic-moon{display:none}
+
+  .eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);font-weight:700}
+  h1{font-size:31px;font-weight:650;letter-spacing:-.02em;line-height:1.15;margin-top:10px;text-wrap:balance}
+  .lead{color:var(--sub);margin-top:14px;max-width:64ch;text-wrap:pretty;font-size:17px}
+  .meta{margin-top:18px;font-size:13.5px;color:var(--sub);border-top:1px solid var(--hair);padding-top:14px}
+  .meta b{color:var(--ink);font-weight:600}
+
+  h2{font-size:20px;font-weight:650;letter-spacing:-.012em;margin:52px 0 4px;display:flex;align-items:baseline;gap:11px}
+  h2 .no{font-family:var(--mono);font-size:14px;color:var(--acc);font-weight:700}
+  h2 + .sub{color:var(--sub);font-size:14.5px;margin-bottom:18px;text-wrap:pretty}
+
+  .card{background:var(--panel);border-radius:16px;padding:22px 24px;margin-top:14px}
+  .card h3{font-size:15.5px;font-weight:650;letter-spacing:-.008em}
+  .card p{font-size:15px;color:var(--sub);margin-top:6px;text-wrap:pretty}
+
+  ul.clean{list-style:none;margin-top:12px;display:grid;gap:11px}
+  ul.clean li{position:relative;padding-left:24px;font-size:15.5px;color:var(--sub);text-wrap:pretty}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:9px;width:7px;height:7px;border-radius:2px;background:var(--acc)}
+  ul.clean li b,ul.clean li strong{color:var(--ink);font-weight:600}
+  ul.clean li code,p code,td code{font-family:var(--mono);font-size:13px;background:var(--pill);padding:1.5px 6px;border-radius:6px;color:var(--ink)}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:14px}
+  .sw{border:1px solid var(--hair);border-radius:14px;overflow:hidden}
+  .sw .chip{height:64px}
+  .sw .lbl{padding:10px 13px;font-size:12.5px;line-height:1.4}
+  .sw .lbl b{display:block;color:var(--ink);font-weight:600}
+  .sw .lbl span{color:var(--sub);font-family:var(--mono);font-size:11.5px}
+
+  table{width:100%;border-collapse:collapse;margin-top:16px;font-size:14.5px}
+  th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--hair);vertical-align:top}
+  th{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--sub);font-weight:700}
+  td b{color:var(--ink);font-weight:600}
+  td:first-child{white-space:nowrap;color:var(--ink);font-weight:600}
+  .type-ico{display:inline-flex;width:22px;height:22px;margin-right:8px;color:var(--acc);vertical-align:-5px}
+  .type-ico svg{width:22px;height:22px}
+
+  .files{display:grid;gap:12px;margin-top:16px}
+  .file{display:flex;gap:14px;align-items:flex-start;background:var(--panel);border-radius:14px;padding:18px 20px;
+    text-decoration:none;color:inherit;transition:transform .18s cubic-bezier(.22,1,.36,1)}
+  @media(hover:hover){.file:hover{transform:translateY(-2px)}}
+  .file .fi{width:38px;height:38px;border-radius:10px;background:var(--pill);color:var(--acc);flex:none;display:grid;place-items:center}
+  .file .fi svg{width:19px;height:19px}
+  .file .ft b{font-size:15.5px;color:var(--ink);font-weight:650}
+  .file .ft code{font-family:var(--mono);font-size:12.5px;color:var(--sub)}
+  .file .ft p{font-size:14px;color:var(--sub);margin-top:5px;text-wrap:pretty}
+
+  .warn{background:color-mix(in srgb,var(--acc) 9%,var(--bg));border:1px solid color-mix(in srgb,var(--acc) 26%,transparent);
+    border-radius:14px;padding:18px 20px;margin-top:16px;font-size:15px;color:var(--ink);text-wrap:pretty}
+  .warn b{font-weight:650}
+  .todo{list-style:none;margin-top:14px;display:grid;gap:10px}
+  .todo li{display:flex;gap:11px;font-size:15px;color:var(--sub);text-wrap:pretty}
+  .todo li .box{width:17px;height:17px;border-radius:5px;border:1.6px solid var(--hair);flex:none;margin-top:3px}
+
+  .foot{margin-top:60px;border-top:1px solid var(--hair);padding-top:20px;font-size:13.5px;color:var(--sub);text-wrap:pretty}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<button class="theme-btn" id="theme-btn" type="button" aria-label="Przełącz motyw">
+  <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+  <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+</button>
+
+<div class="wrap">
+  <div class="eyebrow">Claudemaster · kokpit /app · redesign V2</div>
+  <h1>Zasady redesignu i makiety do wdrożenia</h1>
+  <p class="lead">Kierunek „Cursor calm": spokojne ciepłe szarości, żywe mini-okna zamiast list, zero grywalizacji. Ten folder (<code>app/v2-redesign/</code>) jest źródłem prawdy. Poniżej twarde reguły plus dwie gotowe makiety: odnowiona strona zadań i nowy panel kursu. Wszystko to samowystarczalne pliki HTML (inline CSS/JS, bez buildu, bez bibliotek zewnętrznych).</p>
+  <div class="meta">Motyw jasny i ciemny przełącznikiem (róg strony). Makiety <b>nie są jeszcze wdrożone</b> na produkcję, obecne <code>/app</code> wygląda po staremu. Lista rzeczy do zrobienia przed wdrożeniem jest na końcu.</div>
+
+  <h2><span class="no">01</span> Język wizualny</h2>
+  <p class="sub">Ciepłe szarości, ostre rogi zaokrąglone miękko, jeden kolor akcentu. Motyw jasny/ciemny na kluczu localStorage <code>cm_theme_e</code> (docelowo wspólny dla całego kokpitu).</p>
+  <div class="grid">
+    <div class="sw"><div class="chip" style="background:#F7F6F3;border-bottom:1px solid rgba(0,0,0,.06)"></div><div class="lbl"><b>Tło</b><span>--bg · #F7F6F3</span></div></div>
+    <div class="sw"><div class="chip" style="background:#F0EFEA"></div><div class="lbl"><b>Panel</b><span>--panel · #F0EFEA</span></div></div>
+    <div class="sw"><div class="chip" style="background:#ECEAE5"></div><div class="lbl"><b>Pigułka</b><span>--pill · #ECEAE5</span></div></div>
+    <div class="sw"><div class="chip" style="background:#1A1A1A"></div><div class="lbl"><b>Atrament</b><span>--ink · #1A1A1A</span></div></div>
+    <div class="sw"><div class="chip" style="background:#696760"></div><div class="lbl"><b>Tekst drugi</b><span>--sub · #696760</span></div></div>
+    <div class="sw"><div class="chip" style="background:#DB511D"></div><div class="lbl"><b>Akcent</b><span>--acc · #DB511D</span></div></div>
+  </div>
+  <ul class="clean">
+    <li>Ciemny motyw ma własne wartości (m.in. <code>--bg:#141413</code>, <code>--acc:#F26430</code>) pod <code>html[data-theme="dark"]</code>. Wszystkie kolory idą przez zmienne CSS, nic na sztywno.</li>
+    <li>Font <b>Funnel Sans</b> (300–800). Ikony to inline SVG, nie biblioteka.</li>
+    <li>Akcent jest jeden i oszczędny. <b>Zero żółtego</b>, zero drugiego koloru akcentu. Podkreślenia i stany budujemy odcieniami akcentu przez <code>color-mix</code>.</li>
+  </ul>
+
+  <h2><span class="no">02</span> Typografia i odstępy</h2>
+  <ul class="clean">
+    <li><b>Rampa rozmiarów:</b> 12 / 14 / 16 / 18 / 20 / 28–32 px. Bez wartości „na połówkach" wynikających z przypadku, hierarchia ma być czytelna.</li>
+    <li><b>Nagłówki:</b> waga 650, letter-spacing <code>-.02em</code> (h1) i <code>-.012em</code> (h2). <code>text-wrap:balance</code> na nagłówkach, <code>pretty</code> na akapitach.</li>
+    <li><b>Siatka 4pt.</b> Panele co 24px. Rytm w karcie: tytuł <b>+10</b> opis <b>+18</b> meta <b>+24</b> CTA. Padding wewnątrz panelu większy niż odstęp między panelami (zasada bliskości).</li>
+    <li>Zero em-dashy (—) w treści. W zakresach półpauza (7–10 dni), środkowa kropka „·" w metadanych.</li>
+  </ul>
+
+  <h2><span class="no">03</span> Ruch i dostępność</h2>
+  <ul class="clean">
+    <li><b>Hover tylko w <code>@media(hover:hover)</code>.</b> Na dotyku pełna informacja jest widoczna od razu; nic się nie chowa za najechaniem, żadnych pustych linii po ukrytym elemencie.</li>
+    <li><b><code>prefers-reduced-motion: reduce</code></b> = wersja statyczna (sceny w stanie końcowym, animacje wyłączone). Każda strona to respektuje.</li>
+    <li>Ruch w spoczynku subtelny (duszek mruga co ~4,6 s), pełny dopiero na hover. Animacje czystym CSS, tanie.</li>
+    <li>Stany focus widoczne (<code>focus-visible</code>), sceny dekoracyjne <code>aria-hidden</code>, interaktywne elementy z <code>aria-*</code>.</li>
+  </ul>
+
+  <h2><span class="no">04</span> Postęp bez grywalizacji</h2>
+  <p class="sub">Najważniejsza reguła całego V2. Motywujemy strukturą i cichym wskaźnikiem, nie nagrodami.</p>
+  <div class="warn"><b>Zero odznak, streaków, punktów i konfetti.</b> Postęp pokazujemy paskiem/pastylką i liczbą „X z Y", nazywamy po imieniu, co użytkownik już umie. Bez systemów punktowych i bez świętowania.</div>
+  <ul class="clean">
+    <li><b>Strona zadań:</b> postęp ręczny lub z auto-syncu checklisty. Komplet kroków dopisuje slug do <code>cm_tasks_done</code> (JSON array), ✓ w akcencie przy tytule zrobionej karty, licznik „X z 2 zrobione" przy h1 (ukryty przy zerze).</li>
+    <li><b>Panel kursu:</b> pastylka bieżącego modułu w lewym górnym rogu (bliski cel, „Moduł 2 ▓░░ 1/4”), przycisk „Wszystkie lekcje” wypełnia się kolorem od lewej wg postępu kursu, pełny pasek postępu na górze popupu. Bez paska przez ekran, bez procentu w belce.</li>
+  </ul>
+
+  <h2><span class="no">05</span> Nazewnictwo i ton</h2>
+  <ul class="clean">
+    <li>W kursie mówimy <b>Lekcja</b>, nie „Moduł” na poziomie pojedynczej pozycji (moduł = grupa lekcji). Tytuły lekcji są <b>konkretne</b> („Terminal: pwd, ls, cd”, „Instalacja VS Code krok po kroku”), bez sloganów marketingowych i bez żargonu dydaktycznego widocznego dla użytkownika.</li>
+    <li>Kroki i instrukcje piszemy czasownikami w 2. os. czasu teraźniejszego („Pobierasz”, „Otwierasz”, „Odpalasz”).</li>
+    <li>Ton: polski, ludzki, bezpośredni, bez korpo-mowy.</li>
+  </ul>
+
+  <h2><span class="no">06</span> Cztery typy lekcji w kursie</h2>
+  <p class="sub">Panel kursu obsługuje cztery typy kart. Typ ma swoją ikonę widoczną i w treści, i w spisie lekcji.</p>
+  <table>
+    <thead><tr><th>Typ</th><th>Co to jest</th></tr></thead>
+    <tbody>
+      <tr><td><span class="type-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5h14M5 10h14M5 15h9"/></svg></span>Tekst</td><td>Lekcja tekstowa. Sam czytany materiał.</td></tr>
+      <tr><td><span class="type-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg></span>Wideo</td><td>Odtwarzacz (placeholder w makiecie) plus tekst i linki „Pod filmem” w opisie.</td></tr>
+      <tr><td><span class="type-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.5"/></svg></span>Ćwiczenie</td><td>Interaktywne, bezpośrednio na karcie. W makiecie: dopasowanie pojęć oraz mini-terminal (wpisz <code>ls</code> + Enter).</td></tr>
+      <tr><td><span class="type-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h6l2 2h10v10H3z"/><path d="M12 12v4M10 14l2 2 2-2"/></svg></span>Zadanie</td><td>Zadanie praktyczne na osobnej podstronie (pobieralny folder), jak „Badanie rynku w niszy”.</td></tr>
+    </tbody>
+  </table>
+
+  <h2><span class="no">07</span> Wzorzec danych (edytowalna treść)</h2>
+  <p class="sub">W każdym pliku renderowanym JS-em treść siedzi w jednym bloku na górze skryptu; logika tylko ją czyta. Można podmienić dowolny polski tekst bez dotykania kodu.</p>
+  <div class="card">
+    <h3>Panel kursu · <code>var KURS = [...]</code></h3>
+    <p>Tablica modułów, każdy z listą lekcji. Lekcja ma: <code>id</code>, <code>typ</code> (tekst / wideo / cwiczenie / zadanie), <code>tytul</code>, <code>czas</code>, <code>done</code> oraz pola zależne od typu (<code>tresc</code>, <code>linki</code>, <code>wiersze</code>/<code>cw</code>, <code>kroki</code>+<code>link</code>). Typy trzyma słownik <code>TYPY</code> z ikoną SVG.</p>
+  </div>
+  <div class="card">
+    <h3>Strona zadań · <code>cm_tasks_done</code> + <code>cm_misja_&lt;slug&gt;</code></h3>
+    <p>Status zadań: JSON array slugów w <code>cm_tasks_done</code>. Postęp kroków w podstronie zadania: <code>cm_misja_badanie-rynku-w-niszy</code> o kształcie <code>{checked:[],checkedOpt:[]}</code> (klucz produkcyjny, żeby stan użytkowników przeniósł się bez resetu).</p>
+  </div>
+
+  <h2><span class="no">08</span> Pliki w tym folderze</h2>
+  <div class="files">
+    <a class="file" href="zadania.html">
+      <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9h18"/></svg></span>
+      <span class="ft"><b>zadania.html</b> &nbsp;<code>odnowiona strona zadań</code><p>Siatka zadań w języku V2 (zwycięzca „żywy pixel”): karty z mini-oknami zamiast list, pixel-artowy duszek, postęp ręczny. Karta zadania 1 linkuje do podstrony.</p></span>
+    </a>
+    <a class="file" href="kurs.html">
+      <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></span>
+      <span class="ft"><b>kurs.html</b> &nbsp;<code>panel kursu (nowość)</code><p>Panel lekcji: jedna lekcja na środku, spis w popupie „Wszystkie lekcje”, cztery typy kart, dolny pasek „Dalej”. Postęp wg reguł z sekcji 04.</p></span>
+    </a>
+    <a class="file" href="badanie-rynku-w-niszy.html">
+      <span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h6l2 2h10v10H3z"/></svg></span>
+      <span class="ft"><b>badanie-rynku-w-niszy.html</b> &nbsp;<code>podstrona zadania</code><p>Przykład zadania praktycznego w języku V2: eksplorator plików, checklisty z auto-syncem do siatki, gotowy prompt z „Kopiuj”, feedback. Cel linku „zadanie” z panelu kursu.</p></span>
+    </a>
+  </div>
+
+  <h2><span class="no">09</span> Zanim to trafi na produkcję</h2>
+  <ul class="todo">
+    <li><span class="box"></span>Brama hasłem jak na obecnym <code>/app</code> (jeden klucz sessionStorage <code>cm_app_gate</code>, hasło <code>claudemaster</code>).</li>
+    <li><span class="box"></span>Przenieść motyw z roboczego klucza <code>cm_theme_e</code> na docelowy, wspólny dla całego kokpitu.</li>
+    <li><span class="box"></span>Zamienić prototypowe linki relatywne (<code>zadania.html</code>, <code>kurs.html</code>, <code>badanie-rynku-w-niszy.html</code>) na absolutne <code>/app/...</code> i zweryfikować cele na żywo.</li>
+    <li><span class="box"></span>Przerysować pozostałe strony kokpitu w tym samym języku (index, warsztaty/przygotowanie, opinie, podstrona „Sygnał dźwiękowy”).</li>
+    <li><span class="box"></span>Pamiętać: siatka zadań jest dziś w DWÓCH bajt-identycznych plikach (<code>app/index.html</code> i <code>app/zadania/index.html</code>); przy V2 zachować tę zasadę albo świadomie ją zmienić.</li>
+    <li><span class="box"></span>Cloudflare cache’uje 404 nowych ścieżek <code>/app/...</code>; przy pierwszym wdrożeniu obejście przez <code>?v=N</code>.</li>
+  </ul>
+
+  <div class="foot">Handoff wygenerowany z ustaleń w <code>app/v2-redesign/CLAUDE.md</code> i <code>.claude/CLAUDE.md</code>. Wątpliwości albo decyzje kierunkowe (np. warianty panelu kursu, zakres zmian) idą przez Mikołaja.</div>
+</div>
+
+<script>
+(function(){var b=document.getElementById("theme-btn"),r=document.documentElement;
+b.addEventListener("click",function(){var d=r.getAttribute("data-theme")==="dark";
+if(d){r.removeAttribute("data-theme")}else{r.setAttribute("data-theme","dark")}
+try{localStorage.setItem("cm_theme_e",d?"light":"dark")}catch(e){}})})();
+</script>
+</body>
+</html>
